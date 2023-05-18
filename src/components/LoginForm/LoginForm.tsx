@@ -42,7 +42,7 @@ const LoginForm = () => {
         console.log("submited");
         checkInputs();
         if(!(isValidEmail && isValidPassword)) return;
-        
+
     };
 
     /*
@@ -68,7 +68,7 @@ const LoginForm = () => {
                 <div className='invalidEmailText'>Please enter a valid email address.</div>
             )}
             <label className='password__label'>{<b>Password</b>}</label>
-            <input type='text' placeholder='Enter your password' className='password__input' onChange={checkButtonValidation}></input>
+            <input type='password' placeholder='Enter your password' className='password__input' onChange={checkButtonValidation}></input>
             {!isValidPassword && (
                 <div className='invalidPasswordText'>Password must be at least 6 characters long.</div>
             )}
