@@ -1,0 +1,26 @@
+body{
+    justify-content: center;
+    align-items: center;
+}
+
+.login__container{
+    position: relative;
+    width: 456px;
+    height: 349px;
+    background: #FFFFFF;
+    border-radius: 12px;
+}
+
+.login__header{
+    position: relative;
+    width: 49px;
+    height: 25px;
+    margin: 0;
+    margin-left: 204px;
+    top: 28px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25px;
+    color: #000000;
+}
