@@ -8,7 +8,7 @@ const App = () => {
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<MainPage />} />
-      <Route path="/auth" element={<AuthPage />}></Route>
+      <Route path="/auth/login" element={<AuthPage />}></Route>
     </Routes>
   </BrowserRouter>
   )
