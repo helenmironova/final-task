@@ -5,7 +5,9 @@ const SignUp = () => {
   return (
     <>
       <div className="signup">
-        <Typography variant="h4">Sign Up</Typography>
+        <Typography variant="h5" sx={{ color: "black", fontWeight: "bold" }}>
+          Sign Up
+        </Typography>
         <TextField
           required
           id="outlined-required"
@@ -30,7 +32,10 @@ const SignUp = () => {
         <Button fullWidth={true} sx={{ backgroundColor: "#D8E7FF" }}>
           Create Account
         </Button>
-        <Typography variant="subtitle2">
+        <Typography
+          variant="subtitle2"
+          sx={{ color: "black", fontSize: "14px" }}
+        >
           Already have an account?
           <Link
             href="#"
