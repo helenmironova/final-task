@@ -24,3 +24,21 @@ body{
     line-height: 25px;
     color: #000000;
 }
+
+.login__footer{
+    position: relative;
+    width: 176px;
+    height: 16px;
+    left: 140px;
+    top: 270px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #000000;
+}
+
+.login__footer a {
+    color: black;
+}
+  
