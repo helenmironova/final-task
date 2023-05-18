@@ -1,0 +1,46 @@
+body{
+    background-image: url('src/assets/dna-representation-collage 1.png');
+}
+
+.header{
+    position: absolute;
+    left: 848px;
+    top: 162px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 44px;
+    color: #000000;
+}
+
+.under--header{
+    position: absolute;
+    width: 300px;
+    height: 57px;
+    left: 850px;
+    top: 217px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: #616161;
+    text-align: left;
+}
+
+.login--button{
+    position: absolute;
+    width: 158px;
+    height: 48px;
+    left: 850px;
+    top: 304px;
+    background: #FFFFFF;
+    border-radius: 24px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    color: #175BC0;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}

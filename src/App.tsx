@@ -1,12 +1,14 @@
 import "./App.css"
-
-import { Fragment } from "react"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainPage from "src/pages/main-page/MainPage";
 
 const App = () => {
   return (
-    <Fragment>
-      <h1>{"Your final task"}</h1>
-    </Fragment>
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<MainPage />} />
+    </Routes>
+  </BrowserRouter>
   )
 }
 
