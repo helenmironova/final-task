@@ -1,44 +1,46 @@
-body{
+*{
+    margin: 0;
+}
+
+.body{
     justify-content: center;
     align-items: center;
 }
 
-.login__container{
+.SignUp__container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     position: relative;
     width: 456px;
-    height: 349px;
     background: #FFFFFF;
     border-radius: 12px;
 }
 
-.login__header{
+.SignUp__header{
+    display: flex;
     position: relative;
-    width: 49px;
-    height: 25px;
-    margin: 0;
-    margin-left: 204px;
-    top: 28px;
     font-style: normal;
     font-weight: 700;
     font-size: 18px;
     line-height: 25px;
+    height: 71px;
+    align-items: center;;
+    justify-content: center;
     color: #000000;
 }
 
-.login__footer{
+.SignUp__footer{
     position: relative;
-    width: 176px;
-    height: 16px;
-    left: 140px;
-    top: 270px;
-    font-style: normal;
+    width: 100%;
+    color: #000000;
     font-weight: 400;
     font-size: 12px;
     line-height: 16px;
-    color: #000000;
+    margin-top: 8px;
+    margin-bottom: 23px;
 }
 
-.login__footer a {
+.SignUp__footer a {
     color: black;
 }
-  
