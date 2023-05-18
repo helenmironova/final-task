@@ -1,5 +1,50 @@
+import { Button, Link, TextField, Typography } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
+import "./SignUp.css";
 const SignUp = () => {
-  return <div>this is sign up part</div>;
+  return (
+    <>
+      <div className="signup">
+        <Typography variant="h4">Sign Up</Typography>
+        <TextField
+          required
+          id="outlined-required"
+          label="Email"
+          defaultValue="Enter your email"
+          fullWidth={true}
+        ></TextField>
+        <TextField
+          required
+          id="outlined-required"
+          label="Password"
+          defaultValue="Enter your password"
+          fullWidth={true}
+        ></TextField>
+        <TextField
+          required
+          id="outlined-required"
+          label="Repeat Password"
+          defaultValue="Enter your password again"
+          fullWidth={true}
+        ></TextField>
+        <Button fullWidth={true} sx={{ backgroundColor: "#D8E7FF" }}>
+          Create Account
+        </Button>
+        <Typography variant="subtitle2">
+          Already have an account?
+          <Link
+            href="#"
+            underline="hover"
+            sx={{ color: "black", fontSize: "16px", fontWeight: "bold" }}
+            component={RouterLink}
+            to="/login"
+          >
+            {" Login"}
+          </Link>
+        </Typography>
+      </div>
+    </>
+  );
 };
 
 export default SignUp;
