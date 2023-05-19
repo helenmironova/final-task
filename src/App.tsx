@@ -4,7 +4,7 @@ import SignUp from "src/pages/auth-page-signup/SignUp";
 import AuthPage from "src/pages/auth-page-login/AuthPage";
 import MainPage from "src/pages/main-page/MainPage";
 
-const App = () => {
+const App = () =>{
   return (
     <BrowserRouter>
     <Routes>

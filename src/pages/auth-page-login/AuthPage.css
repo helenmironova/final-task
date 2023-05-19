@@ -6,9 +6,10 @@ body{
 .login__container{
     position: relative;
     width: 456px;
-    height: 349px;
     background: #FFFFFF;
     border-radius: 12px;
+    display: flex;
+    flex-direction: column;
 }
 
 .login__header{
@@ -17,7 +18,7 @@ body{
     height: 25px;
     margin: 0;
     margin-left: 204px;
-    top: 28px;
+    margin-top: 28px;
     font-style: normal;
     font-weight: 700;
     font-size: 18px;
@@ -26,12 +27,12 @@ body{
 }
 
 .login__footer{
-    position: relative;
-    width: 176px;
     height: 16px;
-    left: 140px;
-    top: 277px;
+    margin-top: 7px;
+    margin-bottom: 21px;
     font-style: normal;
+    left: 137px;
+    bottom: 21px;
     font-weight: 400;
     font-size: 12px;
     line-height: 16px;

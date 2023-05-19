@@ -1,25 +1,30 @@
 
 .login__form{
+    width: 100%;
     position: relative;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
 }
 
 .email__label{
-    position: absolute;
-    left: 33px;
-    top: 43px;
+    position: relative;
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 19px;
     color: #2B2B2B;
+    margin-top:19px;
+    left:32px;
 }
 
 .email__input{
-    position: absolute;
+    position: relative;
     width: 395px;
     height: 48px;
     left: 31px;
-    top: 63px;
     padding-left: 14px;
     border: 0;
     box-sizing: border-box;
@@ -29,9 +34,9 @@
 }
 
 .password__label{
-    position: absolute;
-    left: 33px;
-    top: 131px;
+    position: relative;
+    left: 32px;
+    margin-top: 21px;
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
@@ -40,11 +45,10 @@
 }
 
 .password__input{
-    position: absolute;
+    position: relative;
     width: 395px;
     height: 48px;
     left: 31px;
-    top: 151px;
     padding-left: 14px;
     border: 0;
     box-sizing: border-box;
@@ -54,11 +58,11 @@
 }
 
 .login__button--disabled{
-    position: absolute;
+    position: relative;
     width: 395px;
     height: 48px;
     left: 33px;
-    top: 223px;
+    margin-top: 24px;
     background: #CFCFCF;
     border: none;
     border-radius: 12px;
@@ -70,11 +74,11 @@
 }
 
 .login__button--active{
-    position: absolute;
+    position: relative;
     width: 395px;
     height: 48px;
     left: 33px;
-    top: 223px;
+    margin-top: 24px;
     background: #3C86F4;
     border: none;
     border-radius: 12px;
@@ -86,7 +90,7 @@
 }
 
 .invalidEmailText, .invalidPasswordText{
-    position: absolute;
+    position: relative;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -95,10 +99,13 @@
     left: 33px;
 }
 
-.invalidEmailText{
-    top: 109px;
-}
-
-.invalidPasswordText{
-    top: 197px;
+.invalidLoginMessage{
+    position: relative;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 12px;
+    color: #EC3030;
+    left: 45px;
+    margin-top: 17px;
 }
