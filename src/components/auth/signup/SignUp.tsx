@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Link, TextField, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -13,6 +13,10 @@ const SignUp = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [passwordMatchError, setPasswordMatchError] = useState<string | null>(
+    null
+  );
+  const [isDisabled, setIsDisabled] = useState(true);
   const [formError, setFormError] = useState<string | null>(null);
 
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,14 +68,35 @@ const SignUp = () => {
       );
       const user = userCredential.user;
       console.log("Sign-up successful:", user);
-      // Optionally, you can redirect to a success page or perform other actions
     } catch (error) {
       console.error("Sign-up error:", error);
       setFormError("An error occurred during sign-up.");
     }
-    // Proceed with sign-up
   };
-
+  useEffect(() => {
+    if (password !== passwordConfirmation) {
+      setPasswordMatchError("entered passwords do not match");
+    } else {
+      setPasswordMatchError(null);
+    }
+  }, [password, passwordConfirmation]);
+  useEffect(() => {
+    setIsDisabled(
+      !!emailError ||
+        !!passwordError ||
+        !!passwordMatchError ||
+        !email ||
+        !password ||
+        !passwordConfirmation
+    );
+  }, [
+    emailError,
+    passwordError,
+    passwordMatchError,
+    email,
+    password,
+    passwordConfirmation,
+  ]);
   return (
     <>
       <div className="signup">
@@ -107,10 +132,13 @@ const SignUp = () => {
           value={passwordConfirmation}
           onChange={handlePasswordConfirmationChange}
           fullWidth={true}
+          error={!!passwordMatchError}
+          helperText={passwordMatchError}
         ></TextField>
         <Button
           fullWidth={true}
           sx={{ backgroundColor: "#D8E7FF" }}
+          disabled={isDisabled}
           onClick={handleSubmit}
         >
           Create Account

@@ -53,13 +53,7 @@ const Login = () => {
     }
   };
   useEffect(() => {
-    setIsDisabled(
-      !!emailError ||
-        !!passwordError ||
-        !email ||
-        !password ||
-        password.length < 6
-    );
+    setIsDisabled(!!emailError || !!passwordError || !email || !password);
   }, [emailError, passwordError, email, password]);
 
   return (
