@@ -1,7 +1,7 @@
-import { auth } from '../../firebase';
+import {createUserWithEmailAndPassword } from "firebase/auth";
 import './SignUpForm.css'
 import React, { useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth/cordova';
+import {auth} from '../../firebase'
 
 
 const SignUpForm = () => {
@@ -70,12 +70,13 @@ const SignUpForm = () => {
 
     const signUp = () => {
         createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
+          .then((userCredential) => {
             console.log(userCredential);
-        })
-        .catch((error)=>{
-            console.log(error);
-        });
+          })
+          .catch((error) => {
+            console.log(error)
+          });
+        
     }
       
     

@@ -13,7 +13,7 @@ const firebaseConfig = {
   storageBucket: "quantori-final-project.appspot.com",
   messagingSenderId: "1023837254689",
   appId: "1:1023837254689:web:bb76cf11852d160e4fdf60",
-  measurementId: "G-HPBQ1GBEXP"
+  measurementId: "G-HPBQ1GBEXP",
 };
 
 // Initialize Firebase

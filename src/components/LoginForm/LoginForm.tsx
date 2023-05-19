@@ -1,7 +1,7 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import './LoginForm.css'
 import React, { useEffect, useState } from 'react';
-import {auth} from '../../firebase';
+import {signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../../firebase';
 
 const LoginForm = () => {
     const[email, setEmail] = useState("");
@@ -41,12 +41,12 @@ const LoginForm = () => {
 
     const login = () => {
         signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
+          .then((userCredential) => {
             console.log(userCredential);
-        })
-        .catch((error)=>{
-            console.log(error);
-        });
+          })
+          .catch((error) => {
+           console.log(error);
+          });
     }
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
