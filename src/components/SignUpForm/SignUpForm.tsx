@@ -1,5 +1,5 @@
 import './SignUpForm.css'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 const SignUpForm = () => {
@@ -72,21 +72,26 @@ const SignUpForm = () => {
         checkEmail();
         checkPasswords();
     }
+    
+    useEffect(() => {
+        checkButtonValidation();
+    }, [email, password]);
+      
 
     return(
         <form className='signUpForm' onSubmit={handleSubmit}>
             <label className='label'><b>Email</b></label>
-            <input type='text' className='emailInput' placeholder='Enter your email' onInput={checkButtonValidation} onChange={(e)=>setEmail(e.target.value)}></input>
+            <input type='text' className='emailInput' placeholder='Enter your email' onChange={(e)=>setEmail(e.target.value)}></input>
             {!isValidEmail && (
                 <div className='invalidTextSU'>Please enter a valid email address.</div>
             )}
             <label className='label'><b>Password</b></label>
-            <input type='text' className='passwordInput' placeholder='Enter your password' onInput={checkButtonValidation} onChange={(e)=>setPassword(e.target.value)}></input>
+            <input type='text' className='passwordInput' placeholder='Enter your password' onChange={(e)=>setPassword(e.target.value)}></input>
             {!isValidPassword && (
                 <div className='invalidTextSU'> {"Must be at least 6 symbols: lowercase letter, uppercase letter and a number."}</div>
             )}
             <label className='label'><b>Repeat Password</b></label>
-            <input type='text' className='repeatPasswordInput' placeholder='Enter your password again' onInput={checkButtonValidation} onChange={(e)=>setRepeatPassword(e.target.value)}></input>
+            <input type='text' className='repeatPasswordInput' placeholder='Enter your password again' onChange={(e)=>setRepeatPassword(e.target.value)}></input>
             {!isValidRepeat && (
                 <div className='invalidTextSU'> {"Passwords must match."}</div>
             )}
