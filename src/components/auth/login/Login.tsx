@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { TextField, Button, Typography, Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../services/firebase";
+import { emailFormat } from "../../../utils/validations";
+
 import "./Login.css";
 
 const Login = () => {
@@ -9,8 +13,6 @@ const Login = () => {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
-
-  const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -30,18 +32,35 @@ const Login = () => {
     }
   };
 
-  
-  const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     if (emailError || passwordError) {
       return;
     }
+    try {
+      if (email && password) {
+        const loggedInUser = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        console.log(loggedInUser);
+      }
+    } catch (error) {
+      // Handle authentication errors (e.g., display error message)
+      console.log("Authentication error:", error);
+    }
   };
-
   useEffect(() => {
-    setIsDisabled(!!emailError || !!passwordError);
-  }, [emailError, passwordError]);
+    setIsDisabled(
+      !!emailError ||
+        !!passwordError ||
+        !email ||
+        !password ||
+        password.length < 6
+    );
+  }, [emailError, passwordError, email, password]);
 
   return (
     <>
@@ -51,7 +70,7 @@ const Login = () => {
         </Typography>
         <TextField
           required
-          id="outlined-required"
+          id="login-email"
           label="Email"
           value={email}
           onChange={onEmailChange}
@@ -61,7 +80,7 @@ const Login = () => {
         />
         <TextField
           required
-          id="outlined-required"
+          id="login-password"
           label="Password"
           value={password}
           onChange={onPasswordChange}
