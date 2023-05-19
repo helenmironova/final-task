@@ -1,6 +1,7 @@
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import './LoginForm.css'
 import React, { useEffect, useState } from 'react';
-
+import {auth} from '../../firebase';
 
 const LoginForm = () => {
     const[email, setEmail] = useState("");
@@ -38,20 +39,28 @@ const LoginForm = () => {
         checkPassword();
     }
 
+    const login = () => {
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            console.log(userCredential);
+        })
+        .catch((error)=>{
+            console.log(error);
+        });
+    }
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         console.log("submited");
         checkInputs();
         if(!(isValidEmail && isValidPassword)) return;
-
+        login();
     };
 
     /*
         when user changes in password or email fields, isButtonDisabled changes to set button validation status;
     */
     const checkButtonValidation = () =>{
-        console.log(email);
-        console.log(password);
         if(email.length==0 || password.length==0){
             setIsButtonDisabled(true);
         }else{

@@ -1,5 +1,7 @@
+import { auth } from '../../firebase';
 import './SignUpForm.css'
 import React, { useEffect, useState } from 'react';
+import { createUserWithEmailAndPassword } from 'firebase/auth/cordova';
 
 
 const SignUpForm = () => {
@@ -65,17 +67,29 @@ const SignUpForm = () => {
         }
 
     };
+
+    const signUp = () => {
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            console.log(userCredential);
+        })
+        .catch((error)=>{
+            console.log(error);
+        });
+    }
       
     
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         checkEmail();
         checkPasswords();
+        if(!isValidEmail || !isValidPassword || !isValidRepeat) return;
+        signUp();
     }
     
     useEffect(() => {
         checkButtonValidation();
-    }, [email, password]);
+    }, [email, password, repeatPassword]);
       
 
     return(
