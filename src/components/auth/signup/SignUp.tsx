@@ -1,14 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Link, TextField, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  fetchSignInMethodsForEmail,
+} from "firebase/auth";
 import { auth } from "../../../services/firebase";
 import { emailFormat, passwordFormat } from "../../../utils/validations";
 
 import "./SignUp.css";
 
 const SignUp = () => {
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
+  const emailRef = useRef<HTMLInputElement | null>(null);
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [emailError, setEmailError] = useState<string | null>(null);
@@ -20,7 +24,7 @@ const SignUp = () => {
   const [formError, setFormError] = useState<string | null>(null);
 
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
+    // setEmail(e.target.value);
 
     e.target.value.match(emailFormat)
       ? setEmailError(null)
@@ -36,7 +40,24 @@ const SignUp = () => {
           "Must contain at least 6 symbols, uppercase/lowercase characters and numbers"
         );
   };
+  const validateEmail = async () => {
+    if (emailRef.current && emailRef.current.value) {
+      const email = emailRef.current.value;
 
+      try {
+        console.log("it does not run");
+        const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+        if (signInMethods.length > 0) {
+          console.log(signInMethods);
+          setEmailError("Email is already registered");
+        } else {
+          setEmailError(null);
+        }
+      } catch (error) {
+        console.error("Error fetching sign-in methods:", error);
+      }
+    }
+  };
   const handlePasswordConfirmationChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -50,7 +71,7 @@ const SignUp = () => {
     // You can access the email, password, and passwordConfirmation values
 
     // Example validation
-    if (!email || !password || !passwordConfirmation) {
+    if (!emailRef.current?.value || !password || !passwordConfirmation) {
       // Display an error message or perform appropriate actions
       return;
     }
@@ -61,18 +82,32 @@ const SignUp = () => {
     }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-      console.log("Sign-up successful:", user);
+      if (emailRef.current) {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          emailRef.current.value,
+          password
+        );
+        const user = userCredential.user;
+        console.log("Sign-up successful:", user);
+      }
+      // const userCredential = await createUserWithEmailAndPassword(
+      //   auth,
+      //   emailRef.current.value,
+      //   password
+      // );
+      // const user = userCredential.user;
+      // console.log("Sign-up successful:", user);
     } catch (error) {
       console.error("Sign-up error:", error);
       setFormError("An error occurred during sign-up.");
     }
   };
+
+  const onEmailBlur = () => {
+    validateEmail();
+  };
+
   useEffect(() => {
     if (password !== passwordConfirmation) {
       setPasswordMatchError("entered passwords do not match");
@@ -80,12 +115,12 @@ const SignUp = () => {
       setPasswordMatchError(null);
     }
   }, [password, passwordConfirmation]);
+
   useEffect(() => {
     setIsDisabled(
       !!emailError ||
         !!passwordError ||
         !!passwordMatchError ||
-        !email ||
         !password ||
         !passwordConfirmation
     );
@@ -93,10 +128,13 @@ const SignUp = () => {
     emailError,
     passwordError,
     passwordMatchError,
-    email,
+
     password,
     passwordConfirmation,
   ]);
+  useEffect(() => {
+    validateEmail();
+  }, []);
   return (
     <>
       <div className="signup">
@@ -107,8 +145,10 @@ const SignUp = () => {
           required
           id="signup-email"
           label="Email"
-          value={email}
+          // value={email}
+          inputRef={emailRef}
           onChange={onEmailChange}
+          onBlur={onEmailBlur}
           fullWidth={true}
           error={!!emailError}
           helperText={emailError}
