@@ -2,16 +2,17 @@ import './LoginForm.css';
 import React, { useEffect, useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
+import {useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isValidPassword, setIsValidPassword] = useState(true);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isValidLogin, setIsValidLogin] = useState(true);
-  const [isButtonClicked, setIsButtonClicked] = useState(false); // Track button click
+  const [isButtonClicked, setIsButtonClicked] = useState(false); 
+  const navigate = useNavigate(); 
 
   const checkPassword = () => {
     const passwordInput = document.querySelector('.password__input') as HTMLInputElement;
@@ -46,6 +47,7 @@ const LoginForm = () => {
       .then((userCredential) => {
         console.log(userCredential);
         setIsValidLogin(true);
+        navigate('/home'); // Navigate to /home route
       })
       .catch(() => {
         setIsValidLogin(false);
@@ -103,7 +105,9 @@ const LoginForm = () => {
         <div className="invalidPasswordText">Password must be at least 6 characters long.</div>
       )}
       {!isValidLogin && (
-        <p className="invalidLoginMessage">Login failed! Please, check your password and email and try again.</p>
+        <p className="invalidLoginMessage">
+          Login failed! Please, check your password and email and try again.
+        </p>
       )}
       <input
         type="submit"
