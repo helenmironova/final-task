@@ -1,0 +1,23 @@
+.container {
+  background-image: url("/src/assets/main-page-background-dna.png");
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background: #ffffff;
+  border-radius: 12px;
+}
+
+a {
+  cursor: pointer;
+}

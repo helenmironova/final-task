@@ -1,0 +1,26 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.status {
+  font-size: 72px;
+  line-height: 98px;
+  color: #000000;
+}
+.text {
+  font-size: 16px;
+  line-height: 22px;
+  color: #9f9f9f;
+  margin-bottom: 20px;
+}
