@@ -19,8 +19,9 @@ const SearchBar = (props: any) => {
 
     const handleSubmit = () => {
         const query = searchText.trim() || '*';
-        fetch(`https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,cc_subcellular_location&query=${query}`)
+        fetch(`https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=(${query})&size=25`)
         .then((response) => {
+            console.log(response);
             if (response.ok) {
             return response.json();
             }
