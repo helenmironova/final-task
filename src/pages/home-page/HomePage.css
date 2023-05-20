@@ -32,6 +32,7 @@
     display: flex;
     flex-direction: column;
     margin-top: 70px;
+    color: #000000;
 }
 
 .gridHeaders{
@@ -39,3 +40,4 @@
     height: 40px;
     display: flex;
 }
+

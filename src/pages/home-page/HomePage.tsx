@@ -3,11 +3,11 @@ import HomePageHeader from '../../components/HomePageHeader/HomePageHeader';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import GridHeaders from '../../components/GridHeaders/GridHeaders';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const HomePage = () => {
     const [dataToDisplay, setDataToDisplay] = useState(false);
-    // const [data, setData] = useState([]);
-
+    const listItems = useSelector((state: any) => state.listItems)
     return(
         <div className='body'>
             <HomePageHeader />
@@ -17,6 +17,9 @@ const HomePage = () => {
                 {dataToDisplay && 
                     <div className='dataWrapper'>
                         <GridHeaders />
+                        {listItems.map((item: any, index: number) => (
+                            <p key={index}>{item.primaryAccession}</p>
+                        ))}
                     </div>
                 }
             </div>
