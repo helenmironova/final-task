@@ -8,10 +8,8 @@ const SearchBar = () => {
     const [searchText, setSearchText] = useState('');
 
     useEffect(() => {
-        const searchQuery = searchText.trim();
-        if (searchQuery) {
-            navigate(`/search?query=${searchQuery}`);
-        }
+        const searchQuery = searchText.trim() || '*';
+        navigate(`/search?query=${searchQuery}`);
     }, [searchText, navigate]);
 
     const handleSearchTextChange = (e: any) => {
