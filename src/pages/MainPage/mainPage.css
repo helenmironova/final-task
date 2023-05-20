@@ -1,0 +1,35 @@
+.mainPage {
+  box-sizing: border-box;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url("../../assets/dna.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  padding: 150px 130px;
+  display: flex;
+  justify-content: right;
+}
+.mainPage h1 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 44px;
+}
+.mainPage__container {
+  width: 350px;
+}
+.mainPage__text {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  color: #616161;
+  margin-bottom: 35px;
+}
+
+.btn__mainPage:hover {
+  color: #fff;
+  text-transform: capitalize;
+}

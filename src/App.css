@@ -1,6 +1,21 @@
+@font-face {
+  font-family: "Open Sans";
+  src: url("./fonts/OpenSans-VariableFont_wdth\,wght.ttf");
+}
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  font-family: "Open Sans", sans-serif;
+}
+.authPage {
+  box-sizing: border-box;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url("./assets/dna.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
