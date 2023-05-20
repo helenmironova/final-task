@@ -1,0 +1,24 @@
+.notFoundPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.notFoundPage h1 {
+  margin: 0;
+  font-size: 72px;
+  font-style: normal;
+  font-weight: 600;
+}
+.notFoundPage__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.notFoundPage__text {
+  color: #9f9f9f;
+  margin-bottom: 20px;
+}
+.btn__notFound:hover {
+  color: #fff;
+}
