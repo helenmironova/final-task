@@ -15,8 +15,12 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 19px;
-    color: #9F9F9F;
+    color: #2B2B2B;
     padding-left: 16px;
+}
+
+.searchInput::placeholder{
+    color: #9F9F9F;
 }
 
 .searchButton{
