@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './SearchBar.css';
 import logo from '../../assets/🦆 icon _Options_.png';
 
-const SearchBar = () => {
+const SearchBar = (props: any) => {
     const navigate = useNavigate();
     const [searchText, setSearchText] = useState('');
 
@@ -28,6 +28,7 @@ const SearchBar = () => {
         })
         .then((data) => {
             console.log(data);
+            props.onSearch(true);
         })
         .catch((error) => {
             console.error(error);

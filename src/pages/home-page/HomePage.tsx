@@ -10,7 +10,7 @@ const HomePage = () => {
     return(
         <div className='body'>
             <HomePageHeader />
-            <SearchBar />
+            <SearchBar onSearch={setDataToDisplay}/>
             <div className='resultsWrapper'>
                 {!dataToDisplay && <p className='noDataToDisplayP'>No data to display.<br/> Please start a search to display results.</p>}
             </div>
