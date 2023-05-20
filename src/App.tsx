@@ -1,4 +1,4 @@
-import HomePage from "./pages/HomePage";
+import InitialPage from "./pages/InitialPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 
@@ -11,7 +11,7 @@ const App = () => {
   return (
     <Fragment>
       <Routes>
-        <Route path="/" element={<HomePage />}></Route>
+        <Route path="/" element={<InitialPage />}></Route>
         <Route path="/login" element={<LoginPage />}></Route>
         <Route path="/signup" element={<SignUpPage />}></Route>
       </Routes>
