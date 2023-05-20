@@ -3,7 +3,7 @@ import './HomePageHeader.css'
 
 const HomePageHeader = () => {
     return(
-        <div className='wrapper'>
+        <div className='headerWrapper'>
             <p className='userEmail'>your_email@email.com</p>
             <Link to={"/auth/login"} className='logOut'>Log out</Link>
         </div>

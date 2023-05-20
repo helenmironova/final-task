@@ -6,3 +6,22 @@
     left: 0;
     top: 0;
 }
+
+.resultsWrapper{
+    width: 1021px;
+    min-height: 642px;
+    margin-left: 129px;
+    justify-content: center;
+    display: flex;
+}
+
+.noDataToDisplayP{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: #616161;
+    width: 237px;
+    height: 38px;
+    margin-top: 276px;
+}
