@@ -17,6 +17,23 @@ const SearchBar = () => {
         setSearchText(newSearchText);
     };
 
+    const handleSubmit = () => {
+        const query = searchText.trim() || '*';
+        fetch(`https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,cc_subcellular_location&query=${query}`)
+        .then((response) => {
+            if (response.ok) {
+            return response.json();
+            }
+            throw new Error('Request failed');
+        })
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+
     return (
         <div className='searchInputWrapper'>
             <input
@@ -26,7 +43,7 @@ const SearchBar = () => {
                 value={searchText}
                 onChange={handleSearchTextChange}
             />
-            <button type='submit' className='searchButton'>
+            <button type='submit' className='searchButton' onClick={()=>handleSubmit()}>
                 Search
             </button>
             <button className='filter'>
