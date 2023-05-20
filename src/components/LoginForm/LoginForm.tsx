@@ -47,7 +47,7 @@ const LoginForm = () => {
       .then((userCredential) => {
         console.log(userCredential);
         setIsValidLogin(true);
-        navigate('/home'); // Navigate to /home route
+        navigate('/search');
       })
       .catch(() => {
         setIsValidLogin(false);
