@@ -1,8 +1,11 @@
 import './HomePage.css'
+import HomePageHeader from '../../components/HomePageHeader/HomePageHeader';
 
 const HomePage = () => {
     return(
-        <div>THIS IS HOME PAGE</div>
+        <div className='body'>
+            <HomePageHeader />
+        </div>
     )
 }
 

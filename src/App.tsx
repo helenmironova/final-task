@@ -8,13 +8,13 @@ import HomePage from "src/pages/home-page/HomePage";
 const App = () =>{
   return (
     <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<MainPage />} />
-      <Route path="/auth/login" element={<AuthPage />}></Route>
-      <Route path="/auth/signup" element={<SignUp />}></Route>
-      <Route path="/home" element={<HomePage />}></Route>
-    </Routes>
-  </BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/auth/login" element={<AuthPage />}></Route>
+        <Route path="/auth/signup" element={<SignUp />}></Route>
+        <Route path="/home" element={<HomePage />}></Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
