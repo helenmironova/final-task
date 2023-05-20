@@ -6,6 +6,7 @@ import { auth } from "../../../services/firebase";
 import { emailFormat } from "../../../utils/validations";
 
 import "./Login.css";
+import { FirebaseError } from "firebase/app";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -32,7 +33,7 @@ const Login = () => {
     }
   };
 
-  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onUserLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     if (emailError || passwordError) {
@@ -40,16 +41,28 @@ const Login = () => {
     }
     try {
       if (email && password) {
-        const loggedInUser = await signInWithEmailAndPassword(
+        const { user } = await signInWithEmailAndPassword(
           auth,
           email,
           password
         );
-        console.log(loggedInUser);
+        const token = await auth.currentUser?.getIdToken(false);
+        console.log(user);
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({ email, token, uid: user.uid })
+        );
       }
     } catch (error) {
-      // Handle authentication errors (e.g., display error message)
-      console.log("Authentication error:", error);
+      if (error instanceof FirebaseError) {
+        const errorMessage = error.code;
+        errorMessage === "auth/user-not-found"
+          ? setEmailError("user does not exist")
+          : setPasswordError("check whether password typed correctly");
+        console.error("Authentication error:", errorMessage);
+      } else {
+        console.error("An error occurred:", error);
+      }
     }
   };
   useEffect(() => {
@@ -86,16 +99,16 @@ const Login = () => {
         <Button
           fullWidth={true}
           sx={{ backgroundColor: "#D8E7FF" }}
-          onClick={handleLogin}
+          onClick={onUserLogin}
           disabled={isDisabled}
         >
-          Login
+          {"Login"}
         </Button>
         <Typography
           variant="subtitle2"
           sx={{ color: "black", fontSize: "14px" }}
         >
-          Don’t have an account?
+          {"Don’t have an account? "}
           <Link
             href="#"
             underline="hover"
@@ -103,7 +116,7 @@ const Login = () => {
             component={RouterLink}
             to="/signup"
           >
-            {" Sign up"}
+            {"Sign up"}
           </Link>
         </Typography>
       </div>

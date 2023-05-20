@@ -1,5 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { Button, Link, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  InputAdornment,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
+
 import { Link as RouterLink } from "react-router-dom";
 import {
   createUserWithEmailAndPassword,
@@ -9,6 +17,7 @@ import { auth } from "../../../services/firebase";
 import { emailFormat, passwordFormat } from "../../../utils/validations";
 
 import "./SignUp.css";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const SignUp = () => {
   // const [email, setEmail] = useState("");
@@ -22,6 +31,19 @@ const SignUp = () => {
   );
   const [isDisabled, setIsDisabled] = useState(true);
   const [formError, setFormError] = useState<string | null>(null);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordRepeat, setShowPasswordRepeat] = useState(false);
+
+  const showPasswordOnClick = (
+    setter: React.Dispatch<React.SetStateAction<boolean>>
+  ) => setter((show) => !show);
+
+  const mouseDownShowPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
 
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // setEmail(e.target.value);
@@ -45,10 +67,8 @@ const SignUp = () => {
       const email = emailRef.current.value;
 
       try {
-        console.log("it does not run");
         const signInMethods = await fetchSignInMethodsForEmail(auth, email);
         if (signInMethods.length > 0) {
-          console.log(signInMethods);
           setEmailError("Email is already registered");
         } else {
           setEmailError(null);
@@ -91,13 +111,6 @@ const SignUp = () => {
         const user = userCredential.user;
         console.log("Sign-up successful:", user);
       }
-      // const userCredential = await createUserWithEmailAndPassword(
-      //   auth,
-      //   emailRef.current.value,
-      //   password
-      // );
-      // const user = userCredential.user;
-      // console.log("Sign-up successful:", user);
     } catch (error) {
       console.error("Sign-up error:", error);
       setFormError("An error occurred during sign-up.");
@@ -157,23 +170,49 @@ const SignUp = () => {
           required
           id="signup-password"
           label="Password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           value={password}
           onChange={onPasswordChange}
           fullWidth={true}
           error={!!passwordError}
           helperText={passwordError}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => showPasswordOnClick(setShowPassword)}
+                  onMouseDown={mouseDownShowPassword}
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         ></TextField>
         <TextField
           required
           id="signup-password-confirmation"
           label="Repeat Password"
-          type="password"
+          type={showPasswordRepeat ? "text" : "password"}
           value={passwordConfirmation}
           onChange={handlePasswordConfirmationChange}
           fullWidth={true}
           error={!!passwordMatchError}
           helperText={passwordMatchError}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => showPasswordOnClick(setShowPasswordRepeat)}
+                  onMouseDown={mouseDownShowPassword}
+                >
+                  {showPasswordRepeat ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         ></TextField>
         <Button
           fullWidth={true}
@@ -187,7 +226,7 @@ const SignUp = () => {
           variant="subtitle2"
           sx={{ color: "black", fontSize: "14px" }}
         >
-          Already have an account?
+          {"Already have an account? "}
           <Link
             href="#"
             underline="hover"
@@ -195,7 +234,7 @@ const SignUp = () => {
             component={RouterLink}
             to="/login"
           >
-            {" Login"}
+            {"Login"}
           </Link>
         </Typography>
         {formError && <Typography>{formError}</Typography>}
