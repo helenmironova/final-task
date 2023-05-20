@@ -2,9 +2,12 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './SearchBar.css';
 import logo from '../../assets/🦆 icon _Options_.png';
+import { useDispatch} from 'react-redux';
+import { addListItems } from '../../store/listItems';
 
 const SearchBar = (props: any) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch()
     const location = useLocation();
     const [searchText, setSearchText] = useState('');
 
@@ -21,6 +24,7 @@ const SearchBar = (props: any) => {
         setSearchText(newSearchText);
     };
 
+
     const handleSubmit = () => {
         const query = searchText.trim() || '*';
         navigate(`/search?query=${query}`);
@@ -33,6 +37,7 @@ const SearchBar = (props: any) => {
             .then((data) => {
                 console.log(data);
                 props.onSearch(true);
+                dispatch(addListItems(data.results));
             })
             .catch((error) => {
                 console.error(error);
