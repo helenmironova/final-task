@@ -1,10 +1,10 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Button, TextField } from "@mui/material";
+import { Button, CircularProgress, TextField } from "@mui/material";
 import "../AuthForm.css";
 import { NavLink } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
-import { selectAuth, login } from "../../../features/auth/authSlice";
+import { selectAuth, login, clearErrors } from "../../../features/auth/authSlice";
 
 const LoginForm = () => {
   const dispatch = useAppDispatch();
@@ -17,14 +17,18 @@ const LoginForm = () => {
     validationSchema: Yup.object({
       Email: Yup.string()
         .email("Please enter a valid email")
-        .required("Required"),
+        .required("Required")
+        .matches(
+          /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+          "Please enter a valid email"
+        ),
       Password: Yup.string()
         .required("Please enter a password")
         .min(6, "Password is too short - should be 6 chars minimum."),
     }),
     onSubmit: (values) => {
-      const {Email, Password} = values;
-      dispatch(login({email: Email, password: Password}))
+      const { Email, Password } = values;
+      dispatch(login({ email: Email, password: Password }));
     },
   });
   return (
@@ -62,7 +66,10 @@ const LoginForm = () => {
           ? formik.errors.Password
           : " "}
       </span>
-
+      <div className="auth__error">
+        {authState.error ? authState.error : ""}
+      </div>
+      {authState.loading ? <CircularProgress className="authCard__spinner" /> : ""}
       <Button
         disabled={
           !!formik.errors.Password ||
@@ -89,10 +96,11 @@ const LoginForm = () => {
 
       <div className="authCard__footer">
         Don't have an account?
-        <NavLink to="/auth/signup" className="authCard__link">
+        <NavLink to="/auth/signup" className="authCard__link" onClick={() => dispatch(clearErrors())}>
           Sign up
         </NavLink>
       </div>
+      
     </form>
   );
 };

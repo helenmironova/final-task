@@ -28,3 +28,11 @@
 .authCard__footer {
   text-align: center;
 }
+.auth__error {
+  color: #ec3030;
+  text-align: center;
+  margin-top: 10px;
+}
+.authCard__spinner{
+  align-self: center;
+}

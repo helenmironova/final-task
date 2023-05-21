@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
  import { RootState } from "../../app/store";
 import {auth} from "../../firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut  } from "firebase/auth";
 import { User as FirebaseUser } from "firebase/auth";
 
 
@@ -31,12 +31,25 @@ import { User as FirebaseUser } from "firebase/auth";
     }
   );
 
+  export const logout = createAsyncThunk(
+    'auth/logout',
+    async () => {
+      await signOut(auth);
+    }
+  );
+
+
+
 
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    clearErrors: (state) => {
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
@@ -46,6 +59,7 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
+       
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
@@ -58,27 +72,30 @@ export const authSlice = createSlice({
       .addCase(signUp.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
+    
       })
       .addCase(signUp.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Sign up failed.';
-      });
+      })
+      .addCase(logout.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.loading = false;
+        state.user = null;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Log out failed.';
+      })
   },
 });
 
-// export const {
-//   addTodo,
-//   deleteTodo,
-//   updateTodo,
-//   finishTodo,
-//   setTodo,
-//   setCurrentEditTask,
-//   clearCurrentEditTask,
-// } = todoSlice.actions;
+export const {
+  clearErrors
+} = authSlice.actions;
 
  export const selectAuth = (state: RootState) => state.auth;
-
-// export const selectCurrentEditTask = (state: RootState) =>
-//   state.todo.currentEditTask;
-
-// export default todoSlice.reducer;
+export default authSlice.reducer;

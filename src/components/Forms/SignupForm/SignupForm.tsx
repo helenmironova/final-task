@@ -1,15 +1,15 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Button, TextField } from "@mui/material";
+import { Button, CircularProgress, TextField } from "@mui/material";
 import "../AuthForm.css";
 import { NavLink } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
-import { selectAuth, signUp } from "../../../features/auth/authSlice";
+import { clearErrors, selectAuth, signUp } from "../../../features/auth/authSlice";
 
 const SignupForm = () => {
   const dispatch = useAppDispatch();
   const authState = useAppSelector(selectAuth);
- 
+
   const formik = useFormik({
     initialValues: {
       Email: "",
@@ -20,7 +20,10 @@ const SignupForm = () => {
       Email: Yup.string()
         .email("Please enter a valid email")
         .required("Required")
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,"Please enter a valid email" ),
+        .matches(
+          /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+          "Please enter a valid email"
+        ),
       Password: Yup.string()
         .required("Please enter a password")
         .min(6, "Password is too short - should be 6 chars minimum.")
@@ -90,7 +93,14 @@ const SignupForm = () => {
           ? formik.errors.RepeatPassword
           : " "}
       </span>
-
+      <div className="auth__error">
+        {authState.error ? authState.error : ""}
+      </div>
+      {authState.loading ? (
+        <CircularProgress className="authCard__spinner" />
+      ) : (
+        ""
+      )}
       <Button
         disabled={
           !!formik.errors.Password ||
@@ -119,7 +129,7 @@ const SignupForm = () => {
 
       <div className="authCard__footer">
         Already have an account?
-        <NavLink to="/auth" className="authCard__link">
+        <NavLink to="/auth" className="authCard__link" onClick={() => dispatch(clearErrors())}>
           Login
         </NavLink>
       </div>
