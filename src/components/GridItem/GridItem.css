@@ -53,3 +53,41 @@
     line-height: 19px;
     color: #2B2B2B;
 }
+
+.organismDiv{
+    display: flex;
+    width: 166.5px;
+    height: 48px;
+    justify-content: center;
+    align-items: center;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #2B2B2B;
+}
+
+.organismInsideDiv{
+    width: 118px;
+    height: 23px;
+    background: #D8E7FF;
+    border-radius: 12px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.subcelDiv{
+    display: flex;
+    width: 191px;
+    height: 48px;
+    justify-content: center;
+    align-items: center;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #2B2B2B;
+}

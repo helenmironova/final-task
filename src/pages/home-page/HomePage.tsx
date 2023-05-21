@@ -9,10 +9,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 const HomePage = () => {
-
     const [dataToDisplay, setDataToDisplay] = useState(false);
     const listItems = useSelector((state: any) => state.listItems)
-
 
     return(
         <div className='body'>
