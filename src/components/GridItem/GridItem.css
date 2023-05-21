@@ -1,4 +1,55 @@
 .itemWrapper{
+    display: flex;
     width: 1020px;
     height: 48px;
+}
+
+.numberDiv{
+    display: flex;
+    width: 48px;
+    height: 48px;
+    justify-content: center;
+    align-items: center;
+}
+
+.entryDiv{
+    display: flex;
+    width: 115px;
+    height: 48px;
+    justify-content: center;
+    align-items: center;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #175BC0;
+}
+
+.entryNameDiv{
+    display: flex;
+    width: 166.5px;
+    height: 48px;
+    justify-content: center;
+    align-items: center;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: #2B2B2B;
+}
+
+.genesDiv{
+    display: flex;
+    width: 166.5px;
+    height: 48px;
+    justify-content: center;
+    align-items: center;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #2B2B2B;
 }
