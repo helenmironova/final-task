@@ -2,6 +2,7 @@ import './HomePage.css'
 import HomePageHeader from '../../components/HomePageHeader/HomePageHeader';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import GridHeaders from '../../components/GridHeaders/GridHeaders';
+import GridItem from '../../components/GridItem/GridItem';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -17,9 +18,11 @@ const HomePage = () => {
                 {dataToDisplay && 
                     <div className='dataWrapper'>
                         <GridHeaders />
-                        {listItems.map((item: any, index: number) => (
-                            <p key={index}>{item.primaryAccession}</p>
-                        ))}
+                        <div className='itemsWrapper'>
+                            {listItems.map((item: any, index: number) => (
+                                <GridItem item={item} index={index}/>
+                            ))}
+                        </div>
                     </div>
                 }
             </div>

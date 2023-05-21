@@ -41,3 +41,8 @@
     display: flex;
 }
 
+.itemsWrapper{
+    height: 522px;
+    overflow: scroll;
+}
+
