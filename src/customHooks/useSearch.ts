@@ -2,13 +2,19 @@ import { useEffect, useState } from "react";
 import axios, { CancelTokenSource } from "axios";
 
 export interface SearchResult {
-  accession: string;
-  id: string;
-  gene_names: string[];
-  organism_name: string;
-  length: number;
-  ft_peptide: string;
-  cc_subcellular_location: string;
+  primaryAccession: string;
+  uniProtkbId: string;
+  genes: {
+    geneName: {
+      value: string;
+    };
+  }[];
+  organism: {
+    scientificName: string;
+  };
+  sequence: {
+    length: number;
+  };
 }
 
 export default function useSearch(query: string, size: number) {
@@ -18,9 +24,6 @@ export default function useSearch(query: string, size: number) {
   useEffect(() => {
     setResult([]);
   }, [query]);
-
-  console.log(size);
-  console.log(query);
 
   useEffect(() => {
     setError(false);
@@ -43,7 +46,8 @@ export default function useSearch(query: string, size: number) {
           }
         );
 
-        const { results } = response.data;
+        const results = response.data.results;
+        console.log(results);
         setResult(results);
       } catch (e) {
         if (axios.isCancel(e)) {
