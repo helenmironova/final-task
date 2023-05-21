@@ -5,10 +5,15 @@ import GridHeaders from '../../components/GridHeaders/GridHeaders';
 import GridItem from '../../components/GridItem/GridItem';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
+
 
 const HomePage = () => {
+
     const [dataToDisplay, setDataToDisplay] = useState(false);
     const listItems = useSelector((state: any) => state.listItems)
+
+
     return(
         <div className='body'>
             <HomePageHeader />
@@ -20,7 +25,7 @@ const HomePage = () => {
                         <GridHeaders />
                         <div className='itemsWrapper'>
                             {listItems.map((item: any, index: number) => (
-                                <GridItem item={item} index={index}/>
+                                <GridItem item={item} index={index} key={uuidv4()}/>
                             ))}
                         </div>
                     </div>

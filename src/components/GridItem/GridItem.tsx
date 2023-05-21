@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import './GridItem.css'
 
 const GridItem = (props: any) => {
@@ -8,13 +9,13 @@ const GridItem = (props: any) => {
             <div className='entryNameDiv'>{props.item.uniProtkbId}</div>
             <div className='genesDiv'>
                 {props.item.genes.map((gene: any) => (
-                    <span>
+                    <span key={uuidv4()}>
                         <b>{gene.geneName.value}</b>
                         {gene.synonyms && gene.synonyms.length > 0 && (
                             <>
                             {', '}
                                 {gene.synonyms.map((synonym: any, index: number) => (
-                                    <span key={synonym.value}>
+                                    <span key={uuidv4()}>
                                     {synonym.value}
                                     {index !== gene.synonyms.length - 1 && ', '}
                                     </span>
