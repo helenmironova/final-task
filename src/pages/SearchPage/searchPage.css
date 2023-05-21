@@ -1,0 +1,14 @@
+.searchPage {
+  width: 100vw;
+  height: calc(100vh - 50px);
+  display: flex;
+  justify-content: center;
+}
+.searchPage__container {
+  width: 80vw;
+  
+}
+.searchPage__searchfield {
+  display: flex;
+  gap: 10px;
+}

@@ -1,0 +1,12 @@
+.placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #616161;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  height: 70%;
+}

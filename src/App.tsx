@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import MainPage from "./pages/MainPage/MainPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+import SearchPage from "./pages/SearchPage/SearchPage";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/auth/signup" element={ <SignupPage/>} />
         <Route path="/not-found" element={ <NotFoundPage/>} />
         <Route path="*" element={<Navigate to="/not-found" />} />
+        <Route path="/search" element={ <SearchPage/>} />
    </Routes>
     </Fragment>
   )

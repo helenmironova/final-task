@@ -4,7 +4,11 @@ import { Button, CircularProgress, TextField } from "@mui/material";
 import "../AuthForm.css";
 import { NavLink } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
-import { clearErrors, selectAuth, signUp } from "../../../features/auth/authSlice";
+import {
+  clearErrors,
+  selectAuth,
+  signUp,
+} from "../../../features/auth/authSlice";
 
 const SignupForm = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +23,7 @@ const SignupForm = () => {
     validationSchema: Yup.object({
       Email: Yup.string()
         .email("Please enter a valid email")
-        .required("Required")
+        .required("Please enter an email")
         .matches(
           /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
           "Please enter a valid email"
@@ -43,6 +47,7 @@ const SignupForm = () => {
     <form className="authCard" onSubmit={formik.handleSubmit}>
       <h2>Sign up</h2>
       <TextField
+        required
         error={!!(formik.touched.Email && formik.errors.Email)}
         id="Email"
         name="Email"
@@ -59,6 +64,7 @@ const SignupForm = () => {
       </span>
 
       <TextField
+        required
         error={!!(formik.touched.Password && formik.errors.Password)}
         id="Password"
         name="Password"
@@ -76,6 +82,7 @@ const SignupForm = () => {
       </span>
 
       <TextField
+        required
         error={
           !!(formik.touched.RepeatPassword && formik.errors.RepeatPassword)
         }
@@ -129,7 +136,11 @@ const SignupForm = () => {
 
       <div className="authCard__footer">
         Already have an account?
-        <NavLink to="/auth" className="authCard__link" onClick={() => dispatch(clearErrors())}>
+        <NavLink
+          to="/auth"
+          className="authCard__link"
+          onClick={() => dispatch(clearErrors())}
+        >
           Login
         </NavLink>
       </div>

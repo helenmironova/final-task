@@ -4,7 +4,11 @@ import { Button, CircularProgress, TextField } from "@mui/material";
 import "../AuthForm.css";
 import { NavLink } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
-import { selectAuth, login, clearErrors } from "../../../features/auth/authSlice";
+import {
+  selectAuth,
+  login,
+  clearErrors,
+} from "../../../features/auth/authSlice";
 
 const LoginForm = () => {
   const dispatch = useAppDispatch();
@@ -35,6 +39,7 @@ const LoginForm = () => {
     <form className="authCard" onSubmit={formik.handleSubmit}>
       <h2> Login </h2>
       <TextField
+        required
         error={!!(formik.touched.Email && formik.errors.Email)}
         id="Email"
         name="Email"
@@ -51,6 +56,7 @@ const LoginForm = () => {
       </span>
 
       <TextField
+        required
         error={!!(formik.touched.Password && formik.errors.Password)}
         id="Password"
         name="Password"
@@ -69,7 +75,11 @@ const LoginForm = () => {
       <div className="auth__error">
         {authState.error ? authState.error : ""}
       </div>
-      {authState.loading ? <CircularProgress className="authCard__spinner" /> : ""}
+      {authState.loading ? (
+        <CircularProgress className="authCard__spinner" />
+      ) : (
+        ""
+      )}
       <Button
         disabled={
           !!formik.errors.Password ||
@@ -96,11 +106,14 @@ const LoginForm = () => {
 
       <div className="authCard__footer">
         Don't have an account?
-        <NavLink to="/auth/signup" className="authCard__link" onClick={() => dispatch(clearErrors())}>
+        <NavLink
+          to="/auth/signup"
+          className="authCard__link"
+          onClick={() => dispatch(clearErrors())}
+        >
           Sign up
         </NavLink>
       </div>
-      
     </form>
   );
 };
