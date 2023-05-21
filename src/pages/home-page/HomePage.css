@@ -5,12 +5,15 @@
     position: absolute;
     left: 0;
     top: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .resultsWrapper{
     width: 80%;
     min-height: 642px;
-    margin-left: 129px;
     justify-content: center;
     display: flex;
 }

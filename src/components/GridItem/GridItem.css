@@ -10,13 +10,15 @@
     height: 48px;
     justify-content: center;
     align-items: center;
+    margin-right: 2px;
 }
 
 .entryDiv{
     display: flex;
     width: 115px;
     height: 48px;
-    justify-content: center;
+    padding-left: 12px;
+    text-align: left;
     align-items: center;
 
     font-style: normal;
@@ -24,13 +26,15 @@
     font-size: 14px;
     line-height: 19px;
     color: #175BC0;
+    margin-right: 2px;
 }
 
 .entryNameDiv{
     display: flex;
     width: 166.5px;
     height: 48px;
-    justify-content: center;
+    padding-left: 12px;
+    text-align: left;
     align-items: center;
 
     font-style: normal;
@@ -38,20 +42,23 @@
     font-size: 14px;
     line-height: 19px;
     color: #2B2B2B;
+    margin-right: 2px;
 }
 
 .genesDiv{
     display: flex;
     width: 166.5px;
     height: 48px;
-    justify-content: center;
+    padding-left: 12px;
     align-items: center;
 
+    text-align: left;
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 19px;
     color: #2B2B2B;
+    margin-right: 2px;
 }
 
 .organismDiv{
@@ -66,6 +73,7 @@
     font-size: 14px;
     line-height: 19px;
     color: #2B2B2B;
+    margin-right: 2px;
 }
 
 .organismInsideDiv{
@@ -82,12 +90,30 @@
     display: flex;
     width: 191px;
     height: 48px;
-    justify-content: center;
     align-items: center;
+    padding-left: 12px;
+    text-align: left;
 
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 19px;
     color: #2B2B2B;
+    margin-right: 2px;
+}
+
+.lengthDiv{
+    display: flex;
+    width: 166.5px;
+    height: 48px;
+    align-items: center;
+    padding-left: 12px;
+    text-align: left;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #2B2B2B;
+    margin-right: 2px;
 }

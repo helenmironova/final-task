@@ -20,8 +20,8 @@ const HomePage = () => {
                 {!dataToDisplay && <p className='noDataToDisplayP'>No data to display.<br/> Please start a search to display results.</p>}
                 {dataToDisplay && 
                     <div className='dataWrapper'>
-                        <GridHeaders />
                         <div className='itemsWrapper'>
+                            <GridHeaders />
                             {listItems.map((item: any, index: number) => (
                                 <GridItem item={item} index={index} key={uuidv4()}/>
                             ))}

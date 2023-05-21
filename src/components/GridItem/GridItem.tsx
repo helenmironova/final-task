@@ -53,6 +53,7 @@ const GridItem = (props: any) => {
             </div>
             <div className='organismDiv'><div className='organismInsideDiv'>{props.item.organism.scientificName}</div></div>
             <div className='subcelDiv'>{formatArray(locations)}</div>
+            <div className='lengthDiv'>{props.item.sequence.length}</div>
         </div>
     )
 }
