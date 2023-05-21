@@ -30,6 +30,7 @@ const SignInForm: React.FC = () => {
 
   const signInWithGoogle = async () => {
     const { user } = await signInWithGooglePopup();
+    setCurrentUser(user);
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +52,7 @@ const SignInForm: React.FC = () => {
       const user = response?.user;
       console.log("user", user);
       setCurrentUser(user);
-      navigate("/home");
+      navigate("/main");
     } catch (error: any) {
       switch (error.code) {
         case "auth/wrong-password":
@@ -70,7 +71,6 @@ const SignInForm: React.FC = () => {
 
   return (
     <div className={classes.signin_container}>
-      <Navigation />
       <h1>{"Login"}</h1>
       <form onSubmit={submitHandler} className={classes.form_container}>
         <FormInput
@@ -81,6 +81,7 @@ const SignInForm: React.FC = () => {
           required={true}
           label="Email"
           placeholder="Enter your email"
+          styles="formInput"
         />
         <FormInput
           type="password"
@@ -90,6 +91,7 @@ const SignInForm: React.FC = () => {
           required={true}
           label="Password"
           placeholder="Enter your password"
+          styles="formInput"
         />
         <div className={classes.buttons_container}>
           <Button type="submit" placeholder="Login" styles="signIn" />

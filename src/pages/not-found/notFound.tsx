@@ -1,7 +1,7 @@
 import React, { useContext, Fragment } from "react";
 import classes from "./notFound.module.css";
 
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { UserContext } from "../../contexts/user.context";
 
 import Button from "../../components/button/button";
@@ -28,6 +28,7 @@ const NotFound: React.FC = () => {
           </Link>
         </div>
       </div>
+      <Outlet /> {/* Render nested routes */}
     </Fragment>
   );
 };

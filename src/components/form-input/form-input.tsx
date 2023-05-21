@@ -1,13 +1,15 @@
 import React, { Fragment, ChangeEvent } from "react";
+import classes from "./form-inpute.module.css"
 
 interface FormInputProps {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  value: string;
+  value?: string;
   type: string;
   name: string;
   required: boolean;
-  label: string;
+  label?: string;
   placeholder: string;
+  styles: string;
 }
 
 const FormInput: React.FC<FormInputProps> = ({
@@ -18,6 +20,7 @@ const FormInput: React.FC<FormInputProps> = ({
   required,
   label,
   placeholder,
+  styles,
 }) => {
   return (
     <Fragment>
@@ -29,6 +32,7 @@ const FormInput: React.FC<FormInputProps> = ({
         value={value}
         placeholder={placeholder}
         required={required}
+        className={classes[styles]}
       />
     </Fragment>
   );

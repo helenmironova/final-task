@@ -1,7 +1,9 @@
-import React, { useState, useContext, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import classes from "./signUp.module.css";
 
 import { createAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 import { UserContext } from "../../contexts/user.context";
 
 import FormInput from "../form-input/form-input";
@@ -22,7 +24,7 @@ const defaultFormFields: FormFields = {
 const SignUpForm: React.FC = () => {
   const [formFields, setFormFields] = useState<FormFields>(defaultFormFields);
   const { email, password, confirmPassword } = formFields;
-
+  const navigate = useNavigate();
   const { setCurrentUser } = useContext(UserContext);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -45,11 +47,10 @@ const SignUpForm: React.FC = () => {
         email,
         password
       );
-
       const user = response?.user;
-      
       setFormFields(defaultFormFields);
       setCurrentUser(user);
+      navigate("/main");
     } catch (error: any) {
       if (error.code === "auth/email-already-in-use") {
         alert("Cannot create user, email already is in use");
@@ -69,6 +70,7 @@ const SignUpForm: React.FC = () => {
           required={true}
           label="Email"
           placeholder="Enter your email"
+          styles="formInput"
         />
         <FormInput
           type="password"
@@ -78,6 +80,7 @@ const SignUpForm: React.FC = () => {
           required={true}
           label="Password"
           placeholder="Enter your password"
+          styles="formInput"
         />
         <FormInput
           type="password"
@@ -87,6 +90,7 @@ const SignUpForm: React.FC = () => {
           required={true}
           label="Confirm Password"
           placeholder="Enter your password again"
+          styles="formInput"
         />
         <div className={classes.button_container}>
           <Button type="submit" placeholder="Sign Up" styles="signUp" />
