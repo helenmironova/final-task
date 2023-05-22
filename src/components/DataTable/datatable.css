@@ -1,0 +1,9 @@
+.dataTable__headerCell {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dataTable__organism {
+  background-color: #d8e7ff;
+  border-radius: 12px;
+}

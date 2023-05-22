@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import authReducer from "../features/auth/authSlice";
+import proteinDataReducer from "../features/proteinData/proteinDataSlice";
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer
+    auth: authReducer,
+    proteinData: proteinDataReducer
   },
 });
 

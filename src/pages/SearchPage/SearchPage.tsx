@@ -4,15 +4,39 @@ import "./searchPage.css";
 import { Button } from "@mui/material";
 import TuneIcon from "@mui/icons-material/Tune";
 import Placeholder from "../../components/Placeholder/Placeholder";
+import DataTable from "../../components/DataTable/DataTable";
+import { fetchProteinData } from "../../features/proteinData/proteinDataSlice";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { selectProteinData } from "../../features/proteinData/proteinDataSlice";
 
 const SearchPage = () => {
+  const dispatch = useAppDispatch();
+  const proteinDataState = useAppSelector(selectProteinData);
+  function getProtein(event: React.FormEvent) {
+    event.preventDefault();
+    interface RequestData {
+      query: string;
+    }
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form) as unknown as Iterable<
+      [RequestData, FormDataEntryValue]
+    >;
+    const data = Object.fromEntries(formData);
+    dispatch(fetchProteinData({ query: data.query ? data.query : "*" }));
+  }
+
   return (
     <div className="searchPage__wrapper">
       <Header />
       <div className="searchPage">
         <div className="searchPage__container">
-          <form action="" className="searchPage__searchfield">
+          <form
+            action=""
+            className="searchPage__searchfield"
+            onSubmit={getProtein}
+          >
             <TextField
+              name="query"
               sx={{ width: "70%", marginTop: "30px" }}
               label="Enter search value"
             />
@@ -44,7 +68,7 @@ const SearchPage = () => {
               <TuneIcon />
             </Button>
           </form>
-          <Placeholder />
+          {proteinDataState.data === null ? <Placeholder /> : <DataTable /> }
         </div>
       </div>
     </div>

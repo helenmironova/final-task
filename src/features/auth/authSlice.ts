@@ -6,7 +6,7 @@ import { User as FirebaseUser } from "firebase/auth";
 
 
  interface AuthState {
-    user: FirebaseUser | null | void;
+    user: FirebaseUser | null ;
     loading: boolean;
     error: string | null;
   }
@@ -20,14 +20,16 @@ import { User as FirebaseUser } from "firebase/auth";
   export const login = createAsyncThunk(
     'auth/login',
     async ({ email, password }: { email: string; password: string }) => {
-      await signInWithEmailAndPassword(auth, email, password);
+      const data = await signInWithEmailAndPassword(auth, email, password);
+      return data;
     }
   );
   
   export const signUp = createAsyncThunk(
     'auth/signUp',
     async ({ email, password }: { email: string; password: string }) => {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const data =  await createUserWithEmailAndPassword(auth, email, password);
+      return data;
     }
   );
 
@@ -58,7 +60,7 @@ export const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.user = action.payload.user;
        
       })
       .addCase(login.rejected, (state, action) => {
@@ -71,7 +73,7 @@ export const authSlice = createSlice({
       })
       .addCase(signUp.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.user = action.payload.user;
     
       })
       .addCase(signUp.rejected, (state, action) => {
