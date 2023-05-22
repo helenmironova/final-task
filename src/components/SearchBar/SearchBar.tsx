@@ -29,18 +29,22 @@ const SearchBar = (props: any) => {
         const query = searchText.trim() || '*';
         navigate(`/search?query=${query}`);
 
-        fetch(`https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=(${query})&size=25`)
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                console.log(data);
-                props.onSearch(true);
-                dispatch(addListItems(data.results));
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        fetch(`https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=$Cancer`)
+        .then((response) => {
+          console.log(response);
+          console.log(response.headers.get("Link"))
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          props.onSearch(true);
+          dispatch(addListItems(data.results));
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      
+        
     };
 
     useEffect(() => {
