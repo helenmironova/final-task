@@ -1,0 +1,27 @@
+.sequence {
+  margin-bottom: 20px;
+}
+.description {
+  display: flex;
+  align-items: flex-start;
+  color: #616161;
+  margin-bottom: 50px;
+}
+
+.lengthAndMass {
+  display: flex;
+  flex-direction: column;
+  margin-right: 40px;
+}
+
+.margin_bottom {
+  margin-bottom: 20px;
+}
+
+.section {
+  width: 100%;
+  background-color: #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  word-wrap: break-word;
+}

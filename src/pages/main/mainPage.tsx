@@ -7,6 +7,7 @@ import {
   RefCallback,
 } from "react";
 import classes from "./mainPage.module.css";
+import { Link } from "react-router-dom";
 import useSearch, { SearchResult } from "../../customHooks/useSearch";
 
 import Navigation from "../../components/nav-bar/navigation";
@@ -53,6 +54,12 @@ const MainPage = () => {
             value={query}
             styles="searchField"
           />
+          {!query && (
+            <div className={classes.no_data}>
+              <div>No data to display</div>
+              <div>Please start search to display results</div>
+            </div>
+          )}
 
           {query && (
             <div className={classes.grid_container}>
@@ -64,54 +71,62 @@ const MainPage = () => {
               <div className={classes.grid_header}>Length</div>
             </div>
           )}
-          {result.map((item: SearchResult, index: number) => {
-            if (result.length === index + 1) {
-              return (
-                <div
-                  className={classes.item_container}
-                  ref={lastBookElementRef}
-                  key={item.primaryAccession}
-                >
-                  <div className={classes.grid_item}>{index}</div>
-                  <div className={classes.grid_item}>
-                    {item.primaryAccession}
+          <div className={classes.grid_scroll}>
+            {result.map((item: SearchResult, index: number) => {
+              if (result.length === index + 1) {
+                return (
+                  <div
+                    className={classes.item_container}
+                    ref={lastBookElementRef}
+                    key={item.primaryAccession}
+                  >
+                    <div className={classes.grid_item}>{index + 1}</div>
+                    <Link
+                      className={classes.grid_item}
+                      to={`/protein/${item.primaryAccession}`}
+                    >
+                      {item.primaryAccession}
+                    </Link>
+                    <div className={classes.grid_item}>{item.uniProtkbId}</div>
+                    <div className={classes.grid_item}>
+                      {item.genes[0].geneName.value}
+                    </div>
+                    <div className={classes.grid_item}>
+                      {item.organism.scientificName}
+                    </div>
+                    <div className={classes.grid_item}>
+                      {item.sequence.length}
+                    </div>
                   </div>
-                  <div className={classes.grid_item}>{item.uniProtkbId}</div>
-                  <div className={classes.grid_item}>
-                    {item.genes[0].geneName.value}
+                );
+              } else {
+                return (
+                  <div
+                    className={classes.item_container}
+                    key={item.primaryAccession}
+                  >
+                    <div className={classes.grid_item}>{index}</div>
+                    <Link
+                      className={classes.grid_item}
+                      to={`/protein/${item.primaryAccession}`}
+                    >
+                      {item.primaryAccession}
+                    </Link>
+                    <div className={classes.grid_item}>{item.uniProtkbId}</div>
+                    <div className={classes.grid_item}>
+                      {item.genes[0].geneName.value}
+                    </div>
+                    <div className={classes.grid_item}>
+                      {item.organism.scientificName}
+                    </div>
+                    <div className={classes.grid_item}>
+                      {item.sequence.length}
+                    </div>
                   </div>
-                  <div className={classes.grid_item}>
-                    {item.organism.scientificName}
-                  </div>
-                  <div className={classes.grid_item}>
-                    {item.sequence.length}
-                  </div>
-                </div>
-              );
-            } else {
-              return (
-                <div
-                  className={classes.item_container}
-                  key={item.primaryAccession}
-                >
-                  <div className={classes.grid_item}>{index}</div>
-                  <div className={classes.grid_item}>
-                    {item.primaryAccession}
-                  </div>
-                  <div className={classes.grid_item}>{item.uniProtkbId}</div>
-                  <div className={classes.grid_item}>
-                    {item.genes[0].geneName.value}
-                  </div>
-                  <div className={classes.grid_item}>
-                    {item.organism.scientificName}
-                  </div>
-                  <div className={classes.grid_item}>
-                    {item.sequence.length}
-                  </div>
-                </div>
-              );
-            }
-          })}
+                );
+              }
+            })}
+          </div>
         </div>
       </div>
     </Fragment>
@@ -119,32 +134,3 @@ const MainPage = () => {
 };
 
 export default MainPage;
-
-{
-  /* <div className={classes.table_container}>
-<table>
-  <thead>
-    <tr className={classes.header_row}>
-      <th>#</th>
-      <th>Entry</th>
-      <th>Entry Names</th>
-      <th>Genes</th>
-      <th>Organism</th>
-      <th>Length</th>
-    </tr>
-  </thead>
-  <tbody>
-    {result.map((item: SearchResult, index: number) => (
-      <tr ref={lastBookElementRef} key={item.primaryAccession}>
-        <td>{index}</td>
-        <td>{item.primaryAccession}</td>
-        <td>{item.uniProtkbId}</td>
-        <td>{item.genes[0].geneName.value}</td>
-        <td>{item.organism.scientificName}</td>
-        <td>{item.sequence.length}</td>
-      </tr>
-    ))}
-  </tbody>
-</table>
-</div> */
-}

@@ -1,14 +1,13 @@
 import "./App.css";
 
 import { Route, Routes } from "react-router-dom";
-import { useContext } from "react";
-import { UserContext } from "./contexts/user.context";
 
 import Home from "./pages/home/home";
 import NotFound from "./pages/not-found/notFound";
 import Authentication from "./pages/authentication/authentication";
 import MainPage from "./pages/main/mainPage";
 import ProtectedRoutes from "./components/protected-routes/protected-routes";
+import ProteinPage from "./pages/protein/proteinPage";
 
 const App = () => {
   return (
@@ -31,6 +30,7 @@ const App = () => {
           </ProtectedRoutes>
         }
       />
+      <Route path="/protein/:Id" element={<ProteinPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

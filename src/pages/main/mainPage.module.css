@@ -13,15 +13,14 @@
   flex-direction: column;
 }
 
-.table_container {
-  width: 100%;
+.no_data {
   display: flex;
-  justify-content: center;
-}
-
-.header_row {
-  display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  color: #616161;
 }
 
 .grid_container,
@@ -31,6 +30,13 @@
   grid-template-columns: repeat(6, 1fr);
   padding: 5px;
   background-color: #f0f0f0;
+  border-radius: 8px;
+}
+
+.grid_scroll {
+  width: 100%;
+  height: 460px;
+  overflow-y: auto;
 }
 
 .grid_header {
