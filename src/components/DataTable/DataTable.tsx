@@ -8,26 +8,35 @@ import {
   TableRow,
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { useAppSelector } from "../../app/hooks";
 import { selectProteinData } from "../../features/proteinData/proteinDataSlice";
 
 const DataTable = () => {
   const proteinDataState = useAppSelector(selectProteinData);
   const proteins = proteinDataState.data;
   let counter = 1;
-  if(proteins !== null){
 
-  console.log(proteins[0].comments[0].subcellularLocations);}
   const tableRows = proteins?.map((item) => (
-   
     <TableRow key={++counter}>
       <TableCell>{counter}</TableCell>
       <TableCell sx={{ color: "#175BC0" }}>{item.primaryAccession}</TableCell>
-      <TableCell>{item.uniProtkbId}</TableCell>
-      <TableCell>{item.genes.map(item => item.geneName?.value) }</TableCell>
-      <TableCell><span className="dataTable__organism">{item.organism.scientificName}</span></TableCell>
-      <TableCell sx={{maxWidth:"150px"}}>{item.comments[0] ? item.comments[0].subcellularLocations.map(item => item.location.value).join(" ") : ""}</TableCell>
-      <TableCell>{item.sequence.length}</TableCell>
+      <TableCell sx={{ maxWidth: "150px" }}>{item.uniProtkbId}</TableCell>
+      <TableCell sx={{ maxWidth: "150px" }}>
+        {item?.genes?.map((item) => item.geneName?.value).join(", ")}
+      </TableCell>
+      <TableCell sx={{ maxWidth: "150px" }}>
+        <span className="dataTable__organism">
+          {item?.organism?.scientificName}
+        </span>
+      </TableCell>
+      <TableCell sx={{ maxWidth: "150px" }}>
+        {item?.comments[0]
+          ? item.comments[0].subcellularLocations
+              .map((item) => item.location.value)
+              .join(" ")
+          : ""}
+      </TableCell>
+      <TableCell sx={{ maxWidth: "150px" }}>{item?.sequence?.length}</TableCell>
     </TableRow>
   ));
   return (

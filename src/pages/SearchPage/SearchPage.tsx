@@ -3,6 +3,7 @@ import Header from "../../components/Header/Header";
 import "./searchPage.css";
 import { Button } from "@mui/material";
 import TuneIcon from "@mui/icons-material/Tune";
+import { useSearchParams } from "react-router-dom";
 import Placeholder from "../../components/Placeholder/Placeholder";
 import DataTable from "../../components/DataTable/DataTable";
 import { fetchProteinData } from "../../features/proteinData/proteinDataSlice";
@@ -10,6 +11,7 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { selectProteinData } from "../../features/proteinData/proteinDataSlice";
 
 const SearchPage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useAppDispatch();
   const proteinDataState = useAppSelector(selectProteinData);
   function getProtein(event: React.FormEvent) {
@@ -22,6 +24,7 @@ const SearchPage = () => {
       [RequestData, FormDataEntryValue]
     >;
     const data = Object.fromEntries(formData);
+    setSearchParams({ query: data.query });
     dispatch(fetchProteinData({ query: data.query ? data.query : "*" }));
   }
 
@@ -68,7 +71,15 @@ const SearchPage = () => {
               <TuneIcon />
             </Button>
           </form>
-          {proteinDataState.data === null ? <Placeholder /> : <DataTable /> }
+          {proteinDataState.data === null ? (
+            <Placeholder text="No data to display. Please start search to display results" />
+          ) : proteinDataState.data.length < 1 ? (
+            <Placeholder text="Could not find anything. Please search for something else" />
+          ) : proteinDataState.error ? (
+            <Placeholder text="no" />
+          ) : (
+            <DataTable />
+          )}
         </div>
       </div>
     </div>

@@ -1,11 +1,8 @@
 import "./placeholder.css";
 
-const Placeholder = () => {
-  return (
-    <div className="placeholder">
-      No data to display <br /> Please start search to display results
-    </div>
-  );
+const Placeholder = ({ text }: { text: string }) => {
+  const message = text.split(".").map(item => <div>{item + "."} <br/></div>);
+  return <div className="placeholder">{message}</div>;
 };
 
 export default Placeholder;
