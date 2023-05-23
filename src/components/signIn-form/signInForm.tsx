@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 
 import FormInput from "../form-input/form-input";
 import Button from "../button/button";
-import Navigation from "../nav-bar/navigation";
 
 interface FormFields {
   email: string;

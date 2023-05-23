@@ -1,6 +1,12 @@
-import React from "react";
-
 import classes from "./proteinDetails.module.css";
+
+interface IProteinDetails {
+  length: number;
+  weight: number;
+  lastUpdateDate: string;
+  checkSum: string;
+  sectionText: string;
+}
 
 function ProteinDetails({
   length,
@@ -8,7 +14,7 @@ function ProteinDetails({
   lastUpdateDate,
   checkSum,
   sectionText,
-}) {
+}: IProteinDetails) {
   return (
     <div className={classes.details}>
       <h4 className={classes.sequence}>Sequence</h4>

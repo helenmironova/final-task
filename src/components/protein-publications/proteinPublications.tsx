@@ -1,5 +1,3 @@
-import React from "react";
-
 interface IProteinPageProps {
   title: string;
   authors: string;
