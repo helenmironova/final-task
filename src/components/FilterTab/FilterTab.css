@@ -1,0 +1,172 @@
+.popupWrapper{
+    position: absolute;
+    width: 335px;
+    height: 591px;
+    right: 0;
+    top: 41px;
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 12px;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.popupWrapperRelative{
+    display: flex;
+    flex-direction: column;
+    color: #000000;
+    position: relative;
+    justify-content: center;
+    width: 303px;
+    height: 100%;
+    border-radius: 12px;
+}
+
+.popupWrapper__title{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25px;
+    padding-top: 11.93px;
+    text-align: left;
+}
+
+.geneNameWrapper{
+    padding-top: 21.68px;
+    width: 100%;
+}
+
+.geneName__title, .organism__title, .sequenceLength__title, .annotation__title, .protein__title{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #2B2B2B;
+    text-align: left;
+}
+
+.geneName__input{
+    color: #2B2B2B;
+    padding-left: 11px;
+    margin-top: 1px;
+    background: #F5F5F5;
+    border-radius: 8px;
+    width: calc(100% - 11px);
+    border: none;
+    height: 52.04px;
+}
+
+.geneName::placeholder{
+    color: #6C6C6C;
+}
+
+.organism__wrapper, .sequenceLength__wrapper, .annotation__wrapper, .protein__wrapper{
+    margin-top: 15.18px;
+    height: 73.72px;
+    width: 100%;
+}
+
+.organism__select, .annotation__select{
+    color: #2B2B2B;
+    padding-left: 11px;
+    margin-top: 1px;
+    background: #F5F5F5;
+    border-radius: 8px;
+    width: 100%;
+    border: none;
+    height: 52.04px;
+}
+
+.sl__ww{
+    align-items: center;
+    padding-top: 1px;
+    width: 100%;
+    display: flex;
+}
+
+.from__input{
+    border: none;
+    width: 116px;
+    height: 52px;
+    background: #F5F5F5;
+    border-radius: 8px;
+    color: #2B2B2B;
+    padding-left: 11px;
+}
+
+.dec{
+    width: 29.5px;
+    height: 0px;
+    margin-left: 8px;
+    margin-right: 8.5px;
+    border: 1px solid #9F9F9F;
+}
+
+.to__input{
+    border: none;
+    width: 113px;
+    height: 52px;
+    background: #F5F5F5;
+    border-radius: 8px;
+    padding-left: 11px;
+    color: #2B2B2B;
+}
+
+.from__input::placeholder, .to__input::placeholder{
+    color: #6C6C6C;
+}
+
+.protein__select{
+    color: #2B2B2B;
+    padding-left: 11px;
+    margin-top: 1px;
+    background: #F5F5F5;
+    border-radius: 8px;
+    width: 100%;
+    border: none;
+    height: 52.04px;
+}
+
+select {
+    appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+}
+
+.buttonsDiv{
+    width: 100%;
+    height: 39px;
+    position: relative;
+    margin-top: 48.97px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 13px;
+}
+
+.cancelButton{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #3C86F4;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    background-color: #FFFFFF;
+    border: none;
+    align-items: center;
+    display: flex;
+}
+
+.applyButton--disabled{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #FFFFFF;
+    background: #CFCFCF;
+    border-radius: 8px;
+    align-items: center;
+    display: flex;
+}

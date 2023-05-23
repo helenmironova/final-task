@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import {useLocation } from 'react-router-dom';
 import './SearchBar.css';
 import logo from '../../assets/🦆 icon _Options_.png';
+import FilterTab from '../../components/FilterTab/FilterTab';
 
 
 const SearchBar = (props: any) => {
@@ -57,6 +58,7 @@ const SearchBar = (props: any) => {
             <button className='filter'>
                 <img src={logo} alt='Filter' />
             </button>
+            <FilterTab />
         </div>
     );
 };
