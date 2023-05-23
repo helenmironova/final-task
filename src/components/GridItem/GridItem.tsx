@@ -30,7 +30,7 @@ const GridItem = (props: any) => {
     
     return(
         <div className='itemWrapper'>
-            <div className='numberDiv'>1</div>
+            <div className='numberDiv'>{props.index+1}</div>
             <div className='entryDiv'>{props.item.primaryAccession}</div>
             <div className='entryNameDiv'>{props.item.uniProtkbId}</div>
             <div className='genesDiv'>
