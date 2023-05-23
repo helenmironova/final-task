@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import {useLocation } from 'react-router-dom';
 import './SearchBar.css';
 import logo from '../../assets/🦆 icon _Options_.png';
-import { useDispatch} from 'react-redux';
-import { addListItems } from '../../store/listItems';
+
 
 const SearchBar = (props: any) => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch()
     const location = useLocation();
     const [searchText, setSearchText] = useState('');
 
@@ -22,29 +19,6 @@ const SearchBar = (props: any) => {
     const handleSearchTextChange = (e: any) => {
         const newSearchText = e.target.value;
         setSearchText(newSearchText);
-    };
-
-
-    const handleSubmit = () => {
-        const query = searchText.trim() || '*';
-        navigate(`/search?query=${query}`);
-
-        fetch(`https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=$Cancer`)
-        .then((response) => {
-          console.log(response);
-          console.log(response.headers.get("Link"))
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
-          props.onSearch(true);
-          dispatch(addListItems(data.results));
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-      
-        
     };
 
     useEffect(() => {
@@ -63,7 +37,7 @@ const SearchBar = (props: any) => {
                 value={searchText}
                 onChange={handleSearchTextChange}
             />
-            <button type='submit' className='searchButton' onClick={handleSubmit}>
+            <button type='submit' className='searchButton' onClick={()=>props.handleSubmit(searchText)}>
                 Search
             </button>
             <button className='filter'>
