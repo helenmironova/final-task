@@ -57,6 +57,11 @@ const HomePage = () => {
     };
 
 
+    /*
+        This function could be in SearchBar.tsx but I think when search returns fetch results, they should be centralized in Homepage.tsx;
+        changes url query;
+        fetches data;
+    */
     const handleSubmit = (searchText: string) => {
         const query = searchText.trim() || "*";
         navigate(`/search?query=${query}`);      

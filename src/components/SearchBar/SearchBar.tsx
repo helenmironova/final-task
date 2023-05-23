@@ -8,6 +8,9 @@ const SearchBar = (props: any) => {
     const location = useLocation();
     const [searchText, setSearchText] = useState('');
 
+    /*
+        when searchText is changed, new query is added;
+    */
     useEffect(() => {
         const searchQuery = searchText.trim() || '*';
         const currentUrl = new URL(window.location.href);
@@ -16,14 +19,25 @@ const SearchBar = (props: any) => {
         window.history.replaceState({}, '', `${currentUrl.pathname}?${params}`);
     }, [searchText]);
 
+    /*
+        sets new searchText when user changes input value;
+    */
     const handleSearchTextChange = (e: any) => {
         const newSearchText = e.target.value;
         setSearchText(newSearchText);
     };
 
+    /*
+        on location change, changes searchText;
+        if location has query '*' meaning searchText is empty, searchText becomes an empty string;
+    */
     useEffect(() => {
         const searchQuery = new URLSearchParams(location.search).get('query');
         if (searchQuery) {
+            if(searchQuery==='*'){
+                setSearchText("");
+                return;
+            }
             setSearchText(searchQuery);
         }
     }, [location]);
