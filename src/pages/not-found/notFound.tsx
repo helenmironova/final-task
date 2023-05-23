@@ -1,16 +1,13 @@
-import React, { useContext, Fragment } from "react";
+import React, { Fragment } from "react";
 import classes from "./notFound.module.css";
 
 import { Link, Outlet } from "react-router-dom";
-import { UserContext } from "../../contexts/user.context";
 
 import Button from "../../components/button/button";
 import Navigation from "../../components/nav-bar/navigation";
 
 const NotFound: React.FC = () => {
   const handleClick = () => {};
-  const { currentUser } = useContext(UserContext);
-  console.log("currentUser", currentUser);
 
   return (
     <Fragment>
@@ -28,7 +25,7 @@ const NotFound: React.FC = () => {
           </Link>
         </div>
       </div>
-      <Outlet /> {/* Render nested routes */}
+      <Outlet />
     </Fragment>
   );
 };

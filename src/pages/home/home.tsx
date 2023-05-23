@@ -5,10 +5,6 @@ import { Link } from "react-router-dom";
 import Button from "../../components/button/button";
 
 const Home: React.FC = () => {
-  const handleClick = () => {
-    console.log("signed");
-  };
-
   return (
     <div className={classes.container}>
       <div className={classes.content}>
@@ -20,12 +16,7 @@ const Home: React.FC = () => {
           }
         </p>
         <Link to="auth">
-          <Button
-            placeholder="Sign In"
-            type="button"
-            styles="signIn"
-            onClick={handleClick}
-          />
+          <Button placeholder="Sign In" type="button" styles="signIn" />
         </Link>
       </div>
     </div>

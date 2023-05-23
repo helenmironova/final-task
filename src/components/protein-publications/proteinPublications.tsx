@@ -1,7 +1,12 @@
 import React from "react";
-import classes from "./proteinPublications.module.css";
 
-function ProteinPublications({ title, authors, journals }) {
+interface IProteinPageProps {
+  title: string;
+  authors: string;
+  journals: string;
+}
+
+function ProteinPublications({ title, authors, journals }: IProteinPageProps) {
   return (
     <div>
       <h3>{title}</h3>

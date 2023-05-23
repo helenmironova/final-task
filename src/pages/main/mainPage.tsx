@@ -19,8 +19,6 @@ const MainPage = () => {
 
   const { result } = useSearch(query, size);
 
-  console.log(result);
-
   const observer = useRef<IntersectionObserver | null>(null);
   const lastBookElementRef: RefCallback<HTMLTableRowElement> = useCallback(
     (node) => {

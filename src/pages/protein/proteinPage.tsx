@@ -7,23 +7,47 @@ import ProteinDetails from "../../components/proteinDetails/proteinDetails";
 import ProteinPublications from "../../components/protein-publications/proteinPublications";
 import { fetchData } from "../../api/axios/fetchData";
 
-interface ProteinData {
+interface IProteinData {
   primaryAccession: string;
   uniProtkbId: string;
-  genes: any;
-  organism: any;
-  proteinDescription: any;
-  sequence: any;
-  entryAudit: any;
+  genes: [{ geneName: { value: string } }];
+  organism: {
+    scientificName: string;
+  };
+  proteinDescription: {
+    recommendedName: {
+      fullName: {
+        value: string;
+      };
+    };
+  };
+  sequence: {
+    length: string;
+    molWeight: number;
+    value: string;
+  };
+  entryAudit: {
+    lastSequenceUpdateDate: Date;
+  };
+}
+
+interface IPublications {
+  citation: {
+    title: string;
+    authors: string;
+    journal: string;
+  };
 }
 
 function ProteinPage() {
-  const [state, setState] = useState<ProteinData | null>(null);
-  const [publications, setPublications] = useState(null);
+  const [state, setState] = useState<IProteinData | null>(null);
+  const [publications, setPublications] = useState<IPublications[] | null>(
+    null
+  );
   const [view, setView] = useState("details");
   const { Id } = useParams();
 
-  console.log("PUBLICATIONS", publications);
+  console.log("STATE", publications);
 
   useEffect(() => {
     const url = `https://rest.uniprot.org/uniprotkb/${Id}/publications`;
@@ -94,7 +118,8 @@ function ProteinPage() {
                 />
               )}
               {view === "publications" &&
-                publications.map((item) => {
+                publications !== null &&
+                publications.map((item: IPublications) => {
                   return (
                     <ProteinPublications
                       title={item.citation.title}
