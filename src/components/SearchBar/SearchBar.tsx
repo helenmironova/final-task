@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
 import {useLocation } from 'react-router-dom';
 import './SearchBar.css';
 import logo from '../../assets/🦆 icon _Options_.png';
@@ -8,6 +8,7 @@ import FilterTab from '../../components/FilterTab/FilterTab';
 const SearchBar = (props: any) => {
     const location = useLocation();
     const [searchText, setSearchText] = useState('');
+    const [filterPopupIsOpen, setFilterPopupIsOpen] = useState(false);
 
     /*
         when searchText is changed, new query is added;
@@ -43,6 +44,19 @@ const SearchBar = (props: any) => {
         }
     }, [location]);
 
+
+    /*
+        handles filter icon click;
+        conditionaly renders filter popup;
+    */
+    const handleFilterClick = () => {
+        setFilterPopupIsOpen(!filterPopupIsOpen);
+    }
+
+    const handleCancel = () => {
+        setFilterPopupIsOpen(false);
+    }
+
     return (
         <div className='searchInputWrapper'>
             <input
@@ -55,10 +69,10 @@ const SearchBar = (props: any) => {
             <button type='submit' className='searchButton' onClick={()=>props.handleSubmit(searchText)}>
                 Search
             </button>
-            <button className='filter'>
+            <button className='filter' onClick={handleFilterClick}>
                 <img src={logo} alt='Filter' />
             </button>
-            <FilterTab />
+            ({filterPopupIsOpen && <FilterTab cancelFunction={handleCancel}/>})
         </div>
     );
 };

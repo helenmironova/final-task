@@ -1,11 +1,7 @@
 import './FilterTab.css'
 
 
-const FilterTab = () => {
-    
-
-  
-
+const FilterTab = (props: any) => {
     return(
         <div className='popupWrapper'>
             <div className='popupWrapperRelative'>
@@ -47,7 +43,7 @@ const FilterTab = () => {
                 </div>
 
                 <div className='buttonsDiv'>
-                    <button className='cancelButton'>Cancel</button>
+                    <button className='cancelButton' onClick={props.cancelFunction}>Cancel</button>
                     <button className='applyButton--disabled'>Apply Filters</button>
 
                 </div>
