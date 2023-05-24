@@ -5,8 +5,8 @@ import {useState } from 'react';
 const GridItem = (props: any) => {   
     const [locations, setLocations] = useState<string[]>([]);
 
-    if (props.item.comments.length > 0) {
-    props.item.comments[0].subcellularLocations.forEach((loc: any) => {
+    if (props.item.comments && props.item.comments.length > 0) {
+        props.item.comments[0].subcellularLocations.forEach((loc: any) => {
         if (!locations.includes(loc.location.value)) {
             setLocations(prevLocations => [...prevLocations, loc.location.value]);
         }
@@ -25,7 +25,7 @@ const GridItem = (props: any) => {
         }
       
         return words.slice(0, 2).join(', ') + ', ...';
-      }
+    }
 
     
     return(
@@ -34,23 +34,23 @@ const GridItem = (props: any) => {
             <div className='entryDiv'>{props.item.primaryAccession}</div>
             <div className='entryNameDiv'>{props.item.uniProtkbId}</div>
             <div className='genesDiv'>
-                {props.item.genes.map((gene: any) => (
+                {props.item.genes?.map((gene: any) => (
                     <span key={uuidv4()}>
-                        <b>{gene.geneName.value}</b>
-                        {gene.synonyms && gene.synonyms.length > 0 && (
-                            <>
-                            {', '}
-                                {gene.synonyms.map((synonym: any, index: number) => (
-                                    <span key={uuidv4()}>
-                                    {synonym.value}
-                                    {index !== gene.synonyms.length - 1 && ', '}
-                                    </span>
-                                ))}
-                            </>
-                        )}
+                    <b>{gene.geneName.value}</b>
+                    {gene.synonyms && gene.synonyms.length > 0 && (
+                        <>
+                        {', '}
+                        {gene.synonyms.map((synonym: any, index: number) => (
+                            <span key={uuidv4()}>
+                            {synonym.value}
+                            {index !== gene.synonyms.length - 1 && ', '}
+                            </span>
+                        ))}
+                        </>
+                    )}
                     </span>
                 ))}
-            </div>
+                </div>
             <div className='organismDiv'><div className='organismInsideDiv'>{props.item.organism.scientificName}</div></div>
             <div className='subcelDiv'>{formatArray(locations)}</div>
             <div className='lengthDiv'>{props.item.sequence.length}</div>

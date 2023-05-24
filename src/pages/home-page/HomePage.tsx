@@ -83,7 +83,7 @@ const HomePage = () => {
     return(
         <div className='body'>
             <HomePageHeader />
-            <SearchBar handleSubmit={handleSubmit}/>
+            <SearchBar handleSubmit={handleSubmit} fetchData={fetchData}/>
             <div className='resultsWrapper'>
                 {!dataToDisplay && <p className='noDataToDisplayP'>No data to display.<br/> Please start a search to display results.</p>}
                 {dataToDisplay && 

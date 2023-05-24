@@ -73,7 +73,7 @@ const SearchBar = (props: any) => {
             <button className='filter' onClick={handleFilterClick}>
                 <img src={logo} alt='Filter' />
             </button>
-            ({filterPopupIsOpen && <FilterTab/>})
+            ({filterPopupIsOpen && <FilterTab fetchData={props.fetchData} searchText={searchText}/>})
         </div>
     );
 };

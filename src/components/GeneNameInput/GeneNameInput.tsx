@@ -2,10 +2,9 @@ import './GeneNameInput.css'
 
 const GeneNameInput = (props: any) => {
     const handleNameChange = (e: any) => {
-        props.setLocalFilterChanges((prevChanges: any) => ({
-          ...prevChanges,
-          geneName: e.target.value,
-        }));
+        props.setFilterOptions({
+            geneName: e.target.value,
+        })
     };
 
     return(

@@ -2,16 +2,14 @@ import './SequenceLength.css'
 
 const SequenceLengthInput = (props: any) => {
     const handleLengthChange1 = (e: any) => {
-        props.setLocalFilterChanges((prevChanges:any) => ({
-          ...prevChanges,
+        props.setFilterOptions({
           sequenceLength__from: e.target.value,
-        }));
+        });
       };
       const handleLengthChange2 = (e: any) => {
-        props.setLocalFilterChanges((prevChanges: any) => ({
-          ...prevChanges,
+        props.setFilterOptions({
           sequenceLength__to: e.target.value,
-        }));
+        });
       };
     return(
         <div className='sequenceLength__wrapper'>

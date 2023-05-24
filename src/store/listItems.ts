@@ -9,10 +9,13 @@ export const listItemsSlice = createSlice({
     addListItems: (state, action) => {
       state.push(...action.payload);
     },
+    removeItems: (state) => {
+      state.splice(0, state.length);
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addListItems} = listItemsSlice.actions
+export const { addListItems, removeItems} = listItemsSlice.actions
 
 export default listItemsSlice.reducer
