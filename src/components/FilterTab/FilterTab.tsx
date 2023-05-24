@@ -9,6 +9,7 @@ import SequenceLengthInput from '../SequenceLengthInput/SequenceLengthInput';
 import AnnotationInput from '../AnnotationInput/AnnotationInput'
 import ProteinInput from '../ProteinInput/ProteinInput';
 import { removeItems } from '../../store/listItems';
+import { setNewSelected } from '../../store/selected';
 
 const FilterTab = (props: any) => {
     const filterOptions = useSelector((state: any) => state.filterOptions);
@@ -36,6 +37,7 @@ const FilterTab = (props: any) => {
             proteinWith: null
         });
         props.fetchData();
+        dispatch(setNewSelected(0));
     }
 
     /*
@@ -69,7 +71,12 @@ const FilterTab = (props: any) => {
         setApplyButtonValid(isFilterChanged);
     }, [filterOptions])
     
-
+    /*
+        removes old data;
+        gets new data;
+        closes filter popup;
+        removes selected filter on grid;
+    */
     const applyFilters = () => {
         if(!applyButtonValid) return;
         dispatch(removeItems());
@@ -92,9 +99,8 @@ const FilterTab = (props: any) => {
         console.log(url);
         props.fetchData(url);
         dispatch(setNewValue({isOpen: false}));   
+        dispatch(setNewSelected(0));
     }
-
-    
     
     return(
         <div className='popupWrapper'>
