@@ -23,10 +23,11 @@ const HomePage = () => {
         sets nextUrl to appropriate url;
         dispatches new items;
     */
-    const fetchData = (url: string, removeFilterOptions: boolean, removeGridFilter: boolean) => {
-        /*
-          given link header returns it as url;
-        */
+    const fetchData = (url: string, removeFilterOptions: boolean, removeGridFilter: boolean, removePreviousItems: boolean) => {
+        dispatch(setNewValue({isOpen: false}))
+  
+        
+        //given link header returns it as url;
         const parseNextLink = (linkHeader: string | null): string | null => {
             if (linkHeader) {
               const links = linkHeader.split(", ");
@@ -40,24 +41,19 @@ const HomePage = () => {
             return null;
         };
         const removeFilters = () => {
-          const setFilterOptions = (newObj: any) => {
-            dispatch(setNewValue(newObj));
-          }
-          dispatch(setNewValue({isOpen: false}));   
-          setFilterOptions({
+          dispatch(setNewValue({
             geneName: null,
             organism: null,
             sequenceLength__from: null,
             sequenceLength__to: null,
             annotationScore: null,
             proteinWith: null
-        });
+          }));
+                   
         }
         if(removeFilterOptions) removeFilters();
         if(removeGridFilter) dispatch(setNewSelected(0));
-
-        dispatch(setNewValue({isOpen: false}))
-        dispatch(removeItems());
+        if(removePreviousItems) dispatch(removeItems());
 
         setFetching(true);
         fetch(url)
@@ -91,7 +87,7 @@ const HomePage = () => {
         const { scrollTop, clientHeight, scrollHeight } = e.target;
         const scrolledToBottom = scrollTop + clientHeight >= scrollHeight - 1;
         if (scrolledToBottom && nextUrl!='') {
-            fetchData(nextUrl, false, false);
+            fetchData(nextUrl, false, false, false);
         }
     }
 

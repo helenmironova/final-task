@@ -22,7 +22,7 @@ const FilterTab = (props: any) => {
         fetches new data (without filter options);
     */
     const cancelFunction = () => {
-        props.fetchData(`https://rest.uniprot.org/uniprotkb/search?facets=model_organism,proteins_with,annotation_score&query=(${searchText})`, true, false);
+        props.fetchData(`https://rest.uniprot.org/uniprotkb/search?facets=model_organism,proteins_with,annotation_score&query=(${(searchText==='' || searchText===null) ? "*" : searchText})`, true, false, true);
     }
 
     /*
@@ -30,7 +30,7 @@ const FilterTab = (props: any) => {
         saves data in redux via dispatch;
     */
     const fetchDataSelector = () => {
-        fetch(`https://rest.uniprot.org/uniprotkb/search?facets=model_organism,proteins_with,annotation_score&query=(${searchText})`)
+        fetch(`https://rest.uniprot.org/uniprotkb/search?facets=model_organism,proteins_with,annotation_score&query=(cancer)`)
         .then((response) => response.json())
         .then((data) =>{
             dispatch(setAnnotationOptions(data.facets[2].values));
@@ -55,7 +55,7 @@ const FilterTab = (props: any) => {
     */
     const applyFilters = () => {
         if(!applyButtonValid) return;
-        let url = `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=(${searchText})`;
+        let url = `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=(${(searchText==='' || searchText===null) ? "*" : searchText})`;
         if(filterOptions.geneName && filterOptions.geneName!=''){
             url+=` AND (gene:${filterOptions.geneName})`;
         }
@@ -71,7 +71,7 @@ const FilterTab = (props: any) => {
         if(filterOptions.proteinWith && filterOptions.proteinWith!=''){
             url+=` AND (proteins_with:${filterOptions.proteinWith})`;
         }
-        props.fetchData(url, false, true);
+        props.fetchData(url, false, true, true);
     }
     
     return(
