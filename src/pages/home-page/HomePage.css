@@ -50,3 +50,16 @@
     overflow-x: hidden;
 }
 
+.fetchingWrapper{
+    display: flex;
+    background-color: #616161;
+    border-radius: 20px;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    position: absolute;
+    width: 200px;
+    height: 60px;
+}

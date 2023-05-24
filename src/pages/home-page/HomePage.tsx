@@ -17,6 +17,7 @@ const HomePage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const [nextUrl, setNextUrl] = useState<string>("");
+    const [fetching, setFetching] = useState(false);
 
     /*
         given link header returns it as url;
@@ -40,6 +41,7 @@ const HomePage = () => {
         dispatches new items;
     */
     const fetchData = (url: string) => {
+        setFetching(true);
         fetch(url)
           .then((response) => {
             const linkHeader = response.headers.get("Link");
@@ -54,6 +56,11 @@ const HomePage = () => {
           })
           .catch((error) => {
             console.error(error);
+          }) 
+          .finally(() => {
+            setTimeout(() => {
+              setFetching(false);
+            }, 200);
           });
     };
 
@@ -92,7 +99,7 @@ const HomePage = () => {
                 {dataToDisplay && 
                     <div className='dataWrapper'>
                         <div className='itemsWrapper' onScroll={handleScroll}>
-                            <GridHeaders />
+                            <GridHeaders fetchData={fetchData}/>
                             {listItems.map((item: any, index: number) => (
                                 <GridItem item={item} index={index} key={uuidv4()}/>
                             ))}
@@ -100,6 +107,8 @@ const HomePage = () => {
                     </div>
                 }
             </div>
+
+            {fetching && <div className='fetchingWrapper'>Loading...</div>}
         </div>
     )
 }
