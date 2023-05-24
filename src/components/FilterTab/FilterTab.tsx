@@ -21,7 +21,7 @@ const FilterTab = () => {
         sequenceLength__to: null,
         annotationScore: null,
         proteinWith: null,
-      });
+    });
 
     /*
         closes filter popup;
@@ -41,7 +41,6 @@ const FilterTab = () => {
             dispatch(setOrganismOptions(data.facets[0].values));
             dispatch(setProteinWithOptions(data.facets[1].values));
             dispatch(setAlreadyFetched());
-            console.log(data);
         });
     }
 
@@ -55,7 +54,7 @@ const FilterTab = () => {
     }, []);
         
     useEffect(()=>{
-        console.log(localFilterChanges);
+        //console.log(localFilterChanges);
     }, [localFilterChanges])
     
     

@@ -62,6 +62,7 @@
 }
 
 .organism__wrapper, .sequenceLength__wrapper, .annotation__wrapper, .protein__wrapper{
+    position: relative;
     margin-top: 15.18px;
     height: 73.72px;
     width: 100%;

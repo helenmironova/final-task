@@ -19,6 +19,8 @@ const AnnotationInput = (props: any) => {
                     </option>
                 ))}
             </select>
+            <span className="custom-arrow"></span>
+
         </div>
     )
 }
