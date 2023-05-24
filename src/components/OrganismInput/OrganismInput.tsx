@@ -1,21 +1,21 @@
+import { useDispatch, useSelector } from 'react-redux';
 import './OrganismInput.css'
 import { v4 as uuidv4 } from 'uuid';
+import { setNewValue } from '../../store/filterOptions';
 
 
-const OrganismInput = (props: any)=>{
+const OrganismInput = ()=>{
+    const dispatch = useDispatch();
 
-    const handleOrganismChange = (e: any) => {
-        props.setFilterOptions({
-          organism: e.target.value,
-        });
-    };
+    const filterOptions = useSelector((state: any) => state.filterOptions);
+    const selectorOptions = useSelector((state: any) => state.selectorOptions);
 
     return(
         <div className='organism__wrapper'>
             <p className='organism__title'>Organism</p>
-            <select className='organism__select'   value={props.filterOptions.organism || ''} onChange={(e)=>handleOrganismChange(e)}>
+            <select className='organism__select'   value={filterOptions.organism || ''} onChange={(e)=>dispatch(setNewValue({organism: e.target.value}))}>
                 <option value="">Select an option</option>
-                {props.selectorOptions.organismOptions.map((option: any) => (
+                {selectorOptions.organismOptions.map((option: any) => (
                     <option key={uuidv4()} value={option.value}>
                          {option.label}
                     </option>

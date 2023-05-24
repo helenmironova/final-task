@@ -1,26 +1,26 @@
 import { useEffect, useRef } from 'react';
 import './GeneNameInput.css'
+import { useDispatch, useSelector } from 'react-redux';
+import { setNewValue } from '../../store/filterOptions';
 
-const GeneNameInput = (props: any) => {
-    const handleNameChange = (e: any) => {
-        props.setFilterOptions({
-            geneName: e.target.value,
-        })
-    };
+const GeneNameInput = () => {
+    const dispatch = useDispatch();
+
+    const filterOptions = useSelector((state: any) => state.filterOptions);
 
     const nameInput = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (props.filterOptions.geneName != null && props.filterOptions.geneName !== '') {
-        if(!nameInput.current) return;
-        nameInput.current.value = props.filterOptions.geneName;
-    }
-    }, [props.filterOptions.geneName]);
+    useEffect(() => {
+        if (filterOptions.geneName != null && filterOptions.geneName !== '') {
+            if(!nameInput.current) return;
+            nameInput.current.value = filterOptions.geneName;
+        }
+    }, [filterOptions.geneName]);
 
     return(
         <div className='geneNameWrapper'>
             <p className='geneName__title'>Gene Name</p>
-            <input type='text' ref={nameInput} className='geneName__input' placeholder='Enter Gene Name' onChange={(e)=>handleNameChange(e)}></input>
+            <input type='text' ref={nameInput} className='geneName__input' placeholder='Enter Gene Name' onChange={(e)=>dispatch(setNewValue({geneName: e.target.value}))}></input>
         </div>
     )
 }
