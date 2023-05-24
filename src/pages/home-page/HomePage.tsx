@@ -76,8 +76,9 @@ const HomePage = () => {
         then fetches new data, if nextUrl is not an empty string;
     */
     const handleScroll = (e: any) => {
-        const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-        if (bottom && nextUrl!='') {
+        const { scrollTop, clientHeight, scrollHeight } = e.target;
+        const scrolledToBottom = scrollTop + clientHeight >= scrollHeight - 1;
+        if (scrolledToBottom && nextUrl!='') {
             fetchData(nextUrl);
         }
     }
