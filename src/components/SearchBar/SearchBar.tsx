@@ -6,6 +6,7 @@ import FilterTab from '../../components/FilterTab/FilterTab';
 import { useSelector, useDispatch } from 'react-redux';
 import { setNewValue } from '../../store/filterOptions';
 import { setNewSearchText } from '../../store/searchText';
+import logoOpened from '../../assets/opened.png'
 
 const SearchBar = (props: any) => {
     const location = useLocation();
@@ -75,8 +76,8 @@ const SearchBar = (props: any) => {
             <button type='submit' className='searchButton' onClick={()=>props.handleSubmit(searchText)}>
                 Search
             </button>
-            <button className='filter' onClick={handleFilterClick}>
-                <img src={logo} alt='Filter' />
+            <button className={filterPopupIsOpen ? 'filter filter-opened' : 'filter'} onClick={handleFilterClick}>
+                {filterPopupIsOpen ? <img src={logoOpened} alt='Filter__opened'></img> :<img src={logo} alt='Filter'/> }
             </button>
             ({filterPopupIsOpen && <FilterTab fetchData={props.fetchData} searchText={searchText}/>})
         </div>

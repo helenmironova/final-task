@@ -47,3 +47,14 @@
     border-radius: 8px;
     display: flex;
 }
+
+.filter-opened{
+    margin-left: 13px;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #3C86F4;
+    border-radius: 8px;
+    display: flex;
+}
