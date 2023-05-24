@@ -9,11 +9,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router';
 import { addListItems } from '../../store/listItems';
 import { removeItems } from '../../store/listItems';
-
+import { setNewSelected } from '../../store/selected';
 
 const HomePage = () => {
     const [dataToDisplay, setDataToDisplay] = useState(false);
-    const listItems = useSelector((state: any) => state.listItems)
+    const listItems = useSelector((state: any) => state.listItems);
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const [nextUrl, setNextUrl] = useState<string>("");
@@ -71,6 +71,7 @@ const HomePage = () => {
         fetches data;
     */
     const handleSubmit = (searchText: string) => {
+        dispatch(setNewSelected(0));
         dispatch(removeItems());
         const query = searchText.trim() || "*";
         navigate(`/search?query=${query}`);      
@@ -81,6 +82,7 @@ const HomePage = () => {
     /*
         detects when user scrolles to the end of itemsWrapper div;
         then fetches new data, if nextUrl is not an empty string;
+        removes selected results filter;
     */
     const handleScroll = (e: any) => {
         const { scrollTop, clientHeight, scrollHeight } = e.target;

@@ -35,7 +35,7 @@ const GridItem = (props: any) => {
             <div className='entryNameDiv'>{props.item.uniProtkbId}</div>
             <div className='genesDiv'>
                 {props.item.genes?.map((gene: any) => (
-                    <span key={uuidv4()}>
+                    <span key={uuidv4()} className='span'>
                         <b>{gene.geneName?.value}</b>
                         {gene.synonyms && gene.synonyms.length > 0 && (
                             <>

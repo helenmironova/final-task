@@ -3,6 +3,7 @@ import  listItemsReducer from './listItems';
 import filterOptionsReducer from './filterOptions';
 import selectorOptionsReducer from './selectorOptions';
 import searchTextReducer from './searchText'
+import selectedReducer from './selected'
 
 const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
         filterOptions: filterOptionsReducer,
         selectorOptions: selectorOptionsReducer,
         searchText: searchTextReducer,
+        selected: selectedReducer,
     }
 });
 

@@ -7,7 +7,6 @@
 .numberDiv{
     display: flex;
     width: 48px;
-    height: 48px;
     justify-content: center;
     align-items: center;
     margin-right: 2px;
@@ -51,6 +50,8 @@
     min-height: 48px;
     padding-left: 12px;
     align-items: center;
+    flex-direction: column;
+    justify-content: center;
 
     text-align: left;
     font-style: normal;
@@ -119,4 +120,8 @@
     line-height: 19px;
     color: #2B2B2B;
     margin-right: 2px;
+}
+
+.span{
+    width: 100%;
 }
