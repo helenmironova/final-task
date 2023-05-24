@@ -3,13 +3,15 @@ import {useLocation } from 'react-router-dom';
 import './SearchBar.css';
 import logo from '../../assets/🦆 icon _Options_.png';
 import FilterTab from '../../components/FilterTab/FilterTab';
+import { useSelector, useDispatch } from 'react-redux';
+import { setNewValue } from '../../store/filterOptions';
 
 
 const SearchBar = (props: any) => {
     const location = useLocation();
     const [searchText, setSearchText] = useState('');
-    const [filterPopupIsOpen, setFilterPopupIsOpen] = useState(false);
-
+    const filterPopupIsOpen = useSelector((state: any) => state.filterOptions.isOpen);
+    const dispatch = useDispatch();
     /*
         when searchText is changed, new query is added;
     */
@@ -50,12 +52,11 @@ const SearchBar = (props: any) => {
         conditionaly renders filter popup;
     */
     const handleFilterClick = () => {
-        setFilterPopupIsOpen(!filterPopupIsOpen);
+        dispatch(setNewValue({isOpen: !filterPopupIsOpen}));
     }
 
-    const handleCancel = () => {
-        setFilterPopupIsOpen(false);
-    }
+    
+
 
     return (
         <div className='searchInputWrapper'>
@@ -72,7 +73,7 @@ const SearchBar = (props: any) => {
             <button className='filter' onClick={handleFilterClick}>
                 <img src={logo} alt='Filter' />
             </button>
-            ({filterPopupIsOpen && <FilterTab cancelFunction={handleCancel}/>})
+            ({filterPopupIsOpen && <FilterTab/>})
         </div>
     );
 };

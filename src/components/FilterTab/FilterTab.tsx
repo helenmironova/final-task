@@ -1,7 +1,15 @@
 import './FilterTab.css'
+import { useSelector, useDispatch } from 'react-redux';
+import { setNewValue } from '../../store/filterOptions';
 
+const FilterTab = () => {
+    const filterOptions = useSelector((state: any) => state.filterOptions);
+    const dispatch = useDispatch();
 
-const FilterTab = (props: any) => {
+    const cancelFunction = () => {
+        dispatch(setNewValue({isOpen: false}));   
+    }
+    
     return(
         <div className='popupWrapper'>
             <div className='popupWrapperRelative'>
@@ -43,7 +51,7 @@ const FilterTab = (props: any) => {
                 </div>
 
                 <div className='buttonsDiv'>
-                    <button className='cancelButton' onClick={props.cancelFunction}>Cancel</button>
+                    <button className='cancelButton' onClick={cancelFunction}>Cancel</button>
                     <button className='applyButton--disabled'>Apply Filters</button>
 
                 </div>
