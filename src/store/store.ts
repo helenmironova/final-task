@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import  listItemsReducer from './listItems';
 import filterOptionsReducer from './filterOptions';
+import selectorOptionsReducer from './selectorOptions';
 
 const store = configureStore({
     reducer: {
         listItems: listItemsReducer,
         filterOptions: filterOptionsReducer,
+        selectorOptions: selectorOptionsReducer,
     }
 });
 
