@@ -14,6 +14,7 @@ const FilterTab = (props: any) => {
     const filterOptions = useSelector((state: any) => state.filterOptions);
     const dispatch = useDispatch();
     const selectorOptions = useSelector((state: any) => state.selectorOptions);
+    const searchText = useSelector((state: any) => state.searchText);
     const [applyButtonValid, setApplyButtonValid] = useState(false);
 
     const setFilterOptions = (newObj: any) => {
@@ -41,7 +42,7 @@ const FilterTab = (props: any) => {
         set options in redux to fetched data;
     */
     const fetchDataSelector = () => {
-        fetch(`https://rest.uniprot.org/uniprotkb/search?facets=model_organism,proteins_with,annotation_score&query=(${props.searchText})`)
+        fetch(`https://rest.uniprot.org/uniprotkb/search?facets=model_organism,proteins_with,annotation_score&query=(${searchText})`)
         .then((response) => response.json())
         .then((data) =>{
             dispatch(setAnnotationOptions(data.facets[2].values));
@@ -72,7 +73,7 @@ const FilterTab = (props: any) => {
     const applyFilters = () => {
         if(!applyButtonValid) return;
         dispatch(removeItems());
-        let url = `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=(${props.searchText})`;
+        let url = `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=(${searchText})`;
         if(filterOptions.geneName && filterOptions.geneName!=''){
             url+=` AND (gene:${filterOptions.geneName})`;
         }

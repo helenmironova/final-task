@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router';
 import { addListItems } from '../../store/listItems';
+import { removeItems } from '../../store/listItems';
 
 
 const HomePage = () => {
@@ -63,6 +64,7 @@ const HomePage = () => {
         fetches data;
     */
     const handleSubmit = (searchText: string) => {
+        dispatch(removeItems());
         const query = searchText.trim() || "*";
         navigate(`/search?query=${query}`);      
         const apiUrl = `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=${query}`;

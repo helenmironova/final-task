@@ -1,7 +1,7 @@
 .itemWrapper{
     display: inline-flex;
     width: 1020px;
-    height: 48px;
+    min-height: 48px;
 }
 
 .numberDiv{
@@ -16,7 +16,7 @@
 .entryDiv{
     display: flex;
     width: 115px;
-    height: 48px;
+    min-height: 48px;
     padding-left: 12px;
     text-align: left;
     align-items: center;
@@ -32,7 +32,7 @@
 .entryNameDiv{
     display: flex;
     width: 166.5px;
-    height: 48px;
+    min-height: 48px;
     padding-left: 12px;
     text-align: left;
     align-items: center;
@@ -48,7 +48,7 @@
 .genesDiv{
     display: flex;
     width: 166.5px;
-    height: 48px;
+    min-height: 48px;
     padding-left: 12px;
     align-items: center;
 
@@ -64,7 +64,7 @@
 .organismDiv{
     display: flex;
     width: 166.5px;
-    height: 48px;
+    min-height: 48px;
     justify-content: center;
     align-items: center;
 
@@ -78,18 +78,21 @@
 
 .organismInsideDiv{
     padding: 2px 12px;
-    height: 23px;
+    min-height: 23px;
     background: #D8E7FF;
     border-radius: 12px;
     flex: none;
     order: 0;
     flex-grow: 0;
+    max-width: 148px;
+    margin-top: 14.5px;
+    margin-bottom: 14.5px;
 }
 
 .subcelDiv{
     display: flex;
     width: 191px;
-    height: 48px;
+    min-height: 48px;
     align-items: center;
     padding-left: 12px;
     text-align: left;
@@ -105,7 +108,7 @@
 .lengthDiv{
     display: flex;
     width: 166.5px;
-    height: 48px;
+    min-height: 48px;
     align-items: center;
     padding-left: 12px;
     text-align: left;
