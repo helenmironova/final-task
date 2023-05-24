@@ -34,13 +34,14 @@ const FilterTab = (props: any) => {
             annotationScore: null,
             proteinWith: null
         });
+        props.fetchData();
     }
 
     /*
         set options in redux to fetched data;
     */
     const fetchDataSelector = () => {
-        fetch('https://rest.uniprot.org/uniprotkb/search?facets=model_organism,proteins_with,annotation_score&query=(cancer)')
+        fetch(`https://rest.uniprot.org/uniprotkb/search?facets=model_organism,proteins_with,annotation_score&query=(${props.searchText})`)
         .then((response) => response.json())
         .then((data) =>{
             dispatch(setAnnotationOptions(data.facets[2].values));

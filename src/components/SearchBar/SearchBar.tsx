@@ -1,17 +1,22 @@
-import { useState, useEffect} from 'react';
+import {useEffect} from 'react';
 import {useLocation } from 'react-router-dom';
 import './SearchBar.css';
 import logo from '../../assets/🦆 icon _Options_.png';
 import FilterTab from '../../components/FilterTab/FilterTab';
 import { useSelector, useDispatch } from 'react-redux';
 import { setNewValue } from '../../store/filterOptions';
-
+import { setNewSearchText } from '../../store/searchText';
 
 const SearchBar = (props: any) => {
     const location = useLocation();
-    const [searchText, setSearchText] = useState('');
-    const filterPopupIsOpen = useSelector((state: any) => state.filterOptions.isOpen);
+    const searchText = useSelector((state: any) => state.searchText);
     const dispatch = useDispatch();
+
+    const setSearchText = (newText: any) => {
+        dispatch(setNewSearchText(newText));
+    };
+
+    const filterPopupIsOpen = useSelector((state: any) => state.filterOptions.isOpen);
     /*
         when searchText is changed, new query is added;
     */
