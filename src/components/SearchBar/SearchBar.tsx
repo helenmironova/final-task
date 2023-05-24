@@ -1,10 +1,10 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useLocation } from 'react-router-dom';
 import './SearchBar.css';
 import logo from '../../assets/🦆 icon _Options_.png';
 import FilterTab from '../../components/FilterTab/FilterTab';
 import { useSelector, useDispatch } from 'react-redux';
-import { setNewValue } from '../../store/filterOptions';
+import filterOptions, { setNewValue } from '../../store/filterOptions';
 import { setNewSearchText } from '../../store/searchText';
 import logoOpened from '../../assets/opened.png'
 
@@ -12,6 +12,25 @@ const SearchBar = (props: any) => {
     const location = useLocation();
     const searchText = useSelector((state: any) => state.searchText);
     const dispatch = useDispatch();
+    const [dotVisible, setDotVisible] = useState(false);
+    const filterOptions = useSelector((state: any) => state.filterOptions);
+
+    const hasFilters = () => {        
+        for (const value of Object.values(filterOptions)) {
+            if (typeof value !== 'boolean' && value !== null && value !== '') {
+              setDotVisible(true);
+              return;
+            }
+          }
+          
+          setDotVisible(false);
+          return;
+    } 
+
+    useEffect(()=>{
+        hasFilters();
+    }, [filterOptions])
+
 
     const setSearchText = (newText: any) => {
         dispatch(setNewSearchText(newText));
@@ -77,9 +96,10 @@ const SearchBar = (props: any) => {
                 Search
             </button>
             <button className={filterPopupIsOpen ? 'filter filter-opened' : 'filter'} onClick={handleFilterClick}>
-                {filterPopupIsOpen ? <img src={logoOpened} alt='Filter__opened'></img> :<img src={logo} alt='Filter'/> }
+                {filterPopupIsOpen ? <img src={logoOpened} alt='Filter__opened'></img> : <img src={logo} alt='Filter'/> }
+                {dotVisible && <span className='dot'></span>}
             </button>
-            ({filterPopupIsOpen && <FilterTab fetchData={props.fetchData} searchText={searchText}/>})
+            {filterPopupIsOpen && <FilterTab fetchData={props.fetchData} searchText={searchText}/>}
         </div>
     );
 };

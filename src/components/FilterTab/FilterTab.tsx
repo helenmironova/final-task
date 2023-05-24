@@ -36,8 +36,9 @@ const FilterTab = (props: any) => {
             annotationScore: null,
             proteinWith: null
         });
-        props.fetchData();
         dispatch(setNewSelected(0));
+        dispatch(removeItems());
+        props.fetchData(`https://rest.uniprot.org/uniprotkb/search?facets=model_organism,proteins_with,annotation_score&query=(${searchText})`);
     }
 
     /*
@@ -96,7 +97,6 @@ const FilterTab = (props: any) => {
         if(filterOptions.proteinWith && filterOptions.proteinWith!=''){
             url+=` AND (proteins_with:${filterOptions.proteinWith})`;
         }
-        console.log(url);
         props.fetchData(url);
         dispatch(setNewValue({isOpen: false}));   
         dispatch(setNewSelected(0));

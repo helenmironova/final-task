@@ -6,11 +6,13 @@ const GridItem = (props: any) => {
     const [locations, setLocations] = useState<string[]>([]);
 
     if (props.item.comments && props.item.comments.length > 0) {
-        props.item.comments[0].subcellularLocations.forEach((loc: any) => {
-        if (!locations.includes(loc.location.value)) {
-            setLocations(prevLocations => [...prevLocations, loc.location.value]);
+        if(props.item.comments[0].subcellularLocations && props.item.comments[0].subcellularLocations.length>0){
+            props.item.comments[0].subcellularLocations.forEach((loc: any) => {
+                if (!locations.includes(loc.location.value)) {
+                    setLocations(prevLocations => [...prevLocations, loc.location.value]);
+                }
+            });   
         }
-    });
     }
 
     function formatArray(array: string[]): string {

@@ -58,3 +58,13 @@
     border-radius: 8px;
     display: flex;
 }
+
+.dot{
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #3C86F4;
+    border-radius: 50%;
+    right: -3px;
+    top: -4px;
+}

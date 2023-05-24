@@ -10,6 +10,8 @@ import { useNavigate } from 'react-router';
 import { addListItems } from '../../store/listItems';
 import { removeItems } from '../../store/listItems';
 import { setNewSelected } from '../../store/selected';
+import { setNewValue } from '../../store/filterOptions';
+
 
 const HomePage = () => {
     const [dataToDisplay, setDataToDisplay] = useState(false);
@@ -64,13 +66,27 @@ const HomePage = () => {
           });
     };
 
-
     /*
         This function could be in SearchBar.tsx but I think when search returns fetch results, they should be centralized in Homepage.tsx;
         changes url query;
         fetches data;
     */
     const handleSubmit = (searchText: string) => {
+        const removeFilters = () => {
+          const setFilterOptions = (newObj: any) => {
+            dispatch(setNewValue(newObj));
+          }
+          dispatch(setNewValue({isOpen: false}));   
+          setFilterOptions({
+            geneName: null,
+            organism: null,
+            sequenceLength__from: null,
+            sequenceLength__to: null,
+            annotationScore: null,
+            proteinWith: null
+        });
+        }
+        removeFilters();
         dispatch(setNewSelected(0));
         dispatch(removeItems());
         const query = searchText.trim() || "*";
