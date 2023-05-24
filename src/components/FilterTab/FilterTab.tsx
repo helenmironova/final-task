@@ -2,14 +2,26 @@ import './FilterTab.css'
 import { useSelector, useDispatch } from 'react-redux';
 import { setNewValue } from '../../store/filterOptions';
 import { setAnnotationOptions, setProteinWithOptions, setOrganismOptions, setAlreadyFetched } from '../../store/selectorOptions';
-import { useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { useEffect, useState } from 'react';
+import GeneNameInput from '../GeneNameInput/GeneNameInput';
+import OrganismInput from '../OrganismInput/OrganismInput';
+import SequenceLengthInput from '../SequenceLengthInput/SequenceLengthInput';
+import AnnotationInput from '../AnnotationInput/AnnotationInput'
+import ProteinInput from '../ProteinInput/ProteinInput';
 
 const FilterTab = () => {
     const filterOptions = useSelector((state: any) => state.filterOptions);
     const dispatch = useDispatch();
     const selectorOptions = useSelector((state: any) => state.selectorOptions);
     
+    const [localFilterChanges, setLocalFilterChanges] = useState({
+        geneName: null,
+        organism: null,
+        sequenceLength__from: null,
+        sequenceLength__to: null,
+        annotationScore: null,
+        proteinWith: null,
+      });
 
     /*
         closes filter popup;
@@ -42,67 +54,29 @@ const FilterTab = () => {
         }
     }, []);
         
+    useEffect(()=>{
+        console.log(localFilterChanges);
+    }, [localFilterChanges])
+    
     
     return(
         <div className='popupWrapper'>
             <div className='popupWrapperRelative'>
                 <p className='popupWrapper__title'>Filters</p>
+                
+                <GeneNameInput localFilterChanges={localFilterChanges} setLocalFilterChanges={setLocalFilterChanges}/>
 
-                <div className='geneNameWrapper'>
-                    <p className='geneName__title'>Gene Name</p>
-                    <input type='text' className='geneName__input' placeholder='Enter Gene Name'></input>
-                </div>
+                <OrganismInput localFilterChanges={localFilterChanges} setLocalFilterChanges={setLocalFilterChanges} selectorOptions={selectorOptions}/>
 
-                <div className='organism__wrapper'>
-                    <p className='organism__title'>Organism</p>
-                    <select className='organism__select' defaultValue={''}>
-                        <option value="" disabled hidden>Select an option</option>
-                        {selectorOptions.organismOptions.map((option: any) => (
-                            <option key={uuidv4()} value={option.value}>
-                                {option.label}
-                            </option>
-                        ))}
+                <SequenceLengthInput localFilterChanges={localFilterChanges} setLocalFilterChanges={setLocalFilterChanges}/>
 
-                    </select>
-                </div>
+                <AnnotationInput localFilterChanges={localFilterChanges} setLocalFilterChanges={setLocalFilterChanges} selectorOptions={selectorOptions}/>
 
-                <div className='sequenceLength__wrapper'>
-                    <p className='sequenceLength__title'>Sequence Length</p>
-                    <div className='sl__ww'>
-                        <input type='number' className='from__input' placeholder='from'></input>
-                        <div className='dec'></div>
-                        <input type='number' className='to__input' placeholder='to'></input>
-                    </div>
-                </div>
-
-                <div className='annotation__wrapper'>
-                    <p className='annotation__title'>Annotation score</p>
-                    <select className='annotation__select' defaultValue={''}>
-                        <option value="" disabled hidden>Select an option</option>
-                        {selectorOptions.annotationOptions.map((option: any) => (
-                            <option key={uuidv4()} value={option.value}>
-                                {option.value}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-
-                <div className='protein__wrapper'>
-                    <p className='protein__title'>Annotation score</p>
-                    <select className='protein__select' defaultValue={''}>
-                        <option value="" disabled hidden>Select an option</option>
-                        {selectorOptions.proteinWithOptions.map((option: any) => (
-                            <option key={uuidv4()} value={option.value}>
-                                {option.label}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                <ProteinInput localFilterChanges={localFilterChanges} setLocalFilterChanges={setLocalFilterChanges} selectorOptions={selectorOptions}/>
 
                 <div className='buttonsDiv'>
                     <button className='cancelButton' onClick={cancelFunction}>Cancel</button>
                     <button className='applyButton--disabled'>Apply Filters</button>
-
                 </div>
             </div>
         </div>
