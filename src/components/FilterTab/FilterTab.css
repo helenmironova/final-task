@@ -171,3 +171,15 @@ select {
     align-items: center;
     display: flex;
 }
+
+.applyButton--active{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #3C86F4;
+    background: rgba(60, 134, 244, 0.2);;
+    border-radius: 8px;
+    align-items: center;
+    display: flex;
+}

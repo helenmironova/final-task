@@ -23,11 +23,22 @@ const FilterTab = () => {
         proteinWith: null,
     });
 
+    const [applyButtonValid, setApplyButtonValid] = useState(false);
+
     /*
         closes filter popup;
+        clears localFilterChanges;
     */
     const cancelFunction = () => {
         dispatch(setNewValue({isOpen: false}));   
+        setLocalFilterChanges({
+            geneName: null,
+            organism: null,
+            sequenceLength__from: null,
+            sequenceLength__to: null,
+            annotationScore: null,
+            proteinWith: null
+        });
     }
 
     /*
@@ -53,10 +64,19 @@ const FilterTab = () => {
         }
     }, []);
         
+    /*
+        changes apply button visual;
+    */
     useEffect(()=>{
-        //console.log(localFilterChanges);
+        const isFilterChanged = Object.values(localFilterChanges).some(value => value !== null && value !== "");
+        setApplyButtonValid(isFilterChanged);
     }, [localFilterChanges])
     
+
+    const applyFilters = () => {
+        if(!applyButtonValid) return;
+        
+    }
     
     return(
         <div className='popupWrapper'>
@@ -75,7 +95,9 @@ const FilterTab = () => {
 
                 <div className='buttonsDiv'>
                     <button className='cancelButton' onClick={cancelFunction}>Cancel</button>
-                    <button className='applyButton--disabled'>Apply Filters</button>
+                    <button className={`${applyButtonValid ? 'applyButton--active' : 'applyButton--disabled'}`} onClick={applyFilters}>
+                        Apply Filters
+                    </button>                
                 </div>
             </div>
         </div>
