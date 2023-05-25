@@ -1,29 +1,47 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import HomePageHeader from '../../components/HomePageHeader/HomePageHeader';
-import './ProteinPage.css'
-import { useLocation } from 'react-router';
-import { useEffect } from 'react';
+import './ProteinPage.css';
+import { useLocation} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { fetchProteinData } from '../../store/selectedProtein';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
+import BasicData from '../../components/BasicData/BasicData';
+import Paths from '../../components/Paths/Paths';
 
 const ProteinPage = () => {
+    const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
     const location = useLocation();
+    const protein = useSelector((state: any) => state.selectedProtein);
+    
+    const [tab, setTab] = useState('details'); //details || feature || publications
 
-    const selectedProtein = useSelector((state: any)=>state.selectedProtein);
+
+    useEffect(() => {
+        dispatch(fetchProteinData(protein.name));
+    }, [dispatch]);
 
     useEffect(() => {
         const currentUrl = new URL(window.location.href);
         const params = new URLSearchParams(currentUrl.search);
-        params.set('protein', selectedProtein);
+        params.set('protein', protein.name);
         window.history.replaceState({}, '', `${currentUrl.pathname}?${params}`);
-    }, [selectedProtein, location]);
+    }, [location, protein.name]);
 
-    return(
+    return (
         <div className='body'>
-            <HomePageHeader />
-            <div className='proteinDataWrapper'>
-
-            </div>
+        <HomePageHeader />
+        <div className='proteinDataWrapper'>
+            <BasicData protein={protein.protein} />
+            <Paths tab={tab} setTab={setTab}/>
+            {/* Render content based on the selected tab */}
+            {tab === 'details' && <div>Details Content</div>}
+            {tab === 'feature' && <div>Feature Viewer Content</div>}
+            {tab === 'publications' && <div>Publications Content</div>}
+            
         </div>
-    )
-}
+        </div>
+    );
+};
 
 export default ProteinPage;

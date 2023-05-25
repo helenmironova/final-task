@@ -1,0 +1,41 @@
+
+.paths{
+    width: 445px;
+    height: 40px;
+    align-self: baseline;
+    margin-top: 12px;
+    display: flex;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #9F9F9F;
+}
+
+.tab{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#detailsTab{
+    width: 110.67px;
+}
+
+#featureTab{
+    width: 180.39px;
+}
+
+#publicationsTab{
+    width: 153.83px;
+}
+
+.tab--active{
+    color: #3C86F4;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid #3C86F4;
+}

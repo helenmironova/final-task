@@ -1,22 +1,39 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { loadState } from '../localStorage';
 
-import {loadState} from '../localStorage';
+const persistedState = loadState('state')?.selectedProtein;
 
-const persistedState = loadState("state")?.selectedProtein;
+const initialState = persistedState || {
+  name: '',
+  protein: {},
+};
 
-const initialState: string = persistedState || '';
+export const fetchProteinData = createAsyncThunk(
+  'selectedProtein/fetchProteinData',
+  async (name: string) => {
+    const response = await fetch(`https://rest.uniprot.org/uniprotkb/${name}`);
+    const data = await response.json();
+    return data;
+  }
+);
 
 export const selectedProteinSlice = createSlice({
   name: 'selectedProtein',
   initialState,
   reducers: {
-    setNewSelectedProtein: (state: string, action: PayloadAction<string>) => {
-        return action.payload;
-    }
+    setNewSelectedProteinName: (state, action: PayloadAction<string>) => {
+      return { ...state, name: action.payload };
+    },
   },
-})
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProteinData.fulfilled, (state, action) => {
+        return { ...state, protein: action.payload };
+      });
+  },
+});
 
-// Action creators are generated for each case reducer function
-export const {setNewSelectedProtein} = selectedProteinSlice.actions
 
-export default selectedProteinSlice.reducer
+export const { setNewSelectedProteinName } = selectedProteinSlice.actions;
+
+export default selectedProteinSlice.reducer;

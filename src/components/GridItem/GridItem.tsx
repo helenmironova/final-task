@@ -3,7 +3,7 @@ import './GridItem.css'
 import {useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setNewSelectedProtein } from '../../store/selectedProtein';
+import { setNewSelectedProteinName } from '../../store/selectedProtein';
 
 const GridItem = (props: any) => {   
     const dispatch = useDispatch();
@@ -35,7 +35,7 @@ const GridItem = (props: any) => {
     }
 
     const handleLinkClick = () => {
-        dispatch(setNewSelectedProtein(props.item.primaryAccession));
+        dispatch(setNewSelectedProteinName(props.item.primaryAccession));
     };
 
     return(
