@@ -1,20 +1,10 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import classes from "./signInForm.module.css";
 
 import FormInput from "../form-input/form-input";
 import Button from "../button/button";
 import { UserAuth } from "../../contexts/AuthContext";
-
-interface FormFields {
-  email: string;
-  password: string;
-}
-
-const defaultFormFields: FormFields = {
-  email: "",
-  password: "",
-};
 
 const SignInForm: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -32,9 +22,7 @@ const SignInForm: React.FC = () => {
     } catch (error: any) {
       switch (error.code) {
         case "auth/wrong-password":
-          setError(
-            "Login failed! Please,  check you password and email!"
-          );
+          setError("Login failed! Please,  check you password and email!");
           break;
         case "auth/user-not-found":
           setError("You are not registered!");

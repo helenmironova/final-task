@@ -7,6 +7,7 @@ import ProteinDetails from "../../components/proteinDetails/proteinDetails";
 import LoadingSpinner from "../../components/loadingSpinner/loadingSpinner";
 import ProteinPublications from "../../components/protein-publications/proteinPublications";
 import { fetchData } from "../../api/axios/fetchData";
+import FeatureViewer from "../../components/feature-viewer/featureViewer";
 
 interface IProteinData {
   primaryAccession: string;
@@ -116,6 +117,7 @@ function ProteinPage() {
                   sectionText={state.sequence.value}
                 />
               )}
+              {view === "feature" && <FeatureViewer />}
               {view === "publications" &&
                 publications !== null &&
                 publications.map((item: IPublications, index) => {
