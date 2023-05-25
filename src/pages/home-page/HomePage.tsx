@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { fetchItems} from '../../store/listItems';
 import { removeItems } from '../../store/listItems';
-import { setNewSelected } from '../../store/selected';
 import { setNewValue } from '../../store/filterOptions';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
@@ -21,6 +20,7 @@ const HomePage = () => {
     const loading = useSelector((state: any) => state.listItems.isLoading)
     
     const [dataToDisplay, setDataToDisplay] = useState(false);
+    const [selected, setSelected] = useState(0);
 
     /*
         fethes data from given url;
@@ -42,7 +42,7 @@ const HomePage = () => {
                    
         }
         if(removeFilterOptions) removeFilters();
-        if(removeGridFilter) dispatch(setNewSelected(0));
+        if(removeGridFilter) setSelected(0);
         if(removePreviousItems) dispatch(removeItems());
         setDataToDisplay(true);
         dispatch(fetchItems(url));
@@ -69,7 +69,7 @@ const HomePage = () => {
                 {!dataToDisplay && <p className='noDataToDisplayP'>No data to display.<br/> Please start a search to display results.</p>}
                 {dataToDisplay && 
                     <div className='dataWrapper'>
-                      <GridHeaders fetchData={fetchData}/>
+                      <GridHeaders fetchData={fetchData} selected={selected} setSelected={setSelected}/>
                         <div className='itemsWrapper' onScroll={handleScroll}>
                             {listItems?.map((item: any, index: number) => (
                                 <GridItem item={item} index={index} key={uuidv4()}/>

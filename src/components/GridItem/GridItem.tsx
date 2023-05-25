@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import './GridItem.css'
 import {useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const GridItem = (props: any) => {   
     const [locations, setLocations] = useState<string[]>([]);
@@ -33,7 +34,7 @@ const GridItem = (props: any) => {
     return(
         <div className='itemWrapper'>
             <div className='numberDiv'>{props.index+1}</div>
-            <div className='entryDiv'>{props.item.primaryAccession}</div>
+            <div className='entryDiv'><Link to={"/protein"}>{props.item.primaryAccession}</Link></div>
             <div className='entryNameDiv'>{props.item.uniProtkbId}</div>
             <div className='genesDiv'>
                 {props.item.genes?.map((gene: any) => (

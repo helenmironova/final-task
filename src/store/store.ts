@@ -3,7 +3,6 @@ import  listItemsReducer from './listItems';
 import filterOptionsReducer from './filterOptions';
 import selectorOptionsReducer from './selectorOptions';
 import searchTextReducer from './searchText'
-import selectedReducer from './selected'
 import thunkMiddleware from 'redux-thunk';
 
 
@@ -13,7 +12,6 @@ const store = configureStore({
         filterOptions: filterOptionsReducer,
         selectorOptions: selectorOptionsReducer,
         searchText: searchTextReducer,
-        selected: selectedReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
