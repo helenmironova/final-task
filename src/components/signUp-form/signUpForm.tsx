@@ -1,39 +1,18 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import classes from "./signUp.module.css";
 
-import { createAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { UserContext } from "../../contexts/user.context";
+import { UserAuth } from "../../contexts/AuthContext";
 
 import FormInput from "../form-input/form-input";
 import Button from "../button/button";
 
-interface FormFields {
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-const defaultFormFields: FormFields = {
-  email: "",
-  password: "",
-  confirmPassword: "",
-};
-
 const SignUpForm: React.FC = () => {
-  const [formFields, setFormFields] = useState<FormFields>(defaultFormFields);
-  const { email, password, confirmPassword } = formFields;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const { createUser } = UserAuth();
   const navigate = useNavigate();
-  const { setCurrentUser } = useContext(UserContext);
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormFields({
-      ...formFields,
-      [name]: value,
-    });
-  };
 
   const submitHandler = async (event: FormEvent) => {
     event.preventDefault();
@@ -43,13 +22,7 @@ const SignUpForm: React.FC = () => {
       return;
     }
     try {
-      const response = await createAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-      const user = response?.user;
-      setFormFields(defaultFormFields);
-      setCurrentUser(user);
+      await createUser(email, password);
       navigate("/main");
     } catch (error: any) {
       if (error.code === "auth/email-already-in-use") {
@@ -64,7 +37,7 @@ const SignUpForm: React.FC = () => {
       <form onSubmit={submitHandler} className={classes.form_container}>
         <FormInput
           type="email"
-          onChange={handleChange}
+          onChange={(e) => setEmail(e.target.value)}
           name="email"
           value={email}
           required={true}
@@ -74,7 +47,7 @@ const SignUpForm: React.FC = () => {
         />
         <FormInput
           type="password"
-          onChange={handleChange}
+          onChange={(e) => setPassword(e.target.value)}
           name="password"
           value={password}
           required={true}
@@ -84,7 +57,7 @@ const SignUpForm: React.FC = () => {
         />
         <FormInput
           type="password"
-          onChange={handleChange}
+          onChange={(e) => setConfirmPassword(e.target.value)}
           name="confirmPassword"
           value={confirmPassword}
           required={true}

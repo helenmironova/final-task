@@ -1,31 +1,24 @@
 import classes from "./navigation.module.css";
-
-import { useContext, useEffect } from "react";
-import { UserContext } from "../../contexts/user.context";
 import { useNavigate } from "react-router-dom";
-
-import { signOutUser } from "../../utils/firebase/firebase.utils";
+import { UserAuth } from "../../contexts/AuthContext";
 
 const Navigation = () => {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { user, logout } = UserAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!currentUser) {
-      navigate("/");
-    }
-  }, [currentUser]);
-
   const signOutHandler = async () => {
-    await signOutUser();
-    setCurrentUser(null);
-    navigate("/");
+    try {
+      await logout();
+      navigate("/");
+      console.log("You are logged out");
+    } catch (e) {
+      console.log(e.message);
+    }
   };
-
   return (
     <div className={classes.navigation_container}>
-      <div>{currentUser?.email}</div>
-      {currentUser ? (
+      <div>{user?.email}</div>
+      {user ? (
         <div onClick={signOutHandler} className={classes.logOut}>
           Log out
         </div>

@@ -1,14 +1,10 @@
-import React, { useState, useContext, ChangeEvent, FormEvent } from "react";
-import classes from "./signInForm.module.css";
-import {
-  signInWithGooglePopup,
-  signInAuthUserWithEmailAndPassword,
-} from "../../utils/firebase/firebase.utils";
-import { UserContext } from "../../contexts/user.context";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import classes from "./signInForm.module.css";
 
 import FormInput from "../form-input/form-input";
 import Button from "../button/button";
+import { UserAuth } from "../../contexts/AuthContext";
 
 interface FormFields {
   email: string;
@@ -21,36 +17,16 @@ const defaultFormFields: FormFields = {
 };
 
 const SignInForm: React.FC = () => {
-  const [formFields, setFormFields] = useState<FormFields>(defaultFormFields);
-  const { email, password } = formFields;
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { signIn } = UserAuth();
   const navigate = useNavigate();
-  const { setCurrentUser } = useContext(UserContext);
-
-  const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    setCurrentUser(user);
-  };
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormFields({
-      ...formFields,
-      [name]: value,
-    });
-  };
 
   const submitHandler = async (event: FormEvent) => {
     event.preventDefault();
     try {
-      const response = await signInAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
+      await signIn(email, password);
 
-      const user = response?.user;
-      console.log("user", user);
-      setCurrentUser(user);
       navigate("/main");
     } catch (error: any) {
       switch (error.code) {
@@ -74,7 +50,7 @@ const SignInForm: React.FC = () => {
       <form onSubmit={submitHandler} className={classes.form_container}>
         <FormInput
           type="email"
-          onChange={handleChange}
+          onChange={(e) => setEmail(e.target.value)}
           name="email"
           value={email}
           required={true}
@@ -84,7 +60,7 @@ const SignInForm: React.FC = () => {
         />
         <FormInput
           type="password"
-          onChange={handleChange}
+          onChange={(e) => setPassword(e.target.value)}
           name="password"
           value={password}
           required={true}
@@ -94,12 +70,6 @@ const SignInForm: React.FC = () => {
         />
         <div className={classes.buttons_container}>
           <Button type="submit" placeholder="Login" styles="signIn" />
-          <Button
-            type="button"
-            onClick={signInWithGoogle}
-            placeholder="Sign In With Google"
-            styles="signInWithGoogle"
-          />
         </div>
       </form>
     </div>
