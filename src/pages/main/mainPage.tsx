@@ -87,7 +87,11 @@ const MainPage = () => {
                     </Link>
                     <div className={classes.grid_item}>{item.uniProtkbId}</div>
                     <div className={classes.grid_item}>
-                      {item.genes[0].geneName.value}
+                      {item.genes &&
+                      item.genes.length > 0 &&
+                      item.genes[0].geneName
+                        ? item.genes[0].geneName.value
+                        : "N/A"}
                     </div>
                     <div className={classes.grid_item}>
                       {item.organism.scientificName}
@@ -112,7 +116,11 @@ const MainPage = () => {
                     </Link>
                     <div className={classes.grid_item}>{item.uniProtkbId}</div>
                     <div className={classes.grid_item}>
-                      {item.genes[0].geneName.value}
+                      {item.genes &&
+                      item.genes.length > 0 &&
+                      item.genes[0].geneName
+                        ? item.genes[0].geneName.value
+                        : "N/A"}
                     </div>
                     <div className={classes.grid_item}>
                       {item.organism.scientificName}

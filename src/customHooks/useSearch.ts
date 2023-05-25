@@ -49,7 +49,6 @@ export default function useSearch(query: string, size: number) {
         );
 
         const results = response.data.results;
-        console.log(results);
         setResult(results);
       } catch (e) {
         if (axios.isCancel(e)) {

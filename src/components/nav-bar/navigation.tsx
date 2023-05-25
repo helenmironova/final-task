@@ -10,9 +10,8 @@ const Navigation = () => {
     try {
       await logout();
       navigate("/");
-      console.log("You are logged out");
-    } catch (e) {
-      console.log(e.message);
+    } catch (error: any) {
+      console.log(error.message);
     }
   };
   return (

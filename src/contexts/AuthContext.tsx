@@ -6,30 +6,44 @@ import {
   ReactNode,
 } from "react";
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword as createUser,
+  signInWithEmailAndPassword as signIn,
   signOut,
   onAuthStateChanged,
+  UserCredential,
 } from "firebase/auth";
 import { auth } from "../utils/firebase/firebase.utils";
+import { User } from "firebase/auth";
 
 interface AuthContextProviderProps {
   children: ReactNode;
 }
 
-const UserContext = createContext();
+interface UserContextValue {
+  user: User | null;
+  logout: () => void;
+  createUser: (email: string, password: string) => Promise<UserCredential>;
+  signIn: (email: string, password: string) => Promise<UserCredential>;
+}
+
+const UserContext = createContext<UserContextValue>({
+  user: null,
+  logout: () => {},
+  createUser: () => Promise.reject(),
+  signIn: () => Promise.reject(),
+});
 
 export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   children,
 }) => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<User | null>(null);
 
-  const createUser = (email: string, password: string) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  const createUserWithEmailAndPassword = (email: string, password: string) => {
+    return createUser(auth, email, password);
   };
 
-  const signIn = (email: string, password: string) => {
-    return signInWithEmailAndPassword(auth, email, password);
+  const signInWithEmailAndPassword = (email: string, password: string) => {
+    return signIn(auth, email, password);
   };
 
   const logout = () => {
@@ -38,7 +52,6 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
       setUser(currentUser);
     });
     return () => {
@@ -47,7 +60,14 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   }, []);
 
   return (
-    <UserContext.Provider value={{ createUser, user, logout, signIn }}>
+    <UserContext.Provider
+      value={{
+        createUser: createUserWithEmailAndPassword,
+        user,
+        logout,
+        signIn: signInWithEmailAndPassword,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
