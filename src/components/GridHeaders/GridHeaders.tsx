@@ -38,20 +38,25 @@ const GridHeaders = (props: any) => {
         dispatch(removeItems());
         props.fetchData(url);
       }  
+      let sortBy = "";
       let sortType = "";
       if(selected===1){
-        sortType = 'accession';
+        sortBy = 'accession';
       }else if(selected===2){
-        sortType = 'id';
+        sortBy = 'id';
       }else if(selected===3){
-        sortType = 'gene';
+        sortBy = 'gene';
       }else if(selected===4){
-        sortType = 'organism_name';
+        sortBy = 'organism_name';
       }else if(selected===5){
-        sortType = 'length';
+        sortBy = 'length';
       }
-      if(sortType==='') return url;
-      url+=`&sort=${sortType}%20asc`
+      if(type===0){
+        sortType = 'asc';
+      }else if(type===1){
+        sortType = 'desc';
+      }
+      url+=`&sort=${sortBy}%20${sortType}`
       return url;
     }
     const addFilter = (url: string) => {
@@ -74,11 +79,13 @@ const GridHeaders = (props: any) => {
     }
 
     let url = `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=(${(searchText==='' || searchText===null) ? "*" : searchText})`;
-    url = addFilter(url);
-    url = addSortType(url);
+    if(selected!==0){
+      url = addFilter(url);
+      url = addSortType(url);
+    }
     props.fetchData(url, false, false, true);
 
-  }, [selected])
+  }, [selected, type])
 
 
   return (
