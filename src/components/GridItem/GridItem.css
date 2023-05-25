@@ -1,6 +1,6 @@
 .itemWrapper{
     display: inline-flex;
-    width: 1020px;
+    max-width: 1020px;
     min-height: 48px;
 }
 
