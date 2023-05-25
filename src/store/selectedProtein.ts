@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 import {loadState} from '../localStorage';
 
-const persistedState = loadState("state").selectedProtein;
+const persistedState = loadState("state")?.selectedProtein;
 
 const initialState: string = persistedState || '';
 
