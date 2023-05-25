@@ -1,27 +1,29 @@
-import { useEffect} from 'react';
+import { useEffect, useState} from 'react';
 import './GridHeaders.css';
 import logo1 from '../../assets/Vector.png';
 import logo2 from '../../assets/Vector2.png';
+import logo3 from '../../assets/desc.png'
 import { useDispatch, useSelector } from 'react-redux';
 import { removeItems } from '../../store/listItems';
-import { setNewSelected } from '../../store/selected';
 
 const GridHeaders = (props: any) => {
-    const selected = useSelector((state: any) => state.selected);
-    const searchText = useSelector((state: any)=>state.searchText);
-    const filterOptions = useSelector((state: any)=> state.filterOptions)
     const dispatch = useDispatch();
 
-    const setSelected = (newNum: any) => {
-      dispatch(setNewSelected(newNum));
-    }
+    const searchText = useSelector((state: any)=>state.searchText);
+    const filterOptions = useSelector((state: any)=> state.filterOptions)
 
-    const handleLogoClick = (logoNumber: number) => {
-        if(selected===logoNumber){
-            setSelected(0);
-            return;
+    const [selected, setSelected] = useState(0);
+    const [type, setType] = useState(0);
+
+
+    const handleLogoClick = (clicked: number) => {
+        if(selected===clicked){
+            if(type===1) setSelected(0); //if I clicked on a sorting icon that was sorting desc, selected points to 0 (nothing);
+            if(type==0) setType(1); //if I clicked on a sorting icon that was sorting asc, sortType changes to type 1 (desc);
+        }else{
+          setType(0); //I clicked on a new sorting icon, sortType becomes 0 (asc);
+          setSelected(clicked);
         }
-        setSelected(logoNumber);
     };
   
   /*
@@ -84,26 +86,26 @@ const GridHeaders = (props: any) => {
       <div className='number'>#</div>
       <div className='entry'>
         <p className='entryP'>Entry</p>
-        <img src={selected===1 ? logo2 : logo1} className='logo' onClick={()=>handleLogoClick(1)} />
+        <img src={selected===1 ? (type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(1)} />
       </div>
       <div className='entryName'>
         <p className='entryP'>Entry Names</p>
-        <img src={selected===2 ? logo2 : logo1} className='logo' onClick={()=>handleLogoClick(2)} />
+        <img src={selected===2 ? (type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(2)} />
       </div>
       <div className='entryName'>
         <p className='entryP'>Genes</p>
-        <img src={selected===3 ? logo2 : logo1} className='logo' onClick={()=>handleLogoClick(3)} />
+        <img src={selected===3 ? (type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(3)} />
       </div>
       <div className='entryName'>
         <p className='entryP'>Organism</p>
-        <img src={selected===4 ? logo2 : logo1} className='logo' onClick={()=>handleLogoClick(4)} />
+        <img src={selected===4 ? (type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(4)} />
       </div>
       <div className='subcel'>
         <p className='entryP'>Subcellular Location</p>
       </div>
       <div className='length'>
         <p className='entryP'>Length</p>
-        <img src={selected===5 ? logo2 : logo1} className='logo' onClick={()=>handleLogoClick(5)} />
+        <img src={selected===5 ? (type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(5)} />
       </div>
     </div>
   );
