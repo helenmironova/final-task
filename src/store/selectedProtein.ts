@@ -1,6 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-const initialState: string = '';
+import {loadState} from '../localStorage';
+
+const persistedState = loadState("state").selectedProtein;
+
+const initialState: string = persistedState || '';
 
 export const selectedProteinSlice = createSlice({
   name: 'selectedProtein',

@@ -66,18 +66,16 @@ const HomePage = () => {
             <HomePageHeader />
             <SearchBar fetchData={fetchData}/>
             <div className='resultsWrapper'>
-                {!dataToDisplay && <p className='noDataToDisplayP'>No data to display.<br/> Please start a search to display results.</p>}
-                {dataToDisplay && 
-                    <div className='dataWrapper'>
-                      <GridHeaders fetchData={fetchData} selected={selected} setSelected={setSelected}/>
-                        <div className='itemsWrapper' onScroll={handleScroll}>
-                            {listItems?.map((item: any, index: number) => (
-                                <GridItem item={item} index={index} key={uuidv4()}/>
-                            ))}
-                        </div>
-                        {loading && <div className='loadingWrapper'>Loading...</div>}
+                {/* {!dataToDisplay && <p className='noDataToDisplayP'>No data to display.<br/> Please start a search to display results.</p>} */}
+                <div className='dataWrapper'>
+                  <GridHeaders fetchData={fetchData} selected={selected} setSelected={setSelected}/>
+                    <div className='itemsWrapper' onScroll={handleScroll}>
+                        {listItems?.map((item: any, index: number) => (
+                            <GridItem item={item} index={index} key={uuidv4()}/>
+                        ))}
                     </div>
-                }
+                    {loading && <div className='loadingWrapper'>Loading...</div>}
+                </div>
             </div>
         </div>
     )

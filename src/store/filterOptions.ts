@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { loadState } from '../localStorage';
 
-const initialState = {
+const persistedState = loadState('state').filterOptions;
+
+const initialState = persistedState || {
     isOpen: false,
     geneName: null,
     organism: null,

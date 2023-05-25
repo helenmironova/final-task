@@ -1,6 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { loadState } from '../localStorage';
 
-const initialState: string = '';
+const persistedState = loadState('state').searchText
+
+const initialState: string = persistedState || '';
 
 export const searchTextSlice = createSlice({
   name: 'searchText',

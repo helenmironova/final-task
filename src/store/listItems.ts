@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { loadState } from '../localStorage';
 
-const initialState: any = {
+const persistedState = loadState('state').listItems;
+
+const initialState: any = persistedState || {
   items: [],
   isLoading: false,
   nextUrl: '',

@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { loadState } from '../localStorage';
 
-const initialState = {
+const persistedState = loadState("state").selectorOptions;
+
+const initialState = persistedState || {
     alreadyFetched: false,
     organismOptions: [],
     annotationOptions: [],

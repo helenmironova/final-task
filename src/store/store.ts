@@ -5,7 +5,7 @@ import selectorOptionsReducer from './selectorOptions';
 import searchTextReducer from './searchText'
 import thunkMiddleware from 'redux-thunk';
 import selectedProteinReducer from './selectedProtein'
-
+import { saveState } from '../localStorage';
 
 const store = configureStore({
     reducer: {
@@ -22,6 +22,17 @@ const store = configureStore({
         },
         serializableCheck: false, // Disable serializable state check
         }).concat(thunkMiddleware),
+});
+
+store.subscribe(() => {
+    saveState({
+     /* example state */
+      listItems:store.getState().listItems,
+      filterOptions:store.getState().filterOptions,
+      selectorOptions: store.getState().selectorOptions,
+      searchText: store.getState().searchText,
+      selectedProtein: store.getState().selectedProtein,
+    }, 'state');
 });
 
 export default store;
