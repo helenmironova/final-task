@@ -8,6 +8,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import BasicData from '../../components/BasicData/BasicData';
 import Paths from '../../components/Paths/Paths';
+import DetailsTab from '../../components/DetailsTab/DetailsTab';
 
 const ProteinPage = () => {
     const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
@@ -35,10 +36,11 @@ const ProteinPage = () => {
             <BasicData protein={protein.protein} />
             <Paths tab={tab} setTab={setTab}/>
             {/* Render content based on the selected tab */}
-            {tab === 'details' && <div>Details Content</div>}
-            {tab === 'feature' && <div>Feature Viewer Content</div>}
-            {tab === 'publications' && <div>Publications Content</div>}
-            
+            <div className='content'>
+                {tab === 'details' && <DetailsTab/>}
+                {tab === 'feature' && <div>Feature Viewer Content</div>}
+                {tab === 'publications' && <div>Publications Content</div>}
+            </div>
         </div>
         </div>
     );
