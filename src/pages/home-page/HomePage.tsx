@@ -3,19 +3,22 @@ import HomePageHeader from '../../components/HomePageHeader/HomePageHeader';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import GridHeaders from '../../components/GridHeaders/GridHeaders';
 import GridItem from '../../components/GridItem/GridItem';
-import {useEffect, useState } from 'react';
+import {useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { addListItems, setNextUrl } from '../../store/listItems';
+import { fetchItems} from '../../store/listItems';
 import { removeItems } from '../../store/listItems';
 import { setNewSelected } from '../../store/selected';
 import { setNewValue } from '../../store/filterOptions';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
 
 const HomePage = () => {
-    const dispatch = useDispatch()
+    const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
 
     const listItems = useSelector((state: any) => state.listItems.items);
     const nextUrl = useSelector((state: any) => state.listItems.nextUrl);
+    const loading = useSelector((state: any) => state.listItems.isLoading)
     
     const [dataToDisplay, setDataToDisplay] = useState(false);
 
@@ -27,19 +30,6 @@ const HomePage = () => {
     const fetchData = (url: string, removeFilterOptions: boolean, removeGridFilter: boolean, removePreviousItems: boolean) => {
         dispatch(setNewValue({isOpen: false}))
   
-        //given link header returns it as url;
-        const parseNextLink = (linkHeader: string | null): string | null => {
-            if (linkHeader) {
-              const links = linkHeader.split(", ");
-              for (const link of links) {
-                const [url, rel] = link.split("; ");
-                if (rel === 'rel="next"') {
-                  return url.slice(1, -1); // Remove the angle brackets around the URL
-                }
-              }
-            }
-            return null;
-        };
         const removeFilters = () => {
           dispatch(setNewValue({
             geneName: null,
@@ -55,21 +45,7 @@ const HomePage = () => {
         if(removeGridFilter) dispatch(setNewSelected(0));
         if(removePreviousItems) dispatch(removeItems());
         setDataToDisplay(true);
-        
-        fetch(url)
-          .then((response) => {
-            const linkHeader = response.headers.get("Link");
-            const nextUrl = parseNextLink(linkHeader);
-            return Promise.all([response.json(), nextUrl]);
-          })
-          .then(([data, nextUrl]) => {
-            const newItems = data.results;
-            dispatch(setNextUrl(nextUrl || ''));
-            dispatch(addListItems(newItems));
-          })
-          .catch((error) => {
-            console.error(error);
-          }) 
+        dispatch(fetchItems(url));
     };
     
     /*
@@ -99,6 +75,7 @@ const HomePage = () => {
                                 <GridItem item={item} index={index} key={uuidv4()}/>
                             ))}
                         </div>
+                        {loading && <div className='loadingWrapper'>Loading...</div>}
                     </div>
                 }
             </div>

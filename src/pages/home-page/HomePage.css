@@ -50,7 +50,7 @@
     overflow-x: hidden;
 }
 
-.fetchingWrapper{
+.loadingWrapper{
     display: flex;
     background-color: #616161;
     border-radius: 20px;
@@ -60,6 +60,9 @@
     text-align: center;
     color: white;
     position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     width: 200px;
     height: 60px;
 }
