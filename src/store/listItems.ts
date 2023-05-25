@@ -1,21 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState: any = [];
+const initialState: any = {
+  items: [],
+  isLoading: false,
+  nextUrl: '',
+};
 
 export const listItemsSlice = createSlice({
   name: 'listItems',
   initialState,
   reducers: {
     addListItems: (state, action) => {
-      state.push(...action.payload);
+      state.items.push(...action.payload);
     },
     removeItems: (state) => {
-      state.splice(0, state.length);
+      state.items.splice(0, state.items.length);
+    },
+    setNextUrl: (state, action) => {
+      state.nextUrl = action.payload;
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addListItems, removeItems} = listItemsSlice.actions
+export const { addListItems, removeItems, setNextUrl} = listItemsSlice.actions
 
 export default listItemsSlice.reducer

@@ -3,20 +3,21 @@ import HomePageHeader from '../../components/HomePageHeader/HomePageHeader';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import GridHeaders from '../../components/GridHeaders/GridHeaders';
 import GridItem from '../../components/GridItem/GridItem';
-import {useState } from 'react';
+import {useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { addListItems } from '../../store/listItems';
+import { addListItems, setNextUrl } from '../../store/listItems';
 import { removeItems } from '../../store/listItems';
 import { setNewSelected } from '../../store/selected';
 import { setNewValue } from '../../store/filterOptions';
 
 const HomePage = () => {
-    const [dataToDisplay, setDataToDisplay] = useState(false);
-    const listItems = useSelector((state: any) => state.listItems);
     const dispatch = useDispatch()
-    const [nextUrl, setNextUrl] = useState<string>("");
-    const [fetching, setFetching] = useState(false);
+
+    const listItems = useSelector((state: any) => state.listItems.items);
+    const nextUrl = useSelector((state: any) => state.listItems.nextUrl);
+    
+    const [dataToDisplay, setDataToDisplay] = useState(false);
 
     /*
         fethes data from given url;
@@ -26,7 +27,6 @@ const HomePage = () => {
     const fetchData = (url: string, removeFilterOptions: boolean, removeGridFilter: boolean, removePreviousItems: boolean) => {
         dispatch(setNewValue({isOpen: false}))
   
-        
         //given link header returns it as url;
         const parseNextLink = (linkHeader: string | null): string | null => {
             if (linkHeader) {
@@ -54,8 +54,8 @@ const HomePage = () => {
         if(removeFilterOptions) removeFilters();
         if(removeGridFilter) dispatch(setNewSelected(0));
         if(removePreviousItems) dispatch(removeItems());
-
-        setFetching(true);
+        setDataToDisplay(true);
+        
         fetch(url)
           .then((response) => {
             const linkHeader = response.headers.get("Link");
@@ -64,18 +64,12 @@ const HomePage = () => {
           })
           .then(([data, nextUrl]) => {
             const newItems = data.results;
-            setDataToDisplay(true);
-            setNextUrl(nextUrl || '');
+            dispatch(setNextUrl(nextUrl || ''));
             dispatch(addListItems(newItems));
           })
           .catch((error) => {
             console.error(error);
           }) 
-          .finally(() => {
-            setTimeout(() => {
-              setFetching(false);
-            }, 200);
-          });
     };
     
     /*
@@ -101,15 +95,13 @@ const HomePage = () => {
                     <div className='dataWrapper'>
                       <GridHeaders fetchData={fetchData}/>
                         <div className='itemsWrapper' onScroll={handleScroll}>
-                            {listItems.map((item: any, index: number) => (
+                            {listItems?.map((item: any, index: number) => (
                                 <GridItem item={item} index={index} key={uuidv4()}/>
                             ))}
                         </div>
                     </div>
                 }
             </div>
-
-            {fetching && <div className='fetchingWrapper'>Loading...</div>}
         </div>
     )
 }
