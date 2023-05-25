@@ -10,14 +10,23 @@ import {
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { useNavigate } from "react-router-dom";
-import { selectProteinData } from "../../features/proteinData/proteinsSearchSlice";
-import { selectProteinDetails, fetchProteinDetails, setId } from "../../features/proteinData/proteinDetailsSlice";
+import {
+  selectProteinData,
+  scrollProteins,
+} from "../../features/proteinData/proteinsSearchSlice";
+import {
+  selectProteinDetails,
+  fetchProteinDetails,
+  setId,
+} from "../../features/proteinData/proteinDetailsSlice";
+
+import React from "react";
 
 const DataTable = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const proteinDataState = useAppSelector(selectProteinData);
-  const  proteinDetails = useAppSelector(selectProteinDetails);
+  const proteinDetails = useAppSelector(selectProteinDetails);
   const proteins = proteinDataState.data;
   let counter = 1;
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -25,12 +34,26 @@ const DataTable = () => {
       (event.target as HTMLTableCellElement)
         .parentElement as HTMLTableRowElement
     ).id;
-    dispatch(setId( rowId));
-    dispatch(fetchProteinDetails({entry : rowId}));
-    if(proteinDetails.loading === false){
-    navigate(`/protein/${rowId}`)
+    dispatch(setId(rowId));
+    dispatch(fetchProteinDetails({ entry: rowId }));
+    if (proteinDetails.loading === false) {
+      navigate(`/protein/${rowId}`);
     }
-    
+  };
+  const handleScroll = (event: React.UIEvent<HTMLTableElement>) => {
+    const target = event.currentTarget;
+    if (
+      Math.floor(target.scrollTop + target.clientHeight) >= target.scrollHeight
+    ) {
+      if (proteinDataState.link) {
+        const string = proteinDataState.link.replace(/<|>/g, "");
+        const match = string.match(/[^;]+/);
+        if (match) {
+          const url = match[0];
+          dispatch(scrollProteins({ link: url }));
+        }
+      }
+    }
   };
 
   const tableRows = proteins?.map((item) => (
@@ -57,7 +80,7 @@ const DataTable = () => {
   return (
     <div className="dataTable">
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <TableContainer sx={{ maxHeight: "70vh" }}>
+        <TableContainer sx={{ maxHeight: "70vh" }} onScroll={handleScroll}>
           <Table
             stickyHeader
             aria-label="sticky table"

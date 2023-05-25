@@ -31,7 +31,7 @@ interface protein {
 }
 
 interface ProteinData {
-  link: string | null
+  link: string | null;
   data: [protein] | null;
   loading: boolean;
   error: string | null;
@@ -50,9 +50,18 @@ export const fetchProteins = createAsyncThunk(
     const responce = await fetch(
       `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,cc_subcellular_location&query=(${query})`
     );
-    const link = responce.headers.get("link")
+    const link = responce.headers.get("link");
     const data = await responce.json();
-    return {data, link};
+    return { data, link };
+  }
+);
+export const scrollProteins = createAsyncThunk(
+  "proteinData/scroll",
+  async ({ link }: { link: string }) => {
+    const responce = await fetch(link);
+    const data = await responce.json();
+    const newLink = responce.headers.get("link");
+    return { data, newLink };
   }
 );
 
@@ -69,9 +78,22 @@ export const proteinsSearchSlice = createSlice({
       .addCase(fetchProteins.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload.data.results;
-        state.link = action.payload.link
+        state.link = action.payload.link;
       })
       .addCase(fetchProteins.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Could not get the data.";
+      })
+      .addCase(scrollProteins.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(scrollProteins.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = ([...(state.data as [protein]), ... action.payload.data.results] ) as [protein];
+        state.link = action.payload.newLink;
+      })
+      .addCase(scrollProteins.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Could not get the data.";
       });

@@ -77,7 +77,7 @@ const SearchPage = () => {
           ) : proteinDataState?.data?.length < 1 ? (
             <Placeholder text="Could not find anything. Please search for something else" />
           ) : proteinDataState.error ? (
-            <Placeholder text="no" />
+            <Placeholder text="An error occured" />
           ) : proteinDataState.loading ? (
             <div className="dna_spinner">
             <Dna

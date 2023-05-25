@@ -26,7 +26,7 @@ const App = () => {
         <Route path="/auth/signup" element={authState.user ? <Navigate to="/search" /> :  <SignupPage/>} />
         <Route path="/not-found" element={ <NotFoundPage/>} />
         <Route path="*" element={<Navigate to="/not-found" />} />
-        <Route path="/search" element={authState.user ? <SearchPage/> : <Navigate to="/" />} />
+        <Route path="/search" element={ <SearchPage/> } />
         <Route path={`/protein/${proteinDetails.id}`} element={authState.user ? <ProteinPage/> : <Navigate to="/" />} > 
           <Route path={`/protein/${proteinDetails.id}/details`} element={authState.user ? <ProteinDetails/> : <Navigate to="/" />}/>
          
