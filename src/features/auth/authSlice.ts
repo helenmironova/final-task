@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
  import { RootState } from "../../app/store";
 import {auth} from "../../firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut  } from "firebase/auth";
+import { createUserWithEmailAndPassword,  signInWithEmailAndPassword, signOut  } from "firebase/auth";
 import { User as FirebaseUser } from "firebase/auth";
 
 
@@ -16,11 +16,14 @@ import { User as FirebaseUser } from "firebase/auth";
     loading: false,
     error: null,
   };
+ 
 
   export const login = createAsyncThunk(
     'auth/login',
     async ({ email, password }: { email: string; password: string }) => {
       const data = await signInWithEmailAndPassword(auth, email, password);
+      const jsonData = await JSON.stringify(data.user)
+      localStorage.setItem("firebase", jsonData);
       return data;
     }
   );
@@ -92,6 +95,7 @@ export const authSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || 'Log out failed.';
       })
+    
   },
 });
 

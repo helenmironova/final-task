@@ -6,9 +6,12 @@
 }
 .searchPage__container {
   width: 80vw;
-  
 }
 .searchPage__searchfield {
   display: flex;
   gap: 10px;
+}
+.dna_spinner {
+  display: flex;
+  justify-content: center;
 }

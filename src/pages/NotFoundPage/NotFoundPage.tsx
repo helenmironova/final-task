@@ -11,7 +11,7 @@ const NotFoundPage = () => {
         <div className="notFoundPage__container">
           <h1>404</h1>
           <div className="notFoundPage__text">Page Not Found</div>
-          <NavLink to="/auth">
+          <NavLink to="/search">
             <Button
               className="btn__notFound"
               sx={{

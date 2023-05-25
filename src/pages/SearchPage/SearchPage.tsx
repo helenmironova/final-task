@@ -6,9 +6,10 @@ import TuneIcon from "@mui/icons-material/Tune";
 import { useSearchParams } from "react-router-dom";
 import Placeholder from "../../components/Placeholder/Placeholder";
 import DataTable from "../../components/DataTable/DataTable";
-import { fetchProteinData } from "../../features/proteinData/proteinDataSlice";
+import { fetchProteins } from "../../features/proteinData/proteinsSearchSlice";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { selectProteinData } from "../../features/proteinData/proteinDataSlice";
+import { selectProteinData } from "../../features/proteinData/proteinsSearchSlice";
+import { Dna } from "react-loader-spinner";
 
 const SearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -25,7 +26,7 @@ const SearchPage = () => {
     >;
     const data = Object.fromEntries(formData);
     setSearchParams({ query: data.query });
-    dispatch(fetchProteinData({ query: data.query ? data.query : "*" }));
+    dispatch(fetchProteins({ query: data.query ? data.query : "*" }));
   }
 
   return (
@@ -73,10 +74,21 @@ const SearchPage = () => {
           </form>
           {proteinDataState.data === null ? (
             <Placeholder text="No data to display. Please start search to display results" />
-          ) : proteinDataState.data.length < 1 ? (
+          ) : proteinDataState?.data?.length < 1 ? (
             <Placeholder text="Could not find anything. Please search for something else" />
           ) : proteinDataState.error ? (
             <Placeholder text="no" />
+          ) : proteinDataState.loading ? (
+            <div className="dna_spinner">
+            <Dna
+              visible={true}
+              height="180"
+              width="180"
+              ariaLabel="dna-loading"
+              wrapperStyle={{}}
+              wrapperClass="dna-wrapper"
+            />
+            </div>
           ) : (
             <DataTable />
           )}

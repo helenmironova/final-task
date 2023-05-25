@@ -8,16 +8,33 @@ import {
   TableRow,
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { useAppSelector } from "../../app/hooks";
-import { selectProteinData } from "../../features/proteinData/proteinDataSlice";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { useNavigate } from "react-router-dom";
+import { selectProteinData } from "../../features/proteinData/proteinsSearchSlice";
+import { selectProteinDetails, fetchProteinDetails, setId } from "../../features/proteinData/proteinDetailsSlice";
 
 const DataTable = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const proteinDataState = useAppSelector(selectProteinData);
+  const  proteinDetails = useAppSelector(selectProteinDetails);
   const proteins = proteinDataState.data;
   let counter = 1;
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rowId = (
+      (event.target as HTMLTableCellElement)
+        .parentElement as HTMLTableRowElement
+    ).id;
+    dispatch(setId( rowId));
+    dispatch(fetchProteinDetails({entry : rowId}));
+    if(proteinDetails.loading === false){
+    navigate(`/protein/${rowId}`)
+    }
+    
+  };
 
   const tableRows = proteins?.map((item) => (
-    <TableRow key={++counter}>
+    <TableRow key={++counter} id={item.primaryAccession} onClick={handleClick}>
       <TableCell>{counter}</TableCell>
       <TableCell sx={{ color: "#175BC0" }}>{item.primaryAccession}</TableCell>
       <TableCell sx={{ maxWidth: "150px" }}>{item.uniProtkbId}</TableCell>
@@ -25,9 +42,7 @@ const DataTable = () => {
         {item?.genes?.map((item) => item.geneName?.value).join(", ")}
       </TableCell>
       <TableCell sx={{ maxWidth: "150px" }}>
-        <span className="dataTable__organism">
-          {item?.organism?.scientificName}
-        </span>
+        {item?.organism?.scientificName}
       </TableCell>
       <TableCell sx={{ maxWidth: "150px" }}>
         {item?.comments[0]
