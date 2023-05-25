@@ -4,6 +4,7 @@ import filterOptionsReducer from './filterOptions';
 import selectorOptionsReducer from './selectorOptions';
 import searchTextReducer from './searchText'
 import thunkMiddleware from 'redux-thunk';
+import selectedProteinReducer from './selectedProtein'
 
 
 const store = configureStore({
@@ -12,6 +13,7 @@ const store = configureStore({
         filterOptions: filterOptionsReducer,
         selectorOptions: selectorOptionsReducer,
         searchText: searchTextReducer,
+        selectedProtein: selectedProteinReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

@@ -2,8 +2,12 @@ import { v4 as uuidv4 } from 'uuid';
 import './GridItem.css'
 import {useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setNewSelectedProtein } from '../../store/selectedProtein';
 
 const GridItem = (props: any) => {   
+    const dispatch = useDispatch();
+
     const [locations, setLocations] = useState<string[]>([]);
 
     if (props.item.comments && props.item.comments.length > 0) {
@@ -30,11 +34,14 @@ const GridItem = (props: any) => {
         return words.slice(0, 2).join(', ') + ', ...';
     }
 
-    
+    const handleLinkClick = () => {
+        dispatch(setNewSelectedProtein(props.item.primaryAccession));
+    };
+
     return(
         <div className='itemWrapper'>
             <div className='numberDiv'>{props.index+1}</div>
-            <div className='entryDiv'><Link to={"/protein"}>{props.item.primaryAccession}</Link></div>
+            <div className='entryDiv'><Link to={"/protein"} onClick={handleLinkClick} >{props.item.primaryAccession}</Link></div>
             <div className='entryNameDiv'>{props.item.uniProtkbId}</div>
             <div className='genesDiv'>
                 {props.item.genes?.map((gene: any) => (
