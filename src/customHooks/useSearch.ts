@@ -35,6 +35,8 @@ export default function useSearch(query: string, size: number) {
       }
       cancel = axios.CancelToken.source();
 
+      if (!query) return;
+
       try {
         const response = await axios.get<{
           results: SearchResult[];

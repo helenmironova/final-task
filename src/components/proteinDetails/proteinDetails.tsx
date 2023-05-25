@@ -1,9 +1,9 @@
 import classes from "./proteinDetails.module.css";
 
 interface IProteinDetails {
-  length: number;
+  length: string;
   weight: number;
-  lastUpdateDate: string;
+  lastUpdateDate: Date;
   checkSum: string;
   sectionText: string;
 }
@@ -32,7 +32,7 @@ function ProteinDetails({
         <div className={classes.lengthAndMass}>
           <div className={classes.margin_bottom}>
             <div>Last updated</div>
-            <div>{lastUpdateDate}</div>
+            <div>{lastUpdateDate.toString()}</div>
           </div>
           <div>
             <div>Checksum</div>

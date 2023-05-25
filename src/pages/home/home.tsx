@@ -9,7 +9,6 @@ const Home: React.FC = () => {
     <div className={classes.container}>
       <div className={classes.content}>
         <h1 className={classes.heading}>{"Q1 - Search"}</h1>
-        <h1 className={classes.heading}>{"ბრენჩზე დაიწყე მუშაობა!!!"}</h1>
         <p className={classes.text}>
           {
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"

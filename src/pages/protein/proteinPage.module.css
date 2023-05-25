@@ -26,10 +26,6 @@
   border-radius: 12px;
 }
 
-.sections {
-  /* display: flex; */
-}
-
 .headline {
   display: flex;
   justify-content: space-between;

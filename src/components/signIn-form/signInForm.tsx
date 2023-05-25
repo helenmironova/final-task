@@ -19,6 +19,7 @@ const defaultFormFields: FormFields = {
 const SignInForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const { signIn } = UserAuth();
   const navigate = useNavigate();
 
@@ -31,10 +32,12 @@ const SignInForm: React.FC = () => {
     } catch (error: any) {
       switch (error.code) {
         case "auth/wrong-password":
-          alert("incorrect password for email");
+          setError(
+            "Login failed! Please,  check you password and email!"
+          );
           break;
         case "auth/user-not-found":
-          alert("no user associated with this email");
+          setError("You are not registered!");
           break;
         default:
           console.log(error);
@@ -68,6 +71,7 @@ const SignInForm: React.FC = () => {
           placeholder="Enter your password"
           styles="formInput"
         />
+        {error && <div className={classes.error}>{error}</div>}
         <div className={classes.buttons_container}>
           <Button type="submit" placeholder="Login" styles="signIn" />
         </div>

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 import Navigation from "../../components/nav-bar/navigation";
 import ProteinDetails from "../../components/proteinDetails/proteinDetails";
+import LoadingSpinner from "../../components/loadingSpinner/loadingSpinner";
 import ProteinPublications from "../../components/protein-publications/proteinPublications";
 import { fetchData } from "../../api/axios/fetchData";
 
@@ -60,7 +61,7 @@ function ProteinPage() {
   }, []);
 
   if (!state) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   } else {
     return (
       <Fragment>
@@ -119,9 +120,10 @@ function ProteinPage() {
               )}
               {view === "publications" &&
                 publications !== null &&
-                publications.map((item: IPublications) => {
+                publications.map((item: IPublications, index) => {
                   return (
                     <ProteinPublications
+                      key={index}
                       title={item.citation.title}
                       authors={item.citation.authors}
                       journals={item.citation.journal}
