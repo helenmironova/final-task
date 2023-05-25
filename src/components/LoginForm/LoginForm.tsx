@@ -59,6 +59,7 @@ const LoginForm = () => {
     console.log('submitted');
     checkInputs();
     if (!(isValidEmail && isValidPassword)) return;
+    setIsButtonClicked(false);
     setIsButtonClicked(true); // Set button clicked
   };
 
