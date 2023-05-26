@@ -1,0 +1,28 @@
+.login-block__main{
+    position: absolute;
+    width: 300px;
+    top: 160px;
+    right: 160px; 
+ 
+}
+.login-block__title{
+    font-weight: 600;
+    font-size: 32px;
+    margin: 0 0 11px 0;
+}
+.login-block__text{
+    font-size: 14px;
+    color: #616161;
+    margin: 0 0 30px 0;
+}
+#login-block__login-btn{
+    background: #FFFFFF;
+    border-radius: 24px;
+    padding: 16px 62px;
+    color: #175BC0;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: initial;
+    font-family: inherit;
+    
+}
