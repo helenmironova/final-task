@@ -1,6 +1,4 @@
-.signIn,
-.goBackButton,
-.signUp {
+.text {
   width: 158px;
   height: 48px;
   font-weight: 700;
@@ -8,15 +6,6 @@
   line-height: 16px;
   border-radius: 12px;
   border: none;
-}
-
-.goBackButton {
-  background: #d8e7ff;
-  color: #000000;
-}
-
-.signIn,
-.signUp {
   color: #175bc0;
   background-color: #d8e7ff;
 }

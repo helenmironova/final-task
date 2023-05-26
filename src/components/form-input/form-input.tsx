@@ -1,39 +1,27 @@
 import React, { Fragment, ChangeEvent } from "react";
-import classes from "./form-inpute.module.css"
+import classes from "./form-input.module.css";
 
 interface FormInputProps {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  value?: string;
   type: string;
   name: string;
+  placeholder?: string;
+  value?: string;
   required: boolean;
   label?: string;
-  placeholder: string;
-  styles: string;
+  styles?: string;
 }
 
 const FormInput: React.FC<FormInputProps> = ({
-  onChange,
-  value,
-  type,
-  name,
-  required,
   label,
-  placeholder,
-  styles,
+  styles = "searchField",
+  required = "false",
+  ...rest
 }) => {
   return (
     <Fragment>
       <label>{label}</label>
-      <input
-        type={type}
-        onChange={onChange}
-        name={name}
-        value={value}
-        placeholder={placeholder}
-        required={required}
-        className={classes[styles]}
-      />
+      <input className={classes[styles]} {...rest} />
     </Fragment>
   );
 };

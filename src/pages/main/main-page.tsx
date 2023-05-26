@@ -7,9 +7,9 @@ import {
   RefCallback,
   useEffect,
 } from "react";
-import classes from "./mainPage.module.css";
+import classes from "./main-page.module.css";
 import { Link } from "react-router-dom";
-import useSearch, { SearchResult } from "../../hooks/useSearch";
+import { useSearch, SearchResult } from "../../hooks/use-search";
 
 import Navigation from "../../components/nav-bar/navigation";
 import FormInput from "../../components/form-input/form-input";
@@ -42,12 +42,12 @@ const MainPage = () => {
     []
   );
 
-  function handleSearch(e: ChangeEvent<HTMLInputElement>) {
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
     setSize(25);
-  }
+  };
 
-  function sortingHandler(column: string) {
+  const sortingHandler = (column: string) => {
     console.log("clicked 1");
     if (order === "ASC") {
       console.log("clicked ");
@@ -64,7 +64,7 @@ const MainPage = () => {
       setData(sorted);
       setOrder("ASC");
     }
-  }
+  };
 
   return (
     <Fragment>

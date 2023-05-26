@@ -15,7 +15,7 @@ const Home: React.FC = () => {
           }
         </p>
         <Link to="auth">
-          <Button placeholder="Sign In" type="button" styles="signIn" />
+          <Button placeholder="Sign In" type="button" variant="text" />
         </Link>
       </div>
     </div>

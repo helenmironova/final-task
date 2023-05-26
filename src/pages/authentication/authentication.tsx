@@ -1,31 +1,17 @@
 import classes from "./authentication.module.css";
 import { useState } from "react";
 
-import SignInForm from "../../components/signIn-form/signInForm";
-import SignUpForm from "../../components/signUp-form/signUpForm";
+import SignInForm from "../../components/sign-in-form/sign-in-form";
+import SignUpForm from "../../components/sign-up-form/sign-up-form";
 
 const Authentication: React.FC = () => {
   const [registered, setRegistered] = useState(true);
 
-  const formDisplayHandler = () => {
-    setRegistered((prevState) => !prevState);
-  };
-
   return (
     <div className={classes.container}>
       <div className={classes.content}>
-        {registered && <SignInForm />}
-        {!registered && <SignUpForm />}
-        {registered && (
-          <p>
-            Don't have an account? <a onClick={formDisplayHandler}>Sign Up</a>
-          </p>
-        )}
-        {!registered && (
-          <p>
-            Already have an account? <a onClick={formDisplayHandler}>Login</a>
-          </p>
-        )}
+        {registered && <SignInForm setRegistered={setRegistered} />}
+        {!registered && <SignUpForm setRegistered={setRegistered} />}
       </div>
     </div>
   );

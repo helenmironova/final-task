@@ -3,15 +3,15 @@ import "./App.css";
 import { Route, Routes, Navigate } from "react-router-dom";
 
 import Home from "./pages/home/home";
-import NotFound from "./pages/not-found/notFound";
+import NotFound from "./pages/not-found/not-found";
 import Authentication from "./pages/authentication/authentication";
-import MainPage from "./pages/main/mainPage";
-import ProtectedRoutes from "./components/protected-routes/protected-routes";
-import ProteinPage from "./pages/protein/proteinPage";
-import { UserAuth } from "./contexts/AuthContext";
+import MainPage from "./pages/main/main-page";
+import AuthLayout from "./components/auth-layout/auth-layout";
+import ProteinPage from "./pages/protein/protein-page";
+import { UserAuth } from "./contexts/auth-context";
 
 const App = () => {
-  const { user } = UserAuth();
+  const { user } =  UserAuth();
 
   return (
     <Routes>
@@ -26,17 +26,17 @@ const App = () => {
       <Route
         path="/main"
         element={
-          <ProtectedRoutes>
+          <AuthLayout>
             <MainPage />
-          </ProtectedRoutes>
+          </AuthLayout>
         }
       />
       <Route
         path="/protein/:Id"
         element={
-          <ProtectedRoutes>
+          <AuthLayout>
             <ProteinPage />
-          </ProtectedRoutes>
+          </AuthLayout>
         }
       />
       <Route path="*" element={<NotFound />} />

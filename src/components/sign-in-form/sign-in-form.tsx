@@ -1,39 +1,46 @@
 import React, { useState, FormEvent } from "react";
-import classes from "./signUp.module.css";
-
 import { useNavigate } from "react-router-dom";
-import { UserAuth } from "../../contexts/AuthContext";
+import classes from "./sign-in-form.module.css";
 
 import FormInput from "../form-input/form-input";
 import Button from "../button/button";
+import { UserAuth } from "../../contexts/auth-context";
 
-const SignUpForm: React.FC = () => {
+interface SignInFormProps {
+  setRegistered: React.Dispatch<React.SetStateAction<boolean>>;
+}
+const SignInForm: React.FC<SignInFormProps> = ({ setRegistered }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const { createUser } = UserAuth();
+  const [error, setError] = useState("");
+  const { signIn } = UserAuth();
   const navigate = useNavigate();
 
   const submitHandler = async (event: FormEvent) => {
     event.preventDefault();
-
-    if (password !== confirmPassword) {
-      alert("passwords do not match");
-      return;
-    }
     try {
-      await createUser(email, password);
+      await signIn(email, password);
+
       navigate("/main");
     } catch (error: any) {
-      if (error.code === "auth/email-already-in-use") {
-        alert("Cannot create user, email already is in use");
-      } else console.error(error);
+      switch (error.code) {
+        case "auth/wrong-password":
+          setError("Login failed! Please,  check you password and email!");
+          break;
+        case "auth/user-not-found":
+          setError("You are not registered!");
+          break;
+        default:
+          console.log(error);
+      }
+
+      console.error(error);
     }
   };
 
   return (
-    <div className={classes.container}>
-      <h1>{"Sign Up"}</h1>
+    <div className={classes.signin_container}>
+      <h1>{"Login"}</h1>
       <form onSubmit={submitHandler} className={classes.form_container}>
         <FormInput
           type="email"
@@ -55,22 +62,17 @@ const SignUpForm: React.FC = () => {
           placeholder="Enter your password"
           styles="formInput"
         />
-        <FormInput
-          type="password"
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          name="confirmPassword"
-          value={confirmPassword}
-          required={true}
-          label="Confirm Password"
-          placeholder="Enter your password again"
-          styles="formInput"
-        />
-        <div className={classes.button_container}>
-          <Button type="submit" placeholder="Sign Up" styles="signUp" />
+        {error && <span className={classes.error}>{error}</span>}
+        <div className={classes.buttonsAndText_container}>
+          <Button type="submit" placeholder="Login" variant="text" />
+          <span>
+            Don't have an account?{" "}
+            <a onClick={() => setRegistered(false)}>Sign Up</a>
+          </span>
         </div>
       </form>
     </div>
   );
 };
 
-export default SignUpForm;
+export default SignInForm;

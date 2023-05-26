@@ -1,10 +1,14 @@
-interface IProteinPageProps {
+interface ProteinPageProps {
   title: string;
   authors: string;
   journals: string;
 }
 
-function ProteinPublications({ title, authors, journals }: IProteinPageProps) {
+const ProteinPublications = ({
+  title,
+  authors,
+  journals,
+}: ProteinPageProps) => {
   return (
     <div>
       <h3>{title}</h3>
@@ -12,6 +16,6 @@ function ProteinPublications({ title, authors, journals }: IProteinPageProps) {
       <p>Cited for: {journals}</p>
     </div>
   );
-}
+};
 
 export default ProteinPublications;

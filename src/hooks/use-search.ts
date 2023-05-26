@@ -17,7 +17,7 @@ export interface SearchResult {
   };
 }
 
-export default function useSearch(query: string, size: number) {
+export const useSearch = (query: string, size: number) => {
   const [error, setError] = useState<boolean>(false);
   const [result, setResult] = useState<SearchResult[]>([]);
 
@@ -27,13 +27,13 @@ export default function useSearch(query: string, size: number) {
 
   useEffect(() => {
     setError(false);
-    let cancel: CancelTokenSource | null = null;
+    let cancelToken: CancelTokenSource | null = null;
 
     const fetchData = async () => {
-      if (cancel) {
-        cancel.cancel();
+      if (cancelToken) {
+        cancelToken.cancel();
       }
-      cancel = axios.CancelToken.source();
+      cancelToken = axios.CancelToken.source();
 
       if (!query) return;
 
@@ -44,7 +44,7 @@ export default function useSearch(query: string, size: number) {
         }>(
           `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=(${query})&cursor=1mkycb2xwxbouw39b98v99ymv0kejlbmk6r7&size=${size}`,
           {
-            cancelToken: cancel.token,
+            cancelToken: cancelToken.token,
           }
         );
 
@@ -61,11 +61,11 @@ export default function useSearch(query: string, size: number) {
     fetchData();
 
     return () => {
-      if (cancel) {
-        cancel.cancel();
+      if (cancelToken) {
+        cancelToken.cancel();
       }
     };
   }, [query, size]);
 
   return { error, result };
-}
+};

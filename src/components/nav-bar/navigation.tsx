@@ -1,6 +1,6 @@
 import classes from "./navigation.module.css";
 import { useNavigate } from "react-router-dom";
-import { UserAuth } from "../../contexts/AuthContext";
+import { UserAuth } from "../../contexts/auth-context";
 
 const Navigation = () => {
   const { user, logout } = UserAuth();
@@ -15,7 +15,7 @@ const Navigation = () => {
     }
   };
   return (
-    <div className={classes.navigation_container}>
+    <header className={classes.navigation_container}>
       <div>{user?.email}</div>
       {user ? (
         <div onClick={signOutHandler} className={classes.logOut}>
@@ -24,7 +24,7 @@ const Navigation = () => {
       ) : (
         <div>Sign In</div>
       )}
-    </div>
+    </header>
   );
 };
 

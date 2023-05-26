@@ -1,19 +1,16 @@
 import classes from "./button.module.css";
-
-interface IButtonProps {
+interface ButtonProps {
   placeholder: string;
   type?: "button" | "submit" | "reset";
-  styles: string;
+  variant?: "text" | "outline" | "fill";
   onClick?: () => void;
 }
 
-const Button = ({ placeholder, type, styles, onClick }: IButtonProps) => {
+const Button = ({ placeholder, variant = "fill", ...rest }: ButtonProps) => {
   return (
-    <div>
-      <button type={type} className={classes[styles]} onClick={onClick}>
-        {placeholder}
-      </button>
-    </div>
+    <button className={classes[variant]} {...rest}>
+      {placeholder}
+    </button>
   );
 };
 

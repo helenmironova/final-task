@@ -1,6 +1,6 @@
-import classes from "./proteinDetails.module.css";
+import classes from "./protein-details.module.css";
 
-interface IProteinDetails {
+interface ProteinDetails {
   length: string;
   weight: number;
   lastUpdateDate: Date;
@@ -8,13 +8,13 @@ interface IProteinDetails {
   sectionText: string;
 }
 
-function ProteinDetails({
+const ProteinDetails = ({
   length,
   weight,
   lastUpdateDate,
   checkSum,
   sectionText,
-}: IProteinDetails) {
+}: ProteinDetails) => {
   return (
     <div className={classes.details}>
       <h4 className={classes.sequence}>Sequence</h4>
@@ -45,6 +45,6 @@ function ProteinDetails({
       </section>
     </div>
   );
-}
+};
 
 export default ProteinDetails;

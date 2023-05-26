@@ -1,15 +1,15 @@
-import classes from "./proteinPage.module.css";
+import classes from "./protein-page.module.css";
 import { useState, useEffect, Fragment } from "react";
 import { useParams } from "react-router-dom";
 
 import Navigation from "../../components/nav-bar/navigation";
-import ProteinDetails from "../../components/proteinDetails/proteinDetails";
-import LoadingSpinner from "../../components/loadingSpinner/loadingSpinner";
-import ProteinPublications from "../../components/protein-publications/proteinPublications";
+import ProteinDetails from "../../components/protein-details/protein-details";
+import LoadingSpinner from "../../components/loading-spinner/loading-spinner";
+import ProteinPublications from "../../components/protein-publications/protein-publications";
 import { fetchData } from "../../api/axios/fetchData";
-import FeatureViewer from "../../components/feature-viewer/featureViewer";
+import FeatureViewer from "../../components/feature-viewer";
 
-interface IProteinData {
+interface ProteinData {
   primaryAccession: string;
   uniProtkbId: string;
   genes: [{ geneName: { value: string } }];
@@ -33,7 +33,7 @@ interface IProteinData {
   };
 }
 
-interface IPublications {
+interface Publications {
   citation: {
     title: string;
     authors: string;
@@ -41,11 +41,9 @@ interface IPublications {
   };
 }
 
-function ProteinPage() {
-  const [state, setState] = useState<IProteinData | null>(null);
-  const [publications, setPublications] = useState<IPublications[] | null>(
-    null
-  );
+const ProteinPage = () => {
+  const [state, setState] = useState<ProteinData | null>(null);
+  const [publications, setPublications] = useState<Publications[] | null>(null);
   const [view, setView] = useState("details");
   const { Id } = useParams();
 
@@ -136,6 +134,6 @@ function ProteinPage() {
       </Fragment>
     );
   }
-}
+};
 
 export default ProteinPage;

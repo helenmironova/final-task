@@ -1,12 +1,13 @@
 import { FC, ReactElement } from "react";
 import { Navigate } from "react-router-dom";
-import { UserAuth } from "../../contexts/AuthContext";
 
-interface ProtectedRouteProps {
+import { UserAuth } from "../../contexts/auth-context";
+
+interface AuthLayoutProps {
   children: ReactElement;
 }
 
-const ProtectedRoutes: FC<ProtectedRouteProps> = ({ children }) => {
+const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
   const { user } = UserAuth();
 
   if (!user) {
@@ -15,4 +16,4 @@ const ProtectedRoutes: FC<ProtectedRouteProps> = ({ children }) => {
   return children;
 };
 
-export default ProtectedRoutes;
+export default AuthLayout;
