@@ -1,13 +1,14 @@
-import "./App.css"
+import "./App.css";
 
-import { Fragment } from "react"
+import { BrowserRouter } from "react-router-dom";
+import { PagesRouter } from "./routes/PagesRouter";
 
-const App = () => {
+const App = (): JSX.Element => {
   return (
-    <Fragment>
-      <h1>{"Your final task"}</h1>
-    </Fragment>
-  )
-}
+    <BrowserRouter>
+      <PagesRouter />
+    </BrowserRouter>
+  );
+};
 
-export default App
+export default App;
