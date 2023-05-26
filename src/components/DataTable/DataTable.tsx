@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import {
   selectProteinData,
   scrollProteins,
+  setScrollPosition,
 } from "../../features/proteinData/proteinsSearchSlice";
 import {
   selectProteinDetails,
@@ -20,15 +21,24 @@ import {
   setId,
 } from "../../features/proteinData/proteinDetailsSlice";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 const DataTable = () => {
+ 
+  const tableRef = useRef<HTMLTableElement>(null);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const proteinDataState = useAppSelector(selectProteinData);
   const proteinDetails = useAppSelector(selectProteinDetails);
   const proteins = proteinDataState.data;
   let counter = 1;
+
+  useEffect(() => {
+    if (tableRef.current) {
+      tableRef.current.scrollTop = proteinDataState.scrollPosition;
+    }
+  });
+
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const rowId = (
       (event.target as HTMLTableCellElement)
@@ -40,11 +50,15 @@ const DataTable = () => {
       navigate(`/protein/${rowId}`);
     }
   };
+
   const handleScroll = (event: React.UIEvent<HTMLTableElement>) => {
     const target = event.currentTarget;
-    if (
-      Math.floor(target.scrollTop + target.clientHeight) >= target.scrollHeight
-    ) {
+    if (tableRef.current) {
+      dispatch(setScrollPosition(target.scrollTop));
+      console.log(target.scrollTop)
+    }
+    if (target.scrollTop + target.clientHeight >= target.scrollHeight) {
+    
       if (proteinDataState.link) {
         const string = proteinDataState.link.replace(/<|>/g, "");
         const match = string.match(/[^;]+/);
@@ -77,10 +91,15 @@ const DataTable = () => {
       <TableCell sx={{ maxWidth: "150px" }}>{item?.sequence?.length}</TableCell>
     </TableRow>
   ));
+
   return (
     <div className="dataTable">
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <TableContainer sx={{ maxHeight: "70vh" }} onScroll={handleScroll}>
+        <TableContainer
+          sx={{ maxHeight: "70vh" }}
+          ref={tableRef}
+          onScroll={handleScroll}
+        >
           <Table
             stickyHeader
             aria-label="sticky table"

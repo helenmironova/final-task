@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
 interface protein {
@@ -35,6 +35,7 @@ interface ProteinData {
   data: [protein] | null;
   loading: boolean;
   error: string | null;
+  scrollPosition: number
 }
 
 const initialState: ProteinData = {
@@ -42,6 +43,7 @@ const initialState: ProteinData = {
   data: null,
   loading: false,
   error: null,
+  scrollPosition: 0
 };
 
 export const fetchProteins = createAsyncThunk(
@@ -68,7 +70,11 @@ export const scrollProteins = createAsyncThunk(
 export const proteinsSearchSlice = createSlice({
   name: "proteinData",
   initialState,
-  reducers: {},
+  reducers: {
+    setScrollPosition:(state, action: PayloadAction<number>) => {
+      state.scrollPosition = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProteins.pending, (state) => {
@@ -100,5 +106,8 @@ export const proteinsSearchSlice = createSlice({
   },
 });
 
+export const {
+  setScrollPosition
+} = proteinsSearchSlice.actions;
 export const selectProteinData = (state: RootState) => state.proteinData;
 export default proteinsSearchSlice.reducer;

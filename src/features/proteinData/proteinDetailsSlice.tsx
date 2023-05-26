@@ -57,7 +57,7 @@ export const fetchProteinDetails = createAsyncThunk(
   }
 );
 
-export const proteinsSearchSlice = createSlice({
+export const proteinDetailsSlice = createSlice({
   name: "proteinDetails",
   initialState,
   reducers: {
@@ -83,7 +83,7 @@ export const proteinsSearchSlice = createSlice({
 });
 export const {
   setId
-} = proteinsSearchSlice.actions;
+} = proteinDetailsSlice.actions;
 
 export const selectProteinDetails = (state: RootState) => state.proteinDetails;
-export default proteinsSearchSlice.reducer;
+export default proteinDetailsSlice.reducer;
