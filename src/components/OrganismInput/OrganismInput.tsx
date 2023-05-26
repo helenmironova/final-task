@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './OrganismInput.css'
 import { v4 as uuidv4 } from 'uuid';
-import { setNewValue } from '../../store/filterOptions';
+import { setNewValueFilter } from '../../store/filterOptions';
 
 
 const OrganismInput = ()=>{
@@ -13,7 +13,7 @@ const OrganismInput = ()=>{
     return(
         <div className='organism__wrapper'>
             <p className='organism__title'>Organism</p>
-            <select className='organism__select'   value={filterOptions.organism || ''} onChange={(e)=>dispatch(setNewValue({organism: e.target.value}))}>
+            <select className='organism__select'   value={filterOptions.organism || ''} onChange={(e)=>dispatch(setNewValueFilter({organism: e.target.value}))}>
                 <option value="">Select an option</option>
                 {selectorOptions.organismOptions.map((option: any) => (
                     <option key={uuidv4()} value={option.value}>

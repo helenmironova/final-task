@@ -4,9 +4,10 @@ import './SearchBar.css';
 import logo from '../../assets/🦆 icon _Options_.png';
 import FilterTab from '../../components/FilterTab/FilterTab';
 import { useSelector, useDispatch } from 'react-redux';
-import  { setNewValue } from '../../store/filterOptions';
+import  { setNewValueFilter } from '../../store/filterOptions';
 import { setNewSearchText } from '../../store/searchText';
 import logoOpened from '../../assets/opened.png'
+import { removeItems } from '../../store/listItems';
 
 const SearchBar = (props: any) => {
     const location = useLocation();
@@ -27,7 +28,17 @@ const SearchBar = (props: any) => {
         const query = searchText.trim() || "*";
         navigate(`/search?query=${query}`);      
         const apiUrl = `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=${(query==='' || query===null) ? "*" : query }`;
-        props.fetchData(apiUrl, true, true);
+        dispatch(removeItems());
+        dispatch(setNewValueFilter({
+            isOpen: false,
+            geneName: null,
+            organism: null,
+            sequenceLength__from: null,
+            sequenceLength__to: null, 
+            annotationScore: null,
+            proteinWith: null,
+        }));
+        props.fetchData(apiUrl);
     }
 
     //changes dot visability when filterOptions changes;
@@ -85,7 +96,7 @@ const SearchBar = (props: any) => {
             <button type='submit' className='searchButton' onClick={()=>handleSubmit(searchText)}>
                 Search
             </button>
-            <button className={filterPopupIsOpen ? 'filter filter-opened' : 'filter'} onClick={()=>dispatch(setNewValue({isOpen: !filterPopupIsOpen}))}>
+            <button className={filterPopupIsOpen ? 'filter filter-opened' : 'filter'} onClick={()=>dispatch(setNewValueFilter({isOpen: !filterPopupIsOpen}))}>
                 {filterPopupIsOpen ? <img src={logoOpened} alt='Filter__opened'></img> : <img src={logo} alt='Filter'/> }
                 {dotVisible && <span className='dot'></span>}
             </button>

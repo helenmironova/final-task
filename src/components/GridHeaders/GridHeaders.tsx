@@ -3,11 +3,14 @@ import './GridHeaders.css';
 import logo1 from '../../assets/Vector.png';
 import logo2 from '../../assets/Vector2.png';
 import logo3 from '../../assets/desc.png'
-import {useSelector } from 'react-redux';
+import {useSelector, useDispatch } from 'react-redux';
+import { removeItems } from '../../store/listItems';
 
 const GridHeaders = (props: any) => {
     const searchText = useSelector((state: any)=>state.searchText);
     const filterOptions = useSelector((state: any)=> state.filterOptions)
+
+    const dispatch = useDispatch();
 
     const [selected, setSelected] = useState(0);
     const [type, setType] = useState(0);
@@ -71,16 +74,14 @@ const GridHeaders = (props: any) => {
         url = addFilter(url);
         url = addSortType(url);
       }
-      props.fetchData(url, false, true);
+      dispatch(removeItems());
+      props.fetchData(url);
     }
 
-    //handles logo click:
-    //changes img visual;
     const handleLogoClick = (clicked: number) => {
         changeVisual(clicked);
     };
 
-    //when selected sorting tag or sort type changes, fetches new Data;
     useEffect(()=>fetchData(), [selected, type]);
   
   return (

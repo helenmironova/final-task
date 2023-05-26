@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import './GeneNameInput.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { setNewValue } from '../../store/filterOptions';
+import { setNewValueFilter } from '../../store/filterOptions';
 
 const GeneNameInput = () => {
     const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const GeneNameInput = () => {
     return(
         <div className='geneNameWrapper'>
             <p className='geneName__title'>Gene Name</p>
-            <input type='text' ref={nameInput} className='geneName__input' placeholder='Enter Gene Name' onChange={(e)=>dispatch(setNewValue({geneName: e.target.value}))}></input>
+            <input type='text' ref={nameInput} className='geneName__input' placeholder='Enter Gene Name' onChange={(e)=>dispatch(setNewValueFilter({geneName: e.target.value}))}></input>
         </div>
     )
 }

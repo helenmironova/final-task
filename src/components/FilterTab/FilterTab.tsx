@@ -7,6 +7,8 @@ import OrganismInput from '../OrganismInput/OrganismInput';
 import SequenceLengthInput from '../SequenceLengthInput/SequenceLengthInput';
 import AnnotationInput from '../AnnotationInput/AnnotationInput'
 import ProteinInput from '../ProteinInput/ProteinInput';
+import { removeItems } from '../../store/listItems';
+import { setNewValueFilter } from '../../store/filterOptions';
 ;
 
 const FilterTab = (props: any) => {
@@ -22,7 +24,17 @@ const FilterTab = (props: any) => {
         fetches new data (without filter options);
     */
     const cancelFunction = () => {
-        props.fetchData(`https://rest.uniprot.org/uniprotkb/search?facets=model_organism,proteins_with,annotation_score&query=(${(searchText==='' || searchText===null) ? "*" : searchText})`, true, false, true);
+        dispatch(removeItems());
+        dispatch(setNewValueFilter({
+            isOpen: false,
+            geneName: null,
+            organism: null,
+            sequenceLength__from: null,
+            sequenceLength__to: null, 
+            annotationScore: null,
+            proteinWith: null,
+        }));
+        props.fetchData(`https://rest.uniprot.org/uniprotkb/search?facets=model_organism,proteins_with,annotation_score&query=(${(searchText==='' || searchText===null) ? "*" : searchText})`);
     }
 
     /*
@@ -71,7 +83,9 @@ const FilterTab = (props: any) => {
         if(filterOptions.proteinWith && filterOptions.proteinWith!=''){
             url+=` AND (proteins_with:${filterOptions.proteinWith})`;
         }
-        props.fetchData(url, false, true, true);
+        dispatch(setNewValueFilter({isOpen: false}));
+        dispatch(removeItems());
+        props.fetchData(url);
     }
     
     return(

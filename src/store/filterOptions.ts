@@ -17,7 +17,7 @@ export const filterOptionsSlice = createSlice({
   name: 'filterOptions',
   initialState,
   reducers: {
-    setNewValue: (state, action) => {
+    setNewValueFilter: (state, action) => {
         const newValue = action.payload;
         return { ...state, ...newValue };
     },  
@@ -25,6 +25,6 @@ export const filterOptionsSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const {setNewValue} = filterOptionsSlice.actions
+export const {setNewValueFilter} = filterOptionsSlice.actions
 
 export default filterOptionsSlice.reducer

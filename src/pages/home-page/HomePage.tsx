@@ -7,8 +7,6 @@ import {useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { fetchItems} from '../../store/listItems';
-import { removeItems } from '../../store/listItems';
-import { setNewValue } from '../../store/filterOptions';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 
@@ -32,21 +30,7 @@ const HomePage = () => {
         sets nextUrl to appropriate url;
         dispatches new items;
     */
-    const fetchData = (url: string, removeFilterOptions: boolean, removePreviousItems: boolean) => {
-        dispatch(setNewValue({isOpen: false}))
-        const removeFilters = () => {
-          dispatch(setNewValue({
-            geneName: null,
-            organism: null,
-            sequenceLength__from: null,
-            sequenceLength__to: null,
-            annotationScore: null,
-            proteinWith: null
-          }));
-                   
-        }
-        if(removeFilterOptions) removeFilters();
-        if(removePreviousItems) dispatch(removeItems());
+    const fetchData = (url: string) => {
         setDataToDisplay(true);
         dispatch(fetchItems(url));
     };
@@ -60,7 +44,7 @@ const HomePage = () => {
         const { scrollTop, clientHeight, scrollHeight } = e.target;
         const scrolledToBottom = scrollTop + clientHeight >= scrollHeight - 1;
         if (scrolledToBottom && nextUrl!='') {
-            fetchData(nextUrl, false, false);
+            fetchData(nextUrl);
         }
     }
 
