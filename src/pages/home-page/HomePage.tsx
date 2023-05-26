@@ -3,7 +3,7 @@ import HomePageHeader from '../../components/HomePageHeader/HomePageHeader';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import GridHeaders from '../../components/GridHeaders/GridHeaders';
 import GridItem from '../../components/GridItem/GridItem';
-import {useState } from 'react';
+import {useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { fetchItems} from '../../store/listItems';
@@ -20,16 +20,20 @@ const HomePage = () => {
     const loading = useSelector((state: any) => state.listItems.isLoading)
     
     const [dataToDisplay, setDataToDisplay] = useState(false);
-    const [selected, setSelected] = useState(0);
+
+    useEffect(()=>{
+        if(listItems.length>0){
+            setDataToDisplay(true)
+        }
+    }, [listItems])
 
     /*
         fethes data from given url;
         sets nextUrl to appropriate url;
         dispatches new items;
     */
-    const fetchData = (url: string, removeFilterOptions: boolean, removeGridFilter: boolean, removePreviousItems: boolean) => {
+    const fetchData = (url: string, removeFilterOptions: boolean, removePreviousItems: boolean) => {
         dispatch(setNewValue({isOpen: false}))
-  
         const removeFilters = () => {
           dispatch(setNewValue({
             geneName: null,
@@ -42,12 +46,11 @@ const HomePage = () => {
                    
         }
         if(removeFilterOptions) removeFilters();
-        if(removeGridFilter) setSelected(0);
         if(removePreviousItems) dispatch(removeItems());
         setDataToDisplay(true);
         dispatch(fetchItems(url));
     };
-    
+
     /*
         detects when user scrolles to the end of itemsWrapper div;
         then fetches new data, if nextUrl is not an empty string;
@@ -57,7 +60,7 @@ const HomePage = () => {
         const { scrollTop, clientHeight, scrollHeight } = e.target;
         const scrolledToBottom = scrollTop + clientHeight >= scrollHeight - 1;
         if (scrolledToBottom && nextUrl!='') {
-            fetchData(nextUrl, false, false, false);
+            fetchData(nextUrl, false, false);
         }
     }
 
@@ -66,19 +69,20 @@ const HomePage = () => {
             <HomePageHeader />
             <SearchBar fetchData={fetchData}/>
             <div className='resultsWrapper'>
-                {/* {!dataToDisplay && <p className='noDataToDisplayP'>No data to display.<br/> Please start a search to display results.</p>} */}
-                <div className='dataWrapper'>
-                  <GridHeaders fetchData={fetchData} selected={selected} setSelected={setSelected}/>
+                {!dataToDisplay && <p className='noDataToDisplayP'>No data to display.<br/> Please start a search to display results.</p>}
+                {dataToDisplay && <div className='dataWrapper'>
+                  <GridHeaders fetchData={fetchData}/>
                     <div className='itemsWrapper' onScroll={handleScroll}>
                         {listItems?.map((item: any, index: number) => (
                             <GridItem item={item} index={index} key={uuidv4()}/>
                         ))}
                     </div>
                     {loading && <div className='loadingWrapper'>Loading...</div>}
-                </div>
+                </div>}
             </div>
         </div>
     )
 }
 
 export default HomePage;
+

@@ -13,7 +13,7 @@ const BasicData = (props: any) => {
             <div className='info'>
                 <div className='infoTop'>
                     <p className='infoTopHeader'>Protein</p>
-                    <p className='infoTopData'>{protein?.proteinDescription?.alternativeNames[0]?.fullName?.value}</p>
+                    <p className='infoTopData'>{protein?.proteinDescription?.recommendedName?.fullName.value ||protein?.proteinDescription?.alternativeNames[0]?.fullName?.value}</p>
                 </div>
                 <div className='infoBottom'>
                     <p className='infoBottomHeader'>Gene</p>

@@ -27,7 +27,7 @@ const SearchBar = (props: any) => {
         const query = searchText.trim() || "*";
         navigate(`/search?query=${query}`);      
         const apiUrl = `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=${(query==='' || query===null) ? "*" : query }`;
-        props.fetchData(apiUrl, true, true, true);
+        props.fetchData(apiUrl, true, true);
     }
 
     //changes dot visability when filterOptions changes;
@@ -38,7 +38,6 @@ const SearchBar = (props: any) => {
               return;
             }
           }
-          
           setDotVisible(false);
           return;
     }, [filterOptions])
@@ -63,14 +62,14 @@ const SearchBar = (props: any) => {
         if location has query '*' meaning searchText is empty, searchText becomes an empty string;
     */
     useEffect(() => {
-        const searchQuery = new URLSearchParams(location.search).get('query');
-        if (searchQuery) {
-            if(searchQuery==='*'){
-                dispatch(setNewSearchText(""));
-                return;
-            }
-            dispatch(setNewSearchText(searchQuery));
-        }
+        // const searchQuery = new URLSearchParams(location.search).get('query');
+        // if (searchQuery) {
+        //     if(searchQuery==='*'){
+        //         dispatch(setNewSearchText(""));
+        //         return;
+        //     }
+        //     dispatch(setNewSearchText(searchQuery));
+        // }
     }, [location]);
 
 
