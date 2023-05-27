@@ -46,7 +46,7 @@
 }
 
 .itemsWrapper{
-    height: 522px;
+    /* //height: 522px; */
     overflow: scroll;
     overflow-x: hidden;
 }

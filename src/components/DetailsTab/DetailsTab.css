@@ -28,6 +28,7 @@
 
 .imgWrapper{
     display: flex;
+    max-width: 998px;
     justify-content: right;
     gap: 8px;
     font-style: normal;

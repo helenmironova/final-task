@@ -53,3 +53,18 @@
     line-height: 16px;
     color: #2B2B2B;
 }
+
+
+.btwOrganism{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: #2B2B2B;
+    padding: 2px 12px;
+    background: #D8E7FF;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    margin-top: 6px;   
+}

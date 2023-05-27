@@ -1,6 +1,6 @@
 
 .paths{
-    width: 445px;
+    width: 402px;
     height: 40px;
     align-self: baseline;
     margin-top: 12px;
@@ -20,15 +20,15 @@
 }
 
 #detailsTab{
-    width: 110.67px;
+    width: 24.8%;
 }
 
 #featureTab{
-    width: 180.39px;
+    width: 40.5%;
 }
 
 #publicationsTab{
-    width: 153.83px;
+    width: 34.5%;
 }
 
 .tab--active{
