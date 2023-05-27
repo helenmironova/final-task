@@ -30,7 +30,6 @@ const ProteinPage = () => {
         return fetch(`https://rest.uniprot.org/uniprotkb/${testProtein}`)
           .then(response => response.json())
           .then(data => {
-            console.log(data);
             if (data.messages) {
               return false;
             } else {
@@ -40,6 +39,16 @@ const ProteinPage = () => {
           .catch(() => false);
     };
 
+    /*
+        on first render does the following:
+        checks if query has parameter 'protein'
+        ->
+        if yes: checks if it is valid protein name
+            ->
+            if yes: sets selectedProtein name to this parameter, fetches this protein data;
+            if no: navigates to '/not-found';
+        if no: sets query parameter to protain name stored in redux;
+    */
     useEffect(() => {
         if (initialRender.current) {
             initialRender.current = false;
