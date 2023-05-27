@@ -47,20 +47,43 @@ const MainPage = () => {
     setSize(25);
   };
 
-  const sortingHandler = (column: string) => {
-    console.log("clicked 1");
+  const getValueByColumns = (item: SearchResult, columns: string[]) => {
+    let value: any = item; // Use type assertion to allow indexing with a string
+    for (const column of columns) {
+      value = value[column];
+      if (typeof value === "undefined") {
+        return ""; 
+      }
+    }
+
+    if (columns.length === 0) {
+      return value.genes && value.genes.length > 0 && value.genes[0].geneName
+        ? value.genes[0].geneName.value
+        : "N/A";
+    }
+    return value;
+  };
+
+  const sortingHandler = (columns: string[]) => {
     if (order === "ASC") {
-      console.log("clicked ");
-      const sorted = [...result].sort((a, b) =>
-        a[column].toLowerCase() > b[column].toLowerCase() ? 1 : -1
-      );
+      const sorted = [...result].sort((a, b) => {
+        const aValue = getValueByColumns(a, columns);
+        const bValue = getValueByColumns(b, columns);
+        return String(aValue).toLowerCase() > String(bValue).toLowerCase()
+          ? 1
+          : -1;
+      });
       setData(sorted);
       setOrder("DSC");
     }
     if (order === "DSC") {
-      const sorted = [...result].sort((a, b) =>
-        a[column].toLowerCase() < b[column].toLowerCase() ? 1 : -1
-      );
+      const sorted = [...result].sort((a, b) => {
+        const aValue = getValueByColumns(a, columns);
+        const bValue = getValueByColumns(b, columns);
+        return String(aValue).toLowerCase() < String(bValue).toLowerCase()
+          ? 1
+          : -1;
+      });
       setData(sorted);
       setOrder("ASC");
     }
@@ -95,7 +118,7 @@ const MainPage = () => {
                 <img
                   src={Sorting}
                   alt="Sorting Icon"
-                  onClick={() => sortingHandler("primaryAccession")}
+                  onClick={() => sortingHandler(["primaryAccession"])}
                 />
               </div>
               <div className={classes.grid_header}>
@@ -103,7 +126,7 @@ const MainPage = () => {
                 <img
                   src={Sorting}
                   alt="Sorting Icon"
-                  onClick={() => sortingHandler("entry_names")}
+                  onClick={() => sortingHandler([])}
                 />
               </div>
               <div className={classes.grid_header}>
@@ -111,7 +134,9 @@ const MainPage = () => {
                 <img
                   src={Sorting}
                   alt="Sorting Icon"
-                  onClick={() => sortingHandler("genes")}
+                  onClick={() =>
+                    sortingHandler(["genes", "0", "geneName", "value"])
+                  }
                 />
               </div>
               <div className={classes.grid_header}>
@@ -119,7 +144,7 @@ const MainPage = () => {
                 <img
                   src={Sorting}
                   alt="Sorting Icon"
-                  onClick={() => sortingHandler("organism")}
+                  onClick={() => sortingHandler(["organism", "scientificName"])}
                 />
               </div>
               <div className={classes.grid_header}>
@@ -127,7 +152,7 @@ const MainPage = () => {
                 <img
                   src={Sorting}
                   alt="Sorting Icon"
-                  onClick={() => sortingHandler("length")}
+                  onClick={() => sortingHandler(["sequence", "length"])}
                 />
               </div>
             </div>
