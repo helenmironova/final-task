@@ -6,6 +6,7 @@ import searchTextReducer from './searchText'
 import thunkMiddleware from 'redux-thunk';
 import selectedProteinReducer from './selectedProtein'
 import { saveState } from '../localStorage';
+import sortOptionsReducer from './sortOptions'
 
 const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
         selectorOptions: selectorOptionsReducer,
         searchText: searchTextReducer,
         selectedProtein: selectedProteinReducer,
+        sortOptions: sortOptionsReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
@@ -32,6 +34,7 @@ store.subscribe(() => {
       selectorOptions: store.getState().selectorOptions,
       searchText: store.getState().searchText,
       selectedProtein: store.getState().selectedProtein,
+      sortOptions: store.getState().sortOptions,
     }, 'state');
 });
 

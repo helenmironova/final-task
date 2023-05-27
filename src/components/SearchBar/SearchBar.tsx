@@ -8,6 +8,7 @@ import  { setNewValueFilter } from '../../store/filterOptions';
 import { setNewSearchText } from '../../store/searchText';
 import logoOpened from '../../assets/opened.png'
 import { removeItems } from '../../store/listItems';
+import { setNewValueSort } from '../../store/sortOptions';
 
 const SearchBar = (props: any) => {
     const location = useLocation();
@@ -38,6 +39,7 @@ const SearchBar = (props: any) => {
             annotationScore: null,
             proteinWith: null,
         }));
+        dispatch(setNewValueSort({selected: 0, type: 0}))
         props.fetchData(apiUrl);
     }
 

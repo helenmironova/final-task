@@ -9,7 +9,8 @@ import AnnotationInput from '../AnnotationInput/AnnotationInput'
 import ProteinInput from '../ProteinInput/ProteinInput';
 import { removeItems } from '../../store/listItems';
 import { setNewValueFilter } from '../../store/filterOptions';
-;
+import { setNewValueSort } from '../../store/sortOptions';
+
 
 const FilterTab = (props: any) => {
     const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const FilterTab = (props: any) => {
             annotationScore: null,
             proteinWith: null,
         }));
+        dispatch(setNewValueSort({selected: 0, type: 0}))
         props.fetchData(`https://rest.uniprot.org/uniprotkb/search?facets=model_organism,proteins_with,annotation_score&query=(${(searchText==='' || searchText===null) ? "*" : searchText})`);
     }
 
@@ -85,6 +87,7 @@ const FilterTab = (props: any) => {
         }
         dispatch(setNewValueFilter({isOpen: false}));
         dispatch(removeItems());
+        dispatch(setNewValueSort({selected: 0, type: 0}))
         props.fetchData(url);
     }
     

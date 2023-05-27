@@ -1,38 +1,38 @@
-import {useState, useEffect} from 'react';
+import {useEffect} from 'react';
 import './GridHeaders.css';
 import logo1 from '../../assets/Vector.png';
 import logo2 from '../../assets/Vector2.png';
 import logo3 from '../../assets/desc.png'
 import {useSelector, useDispatch } from 'react-redux';
 import { removeItems } from '../../store/listItems';
+import { setNewValueSort } from '../../store/sortOptions';
 
 const GridHeaders = (props: any) => {
     const searchText = useSelector((state: any)=>state.searchText);
-    const filterOptions = useSelector((state: any)=> state.filterOptions)
+    const filterOptions = useSelector((state: any)=> state.filterOptions);
+    const sortOptions = useSelector((state: any)=>state.sortOptions);
 
     const dispatch = useDispatch();
 
-    const [selected, setSelected] = useState(0);
-    const [type, setType] = useState(0);
+  
 
     const addSortType = (url: string) => {
-      console.log(url)
       let sortBy = "";
       let sortType = "";
-      if(selected===1){
+      if(sortOptions.selected===1){
         sortBy = 'accession';
-      }else if(selected===2){
+      }else if(sortOptions.selected===2){
         sortBy = 'id';
-      }else if(selected===3){
+      }else if(sortOptions.selected===3){
         sortBy = 'gene';
-      }else if(selected===4){
+      }else if(sortOptions.selected===4){
         sortBy = 'organism_name';
-      }else if(selected===5){
+      }else if(sortOptions.selected===5){
         sortBy = 'length';
       }
-      if(type===0){
+      if(sortOptions.type===0){
         sortType = 'asc';
-      }else if(type===1){
+      }else if(sortOptions.type===1){
         sortType = 'desc';
       }
       url+=`&sort=${sortBy}%20${sortType}`
@@ -59,20 +59,19 @@ const GridHeaders = (props: any) => {
     }
 
     const changeVisual = (clicked: number) => {
-      if(selected===clicked){
-        if(type===1) setSelected(0); //if I clicked on a sorting icon that was sorting desc, selected points to 0 (nothing);
-        if(type==0) setType(1); //if I clicked on a sorting icon that was sorting asc, sortType changes to type 1 (desc);
+      if(sortOptions.selected===clicked){
+        if(sortOptions.type===1) dispatch(setNewValueSort({selected: 0})); //if I clicked on a sorting icon that was sorting desc, selected points to 0 (nothing);
+        if(sortOptions.type==0) dispatch(setNewValueSort({type: 1})); //if I clicked on a sorting icon that was sorting asc, sortType changes to type 1 (desc);
       }else{
-        setType(0); //I clicked on a new sorting icon, sortType becomes 0 (asc);
-        setSelected(clicked);
+        dispatch(setNewValueSort({type: 0})); //I clicked on a new sorting icon, sortType becomes 0 (asc);
+        dispatch(setNewValueSort({selected: clicked}));
       }
     }
 
     const fetchData = () => {
       let url = `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=(${(searchText==='' || searchText===null) ? "*" : searchText})`;
-      console.log(selected);
-      url = addFilter(url);
-      if(selected!==0){
+        url = addFilter(url);
+      if(sortOptions.selected!==0 && sortOptions.selected!==null){
         url = addSortType(url);
       }
       dispatch(removeItems());
@@ -84,33 +83,33 @@ const GridHeaders = (props: any) => {
         changeVisual(clicked);
     };
 
-    useEffect(()=>fetchData(), [selected, type]);
+    useEffect(()=>fetchData(), [sortOptions.selected, sortOptions.type]);
   
   return (
     <div className='gridHeaders'>
       <div className='number'>#</div>
       <div className='entry'>
         <p className='entryP'>Entry</p>
-        <img src={selected===1 ? (type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(1)} />
+        <img src={sortOptions.selected===1 ? (sortOptions.type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(1)} />
       </div>
       <div className='entryName'>
         <p className='entryP'>Entry Names</p>
-        <img src={selected===2 ? (type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(2)} />
+        <img src={sortOptions.selected===2 ? (sortOptions.type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(2)} />
       </div>
       <div className='entryName'>
         <p className='entryP'>Genes</p>
-        <img src={selected===3 ? (type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(3)} />
+        <img src={sortOptions.selected===3 ? (sortOptions.type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(3)} />
       </div>
       <div className='entryName'>
         <p className='entryP'>Organism</p>
-        <img src={selected===4 ? (type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(4)} />
+        <img src={sortOptions.selected===4 ? (sortOptions.type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(4)} />
       </div>
       <div className='subcel'>
         <p className='entryP'>Subcellular Location</p>
       </div>
       <div className='length'>
         <p className='entryP'>Length</p>
-        <img src={selected===5 ? (type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(5)} />
+        <img src={sortOptions.selected===5 ? (sortOptions.type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(5)} />
       </div>
     </div>
   );
