@@ -75,7 +75,6 @@ const GridHeaders = (props: any) => {
         url = addSortType(url);
       }
       dispatch(removeItems());
-      console.log(url);
       props.fetchData(url);
     }
 

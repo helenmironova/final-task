@@ -11,7 +11,8 @@ const LoginForm = () => {
   const [isValidPassword, setIsValidPassword] = useState(true);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isValidLogin, setIsValidLogin] = useState(true);
-  const [isButtonClicked, setIsButtonClicked] = useState(false); 
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+
   const navigate = useNavigate(); 
 
   const checkPassword = () => {
@@ -43,14 +44,21 @@ const LoginForm = () => {
   };
 
   const login = () => {
+    const emailInput = document.querySelector('.email__input') as HTMLInputElement;
+    const passwordInput = document.querySelector('.password__input') as HTMLInputElement;
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential);
         setIsValidLogin(true);
+        passwordInput.style.border = '0';
+        emailInput.style.border = '0';
         navigate('/search');
       })
       .catch(() => {
         setIsValidLogin(false);
+        setIsFormSubmitted(false);
+        emailInput.style.border = '2px solid #EC3030';
+        passwordInput.style.border = '2px solid #EC3030';
       });
   };
 
@@ -59,8 +67,8 @@ const LoginForm = () => {
     console.log('submitted');
     checkInputs();
     if (!(isValidEmail && isValidPassword)) return;
-    setIsButtonClicked(false);
-    setIsButtonClicked(true); // Set button clicked
+    setIsFormSubmitted(true);
+
   };
 
   const checkButtonValidation = () => {
@@ -76,10 +84,10 @@ const LoginForm = () => {
   }, [email, password]);
 
   useEffect(() => {
-    if (isButtonClicked && isValidEmail && isValidPassword) {
+    if (isFormSubmitted && isValidEmail && isValidPassword) {
       login(); // Execute login when button is clicked and checks pass
     }
-  }, [isButtonClicked, isValidEmail, isValidPassword]);
+  }, [isValidEmail, isValidPassword, isFormSubmitted]);
 
   return (
     <form className="login__form" onSubmit={handleSubmit}>
