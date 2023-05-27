@@ -52,3 +52,52 @@
 .source{
     margin-bottom: 19px;
 }
+
+.linksDiv{
+    display: flex;
+    height: 24px;
+    gap: 9px;
+}
+
+.link{
+    height: 100%;
+    display: flex;
+    border: 1px solid #3C86F4;
+    gap: 9px;
+    border-radius: 4px;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+
+    padding-left: 10px;
+    padding-right: 8px;
+    color: #3C86F4;
+}
+
+.linkImg{
+    width: 14px;
+    height: 14px;
+}
+
+.link--inactive{
+    height: 100%;
+    display: flex;
+    border: 1px solid #9F9F9F;
+    gap: 9px;
+    border-radius: 4px;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+
+    padding-left: 10px;
+    padding-right: 8px;
+    color: #9F9F9F;
+}
