@@ -1,0 +1,28 @@
+.referenceItemWrapper{
+    width: 78.4%;
+    padding: 14px 23px 10px  23px;
+    background: #F5F6F8;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.referenceItemHeader{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: #2B2B2B;
+    text-align: left;
+    margin-bottom: 6px;
+}
+
+.authors{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    text-decoration-line: underline;
+    color: #2B2B2B;
+    text-align: left;
+}

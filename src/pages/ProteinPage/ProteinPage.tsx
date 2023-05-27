@@ -9,6 +9,7 @@ import { AnyAction } from 'redux';
 import BasicData from '../../components/BasicData/BasicData';
 import Paths from '../../components/Paths/Paths';
 import DetailsTab from '../../components/DetailsTab/DetailsTab';
+import PublicationsTab from '../../components/PublicationsTab/PublicationsTab';
 
 const ProteinPage = () => {
     const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
@@ -28,7 +29,6 @@ const ProteinPage = () => {
         window.history.replaceState({}, '', `${currentUrl.pathname}?${params}`);
     }, [location, protein.name]);
 
-    console.log(protein);
     return (
         <div className='body'>
         <HomePageHeader />
@@ -39,7 +39,7 @@ const ProteinPage = () => {
             <div className='content'>
                 {tab === 'details' && <DetailsTab/>}
                 {tab === 'feature' && <div>Feature Viewer Content</div>}
-                {tab === 'publications' && <div>Publications Content</div>}
+                {tab === 'publications' && <PublicationsTab />}
             </div>
         </div>
         </div>
