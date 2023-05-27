@@ -2,7 +2,6 @@ import './BasicData.css'
 
 const BasicData = (props: any) => {
     const protein = props.protein;
-    console.log(props.protein);
     return(
         <div className='basicDataWrapper'>
             <div className='bdwTop'>

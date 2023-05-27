@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { loadState } from '../localStorage';
+import { setNewSelectedProteinName, fetchProteinData } from './selectedProtein';
 
 const persistedState = loadState('state')?.listItems;
 
@@ -35,6 +36,8 @@ export const fetchItems = createAsyncThunk(
       const newItems = data.results;
       dispatch(setNextUrl(newNextUrl || ''));
       dispatch(addListItems(newItems));
+      dispatch(setNewSelectedProteinName(newItems[0].primaryAccession))
+      dispatch(fetchProteinData(newItems[0].primaryAccession))
     } catch (error) {
       console.error(error);
     }

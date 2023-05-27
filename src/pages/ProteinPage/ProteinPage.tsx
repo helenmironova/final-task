@@ -17,7 +17,6 @@ const ProteinPage = () => {
     
     const [tab, setTab] = useState('details'); //details || feature || publications
 
-
     useEffect(() => {
         dispatch(fetchProteinData(protein.name));
     }, [dispatch]);
@@ -29,6 +28,7 @@ const ProteinPage = () => {
         window.history.replaceState({}, '', `${currentUrl.pathname}?${params}`);
     }, [location, protein.name]);
 
+    console.log(protein);
     return (
         <div className='body'>
         <HomePageHeader />
