@@ -2,8 +2,8 @@ import React, { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import classes from "./sign-in-form.module.css";
 
-import FormInput from "../form-input/form-input";
-import Button from "../button/button";
+import FormInput from "../form-input";
+import Button from "../button";
 import { UserAuth } from "../../contexts/auth-context";
 
 interface SignInFormProps {

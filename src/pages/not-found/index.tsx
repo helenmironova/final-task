@@ -2,8 +2,8 @@ import React, { Fragment } from "react";
 import classes from "./not-found.module.css"
 import { useNavigate } from "react-router-dom";
 
-import Button from "../../components/button/button";
-import Navigation from "../../components/nav-bar/navigation";
+import Button from "../../components/button";
+import Navigation from "../../components/nav-bar";
 
 const NotFound: React.FC = () => {
   const navigate = useNavigate();

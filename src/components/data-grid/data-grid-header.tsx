@@ -5,12 +5,12 @@ import Sorting from "../../assets/Vector.svg";
 import { SearchResult } from "../../hooks/use-search";
 
 interface DataGriHeaderdProps {
-  query: string;
   setData: React.Dispatch<React.SetStateAction<SearchResult[]>>;
   result: SearchResult[];
+  data: SearchResult[];
 }
 
-const DataGridHeader = ({ query, setData, result }: DataGriHeaderdProps) => {
+const DataGridHeader = ({ setData, result, data }: DataGriHeaderdProps) => {
   const [order, setOrder] = useState("ASC");
 
   const getValueByColumns = (item: SearchResult, columns: string[]) => {
@@ -32,7 +32,7 @@ const DataGridHeader = ({ query, setData, result }: DataGriHeaderdProps) => {
 
   const sortingHandler = (columns: string[]) => {
     if (order === "ASC") {
-      const sorted = [...result].sort((a, b) => {
+      const sorted = [...data].sort((a, b) => {
         const aValue = getValueByColumns(a, columns);
         const bValue = getValueByColumns(b, columns);
         return String(aValue).toLowerCase() > String(bValue).toLowerCase()
@@ -43,7 +43,7 @@ const DataGridHeader = ({ query, setData, result }: DataGriHeaderdProps) => {
       setOrder("DSC");
     }
     if (order === "DSC") {
-      const sorted = [...result].sort((a, b) => {
+      const sorted = [...data].sort((a, b) => {
         const aValue = getValueByColumns(a, columns);
         const bValue = getValueByColumns(b, columns);
         return String(aValue).toLowerCase() < String(bValue).toLowerCase()
@@ -54,9 +54,10 @@ const DataGridHeader = ({ query, setData, result }: DataGriHeaderdProps) => {
       setOrder("ASC");
     }
   };
+
   return (
     <Fragment>
-      {query && (
+      {data.length !== 0 && (
         <div className={classes.grid_container}>
           <div className={classes.grid_header}>#</div>
           <div className={classes.grid_header}>

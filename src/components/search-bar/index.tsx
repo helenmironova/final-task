@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
 
-import FormInput from "../../components/form-input/form-input";
+import FormInput from "../form-input";
 
 interface SearchBarProps {
   query: string;

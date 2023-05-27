@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./home.module.css";
 import { Link } from "react-router-dom";
 
-import Button from "../../components/button/button";
+import Button from "../../components/button";
 
 const Home: React.FC = () => {
   return (

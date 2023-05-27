@@ -4,8 +4,8 @@ import classes from "./sign-up-form.module.css";
 import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../../contexts/auth-context";
 
-import FormInput from "../form-input/form-input";
-import Button from "../button/button";
+import FormInput from "../form-input";
+import Button from "../button";
 
 interface SignUpFormProps {
   setRegistered: React.Dispatch<React.SetStateAction<boolean>>;

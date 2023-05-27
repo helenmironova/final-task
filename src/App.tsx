@@ -2,12 +2,12 @@ import "./App.css";
 
 import { Route, Routes, Navigate } from "react-router-dom";
 
-import Home from "./pages/home/home";
-import NotFound from "./pages/not-found/not-found";
-import Authentication from "./pages/authentication/authentication";
-import MainPage from "./pages/main/main-page";
-import AuthLayout from "./components/auth-layout/auth-layout";
-import ProteinPage from "./pages/protein/protein-page";
+import Home from "./pages/home";
+import NotFound from "./pages/not-found";
+import Authentication from "./pages/authentication";
+import MainPage from "./pages/main";
+import AuthLayout from "./components/auth-layout";
+import ProteinPage from "./pages/protein";
 import { UserAuth } from "./contexts/auth-context";
 
 const App = () => {

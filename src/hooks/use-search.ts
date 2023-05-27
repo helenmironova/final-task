@@ -67,5 +67,5 @@ export const useSearch = (query: string, size: number) => {
     };
   }, [query, size]);
 
-  return { error, result };
+  return { error, result, setResult };
 };

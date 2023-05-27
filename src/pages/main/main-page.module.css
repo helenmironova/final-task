@@ -8,9 +8,17 @@
 
 .content {
   width: 70vw;
+  height: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+.searchBarAndFilterContainer {
+  width: 100%;
+  height: 65px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .no_data {
@@ -21,7 +29,7 @@
   font-size: 14px;
   line-height: 19px;
   color: #616161;
-  height: 100%;
+  height: 100px;
   overflow: hidden;
+  margin-top: 200px;
 }
-

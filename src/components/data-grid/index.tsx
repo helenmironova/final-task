@@ -4,7 +4,6 @@ import DataGridHeader from "./data-grid-header";
 import DataGridBody from "./data-grid-body";
 
 interface DataGridProps {
-  query: string;
   data: SearchResult[];
   setData: React.Dispatch<React.SetStateAction<SearchResult[]>>;
   result: SearchResult[];
@@ -12,7 +11,6 @@ interface DataGridProps {
 }
 
 const DataGrid = ({
-  query,
   data,
   setData,
   result,
@@ -20,7 +18,7 @@ const DataGrid = ({
 }: DataGridProps) => {
   return (
     <Fragment>
-      <DataGridHeader query={query} setData={setData} result={result} />
+      <DataGridHeader setData={setData} result={result} data={data} />
       <DataGridBody data={data} lastBookElementRef={lastBookElementRef} />
     </Fragment>
   );

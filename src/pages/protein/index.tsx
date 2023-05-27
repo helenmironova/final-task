@@ -2,12 +2,12 @@ import classes from "./protein-page.module.css";
 import { useState, useEffect, Fragment } from "react";
 import { useParams } from "react-router-dom";
 
-import Navigation from "../../components/nav-bar/navigation";
-import ProteinDetails from "../../components/protein-details/protein-details";
-import LoadingSpinner from "../../components/loading-spinner/loading-spinner";
-import ProteinPublications from "../../components/protein-publications/protein-publications";
+import Navigation from "../../components/nav-bar";
+import ProteinDetails from "../../components/protein-details";
+import LoadingSpinner from "../../components/loading-spinner";
+import ProteinPublications from "../../components/protein-publications";
 import { fetchData } from "../../api/axios/fetchData";
-import FeatureViewer from "../../components/feature-viewer/feature-viewer";
+import FeatureViewer from "../../components/feature-viewer";
 
 interface ProteinData {
   primaryAccession: string;

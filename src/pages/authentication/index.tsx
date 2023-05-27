@@ -1,8 +1,8 @@
 import classes from "./authentication.module.css";
 import { useState } from "react";
 
-import SignInForm from "../../components/sign-in-form/sign-in-form";
-import SignUpForm from "../../components/sign-up-form/sign-up-form";
+import SignInForm from "../../components/sign-in-form";
+import SignUpForm from "../../components/sign-up-form";
 
 const Authentication: React.FC = () => {
   const [registered, setRegistered] = useState(true);
