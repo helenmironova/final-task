@@ -25,35 +25,3 @@
   overflow: hidden;
 }
 
-.grid_container,
-.item_container {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  padding: 5px;
-  background-color: #f0f0f0;
-  border-radius: 8px;
-}
-
-.grid_scroll {
-  width: 100%;
-  height: 460px;
-  overflow-y: auto;
-}
-
-.grid_header {
-  padding: 5px;
-  justify-self: center;
-  align-self: center;
-}
-
-.item_container {
-  background-color: #fff;
-}
-
-.grid_item {
-  background-color: #fff;
-  padding: 5px;
-  justify-self: center;
-  align-self: center;
-}
