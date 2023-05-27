@@ -9,7 +9,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { fetchItems} from '../../store/listItems';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
-import { fetchProteinData, setNewSelectedProteinName } from '../../store/selectedProtein';
 
 const HomePage = () => {
     const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();

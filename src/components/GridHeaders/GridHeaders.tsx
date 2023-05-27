@@ -70,11 +70,13 @@ const GridHeaders = (props: any) => {
 
     const fetchData = () => {
       let url = `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=(${(searchText==='' || searchText===null) ? "*" : searchText})`;
+      console.log(selected);
+      url = addFilter(url);
       if(selected!==0){
-        url = addFilter(url);
         url = addSortType(url);
       }
       dispatch(removeItems());
+      console.log(url);
       props.fetchData(url);
     }
 
