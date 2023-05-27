@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
 import {useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setNewUser } from '../../store/user';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -13,6 +15,7 @@ const LoginForm = () => {
   const [isValidLogin, setIsValidLogin] = useState(true);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
+  const dispatch = useDispatch();
   const navigate = useNavigate(); 
 
   const checkPassword = () => {
@@ -53,6 +56,8 @@ const LoginForm = () => {
         passwordInput.style.border = '0';
         emailInput.style.border = '0';
         navigate('/search');
+        const userEmail: string = userCredential?.user?.email as string;
+        dispatch(setNewUser(userEmail));
       })
       .catch(() => {
         setIsValidLogin(false);
