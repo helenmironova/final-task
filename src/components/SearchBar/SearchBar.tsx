@@ -75,14 +75,14 @@ const SearchBar = (props: any) => {
         if location has query '*' meaning searchText is empty, searchText becomes an empty string;
     */
     useEffect(() => {
-        // const searchQuery = new URLSearchParams(location.search).get('query');
-        // if (searchQuery) {
-        //     if(searchQuery==='*'){
-        //         dispatch(setNewSearchText(""));
-        //         return;
-        //     }
-        //     dispatch(setNewSearchText(searchQuery));
-        // }
+        const searchQuery = new URLSearchParams(location.search).get('query');
+        if (searchQuery) {
+            if(searchQuery==='*'){
+                dispatch(setNewSearchText(""));
+                return;
+            }
+            dispatch(setNewSearchText(searchQuery));
+        }
     }, [location]);
 
 

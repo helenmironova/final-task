@@ -15,7 +15,7 @@ const HomePage = () => {
 
     const listItems = useSelector((state: any) => state.listItems.items);
     const nextUrl = useSelector((state: any) => state.listItems.nextUrl);
-    const loading = useSelector((state: any) => state.listItems.isLoading)
+    const loading = useSelector((state: any) => state.listItems.isLoading);
     
     const [dataToDisplay, setDataToDisplay] = useState(false);
 
