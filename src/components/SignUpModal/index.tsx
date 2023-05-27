@@ -8,7 +8,7 @@ interface Props {
   onPageChange: () => void;
 }
 
-const LoginModal = ({ onPageChange }: Props): JSX.Element => {
+const SignUpModal = ({ onPageChange }: Props): JSX.Element => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -34,7 +34,7 @@ const LoginModal = ({ onPageChange }: Props): JSX.Element => {
         }}
       >
         <Typography component="h1" fontSize={18} fontWeight={700}>
-          Login
+          Sign up
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate width={"100%"}>
           <ModalTextInput
@@ -47,7 +47,12 @@ const LoginModal = ({ onPageChange }: Props): JSX.Element => {
             labelText="Password"
             placeholderText="Enter your password"
           ></ModalTextInput>
-          <ModalButton>Login</ModalButton>
+          <ModalTextInput
+            inputType={"password"}
+            labelText="Repeat Password"
+            placeholderText="Enter your password again"
+          ></ModalTextInput>
+          <ModalButton>Create Account</ModalButton>
           <Container
             sx={{
               display: "flex",
@@ -56,7 +61,7 @@ const LoginModal = ({ onPageChange }: Props): JSX.Element => {
             }}
           >
             <Typography variant="caption" fontSize="12">
-              Don't have an account?
+              Already have an account?
             </Typography>
             <Button
               onClick={onPageChange}
@@ -73,7 +78,7 @@ const LoginModal = ({ onPageChange }: Props): JSX.Element => {
               }}
               variant="text"
             >
-              {"Sign Up"}
+              Login
             </Button>
           </Container>
         </Box>
@@ -82,4 +87,4 @@ const LoginModal = ({ onPageChange }: Props): JSX.Element => {
   );
 };
 
-export default LoginModal;
+export default SignUpModal;
