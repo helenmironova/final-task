@@ -41,9 +41,9 @@ const ReferenceItem = (props: any) => {
             <div className='categories'>
                 <p className='categoriesLabel'>Categories:&nbsp;<span className='categoriesData'> {reference?.references[0]?.sourceCategories?.join(', ')}</span></p>
             </div>
-            <div className='citedFor'>
+            {/* <div className='citedFor'> */}
                 <p className='citedForLabel'>Cited for:&nbsp;<span className='citedForData'> {reference?.references[0]?.referencePositions?.join(', ')}</span></p>
-            </div>
+            {/* </div> */}
             <div className='source'>
                 <p className='sourceLabel'>Source:&nbsp; <span className='sourceData'>{reference?.references[0]?.source?.name}</span></p>
             </div>
