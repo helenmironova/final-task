@@ -7,7 +7,7 @@ import ProteinDetails from "../../components/protein-details/protein-details";
 import LoadingSpinner from "../../components/loading-spinner/loading-spinner";
 import ProteinPublications from "../../components/protein-publications/protein-publications";
 import { fetchData } from "../../api/axios/fetchData";
-import FeatureViewer from "../../components/feature-viewer";
+import FeatureViewer from "../../components/feature-viewer/feature-viewer";
 
 interface ProteinData {
   primaryAccession: string;
@@ -63,7 +63,7 @@ const ProteinPage = () => {
     return (
       <Fragment>
         <Navigation />
-        <div className={classes.main_container}>
+        <main className={classes.main_container}>
           <div className={classes.headline_container}>
             <h2>
               {state.primaryAccession} / {state.uniProtkbId}
@@ -115,10 +115,12 @@ const ProteinPage = () => {
                   sectionText={state.sequence.value}
                 />
               )}
-              {view === "feature" && <FeatureViewer />}
+
+              {view === "feature" && <FeatureViewer accession={Id} /> }
+
               {view === "publications" &&
                 publications !== null &&
-                publications.map((item: IPublications, index) => {
+                publications.map((item: Publications, index) => {
                   return (
                     <ProteinPublications
                       key={index}
@@ -130,7 +132,7 @@ const ProteinPage = () => {
                 })}
             </div>
           </div>
-        </div>
+        </main>
       </Fragment>
     );
   }

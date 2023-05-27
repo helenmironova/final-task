@@ -22,7 +22,6 @@ const MainPage = () => {
   useEffect(() => {
     setData(result);
   }, [result]);
-  console.log("DATA", data);
 
   const observer = useRef<IntersectionObserver | null>(null);
   const lastBookElementRef: RefCallback<HTMLTableRowElement> = useCallback(
