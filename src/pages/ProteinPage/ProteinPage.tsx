@@ -3,7 +3,7 @@ import HomePageHeader from '../../components/HomePageHeader/HomePageHeader';
 import './ProteinPage.css';
 import { useLocation} from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { fetchProteinData } from '../../store/selectedProtein';
+import { fetchProteinData, fetchProteinReferencesData } from '../../store/selectedProtein';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import BasicData from '../../components/BasicData/BasicData';
@@ -20,6 +20,7 @@ const ProteinPage = () => {
 
     useEffect(() => {
         dispatch(fetchProteinData(protein.name));
+        dispatch(fetchProteinReferencesData(protein.name));
     }, [dispatch]);
 
     useEffect(() => {

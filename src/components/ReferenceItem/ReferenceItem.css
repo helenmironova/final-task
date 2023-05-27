@@ -25,4 +25,33 @@
     text-decoration-line: underline;
     color: #2B2B2B;
     text-align: left;
+    margin-bottom: 18px;
+}
+
+.categories, .citedFor, .source{
+    display: flex;
+    margin-bottom: 6px;
+}
+
+.categoriesLabel, .citedForLabel, .sourceLabel{
+    color: #6C6C6C;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    text-align: left;
+}
+
+.categoriesData, .citedForData, .sourceData{
+    color: #2B2B2B;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    display: flex;
+    text-align: left;
+}
+
+.source{
+    margin-bottom: 19px;
 }

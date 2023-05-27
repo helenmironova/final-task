@@ -5,8 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 const PublicationsTab = () => {
-    const protein = useSelector((state: any) => state.selectedProtein.protein);
-    const references = protein?.references;
+    const protein = useSelector((state: any) => state.selectedProtein);
+    const references = protein?.references.results;
     return(
         <div className='publicationsWrapper'>
             {references &&
