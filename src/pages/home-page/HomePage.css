@@ -46,9 +46,9 @@
 }
 
 .itemsWrapper{
-    /* //height: 522px; */
     overflow: scroll;
     overflow-x: hidden;
+    height: 764px;
 }
 
 .loadingWrapper{

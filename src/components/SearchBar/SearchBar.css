@@ -4,10 +4,11 @@
     display: flex;
     justify-content: center;
     position: relative;
+    width: 100%;
 }
 
 .searchInput{
-    width: 759.4px;
+    width: 60.7%;
     height: 100%;
     border: 1px solid #D9D9D9;
     border-radius: 8px;
@@ -32,7 +33,7 @@
     font-weight: 600;
     font-size: 14px;
     line-height: 19px;
-    width: 179px;
+    width: 13.9%;
     height: 40px;
     margin-left: 9px;
 }
