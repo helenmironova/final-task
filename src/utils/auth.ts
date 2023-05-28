@@ -28,34 +28,49 @@ const auth = getAuth(app);
 connectAuthEmulator(auth, "http://localhost:9099");
 
 export const loginEmailPassword = async (
-  loginEmail: string,
-  loginPassword: string
+  loginEmail: string | undefined,
+  loginPassword: string | undefined
 ): Promise<void> => {
-  try {
+  if (loginEmail && loginPassword) {
     const userCredential = await signInWithEmailAndPassword(
       auth,
       loginEmail,
       loginPassword
     );
     console.log(userCredential.user);
-  } catch (error) {
-    console.error(error);
+  } else {
+    throw new Error("Empty email or password");
   }
 };
 
+/**
+ * Creates a user account.
+ *
+ * @param loginEmail - The email for the account.
+ * @param loginPassword - The password for the account.
+ * @param loginRepeatPassword - The repeated password for confirmation.
+ * @throws {Error} If the passwords do not match.
+ * @returns {Promise<void>} A Promise that resolves when the account is created.
+ */
+
 export const createAccount = async (
-  loginEmail: string,
-  loginPassword: string
+  loginEmail: string | undefined,
+  loginPassword: string | undefined,
+  loginRepeatPassword: string | undefined
 ): Promise<void> => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      loginEmail,
-      loginPassword
-    );
-    console.log(userCredential.user);
-  } catch (error) {
-    console.error(error);
+  if (loginEmail && loginPassword && loginRepeatPassword) {
+    if (loginPassword === loginRepeatPassword) {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        loginEmail,
+        loginPassword
+      );
+      console.log(userCredential.user);
+    } else {
+      throw new Error("Passwords do not match");
+    }
+  } else {
+    throw new Error("Empty email or password");
   }
 };
 

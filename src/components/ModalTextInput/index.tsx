@@ -2,14 +2,18 @@ import { InputLabel, TextField } from "@mui/material";
 import "./index.css";
 
 interface Props {
+  inputName: string;
   inputType: string;
   labelText: string;
   placeholderText: string;
+  formError: string;
 }
 const ModalTextInput = ({
+  inputName,
   inputType,
   labelText,
   placeholderText,
+  formError,
 }: Props): JSX.Element => {
   return (
     <>
@@ -29,13 +33,14 @@ const ModalTextInput = ({
           boxSizing: "border-box",
           overflow: "hidden",
           marginTop: "0",
+          borderRadius: "8px",
+          border: formError ? "2px solid #EC3030" : "none",
         }}
         variant="filled"
         margin="normal"
         fullWidth
-        name={inputType}
+        name={inputName}
         type={inputType}
-        id={inputType}
         label={placeholderText}
         autoComplete="current-password"
         InputLabelProps={{

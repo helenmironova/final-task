@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
 import { loginEmailPassword } from "../../utils/auth";
 import ModalButton from "../ModalButton";
@@ -9,13 +9,24 @@ interface Props {
 }
 
 const LoginModal = ({ onPageChange }: Props): JSX.Element => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+  const [formError, setFormError] = useState("");
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const email = data.get("email")?.toString();
-    const password = data.get("password")?.toString();
-    if (email && password) {
-      loginEmailPassword(email, password);
+
+    try {
+      const data = new FormData(event.currentTarget);
+      const email = data.get("email")?.toString();
+      const password = data.get("password")?.toString();
+      await loginEmailPassword(email, password);
+      setFormError("");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setFormError(error.message);
+      } else {
+        // Handle other types of errors
+        setFormError("An unknown error occurred.");
+      }
     }
   };
 
@@ -38,14 +49,18 @@ const LoginModal = ({ onPageChange }: Props): JSX.Element => {
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate width={"100%"}>
           <ModalTextInput
+            inputName={"email"}
             inputType={"email"}
             labelText="Email"
             placeholderText="Enter your email"
+            formError={formError}
           ></ModalTextInput>
           <ModalTextInput
+            inputName="password"
             inputType={"password"}
             labelText="Password"
             placeholderText="Enter your password"
+            formError={formError}
           ></ModalTextInput>
           <ModalButton>Login</ModalButton>
           <Container
@@ -76,6 +91,16 @@ const LoginModal = ({ onPageChange }: Props): JSX.Element => {
               {"Sign Up"}
             </Button>
           </Container>
+          {formError && (
+            <Typography
+              color="#EC3030"
+              variant="caption"
+              fontWeight={600}
+              fontSize={12}
+            >
+              Login failed! Please, check you password and email and try again
+            </Typography>
+          )}
         </Box>
       </Box>
     </Container>

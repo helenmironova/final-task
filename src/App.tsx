@@ -5,6 +5,7 @@ import { PagesRouter } from "./routes/PagesRouter";
 import { ThemeProvider, createTheme } from "@mui/material";
 
 import OpenSansFont from "./assets/fonts/OpenSans-VariableFont.ttf";
+import { monitorAuthState } from "./utils/auth";
 
 const THEME = createTheme({
   typography: {
@@ -13,6 +14,7 @@ const THEME = createTheme({
 });
 
 const App = (): JSX.Element => {
+  monitorAuthState();
   return (
     <ThemeProvider theme={THEME}>
       <BrowserRouter>
