@@ -8,7 +8,7 @@ const Header = () => {
   const authState = useAppSelector(selectAuth);
   return (
     <div className="header">
-      <div className="header__email">{authState.user?.email}</div>
+      <div className="header__email">{authState.email}</div>
 
       <Button
         onClick={() => dispatch(logout())}

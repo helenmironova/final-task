@@ -1,25 +1,42 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import { User  } from "firebase/auth";
 import { auth } from "../../firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
-import { User as FirebaseUser } from "firebase/auth";
 
 interface AuthState {
-  user: FirebaseUser | null;
+  isLoggedIn: boolean;
+  email: string | null;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: AuthState = {
-  user: null,
+  isLoggedIn: false,
+  email: null,
   loading: false,
   error: null,
 };
 
+export const getAuthState = createAsyncThunk<User | null>("auth/getAuthState", async () => {
+  return new Promise<User | null>((resolve) => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in
+        resolve(user);
+      } else {
+        // User is signed out
+        resolve(null);
+      }
+    });
+  });
+});
+  
 export const login = createAsyncThunk(
   "auth/login",
   async ({ email, password }: { email: string; password: string }) => {
@@ -56,7 +73,8 @@ export const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.user;
+        state.email = action.payload.user.email;
+        state.isLoggedIn = true;
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
@@ -68,7 +86,8 @@ export const authSlice = createSlice({
       })
       .addCase(signUp.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.user;
+        state.email = action.payload.user.email;
+        state.isLoggedIn = true;
       })
       .addCase(signUp.rejected, (state, action) => {
         state.loading = false;
@@ -80,11 +99,21 @@ export const authSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state) => {
         state.loading = false;
-        state.user = null;
+        state.email = null;
+        state.isLoggedIn = false;
       })
       .addCase(logout.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Log out failed.";
+      })
+      .addCase(getAuthState.fulfilled, (state, action) => {
+        if (action.payload === null) {
+          state.email = null;
+          state.isLoggedIn = false;
+        } else {
+          state.email = action.payload.email;
+          state.isLoggedIn = true;
+        }
       });
   },
 });
