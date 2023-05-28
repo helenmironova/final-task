@@ -2,12 +2,13 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import authReducer from "../features/auth/authSlice";
 import proteinDataReducer from "../features/proteinData/proteinsSearchSlice";
 import proteinDetailsReducer from "../features/proteinData/proteinDetailsSlice";
-
+import filterReducer from "../features/proteinData/filterPanelSlice"
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     proteinData: proteinDataReducer,
-    proteinDetails: proteinDetailsReducer
+    proteinDetails: proteinDetailsReducer,
+    filter: filterReducer
   },
 });
 

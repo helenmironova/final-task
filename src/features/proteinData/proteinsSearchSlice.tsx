@@ -1,5 +1,9 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import {
+  extractFilterOptions,
+  QueryOptions,
+} from "../../components/FilterPanel/extractFilterOptions";
 
 interface protein {
   primaryAccession: string;
@@ -35,7 +39,7 @@ interface ProteinData {
   data: [protein] | null;
   loading: boolean;
   error: string | null;
-  scrollPosition: number
+  scrollPosition: number;
 }
 
 const initialState: ProteinData = {
@@ -43,14 +47,15 @@ const initialState: ProteinData = {
   data: null,
   loading: false,
   error: null,
-  scrollPosition: 0
+  scrollPosition: 0,
 };
 
 export const fetchProteins = createAsyncThunk(
   "proteinData/fetch",
-  async ({ query }: { query: string }) => {
+  async ({ query, options }: { query: string; options?: QueryOptions }) => {
+    const queryOptions = extractFilterOptions(options);
     const responce = await fetch(
-      `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,cc_subcellular_location&query=(${query})`
+      `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,cc_subcellular_location&query=(${query})${queryOptions}`
     );
     const link = responce.headers.get("link");
     const data = await responce.json();
@@ -71,7 +76,7 @@ export const proteinsSearchSlice = createSlice({
   name: "proteinData",
   initialState,
   reducers: {
-    setScrollPosition:(state, action: PayloadAction<number>) => {
+    setScrollPosition: (state, action: PayloadAction<number>) => {
       state.scrollPosition = action.payload;
     },
   },
@@ -96,7 +101,10 @@ export const proteinsSearchSlice = createSlice({
       })
       .addCase(scrollProteins.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = ([...(state.data as [protein]), ... action.payload.data.results] ) as [protein];
+        state.data = [
+          ...(state.data as [protein]),
+          ...action.payload.data.results,
+        ] as [protein];
         state.link = action.payload.newLink;
       })
       .addCase(scrollProteins.rejected, (state, action) => {
@@ -106,8 +114,6 @@ export const proteinsSearchSlice = createSlice({
   },
 });
 
-export const {
-  setScrollPosition
-} = proteinsSearchSlice.actions;
+export const { setScrollPosition } = proteinsSearchSlice.actions;
 export const selectProteinData = (state: RootState) => state.proteinData;
 export default proteinsSearchSlice.reducer;

@@ -24,7 +24,6 @@ import {
 import React, { useEffect, useRef } from "react";
 
 const DataTable = () => {
- 
   const tableRef = useRef<HTMLTableElement>(null);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -55,10 +54,8 @@ const DataTable = () => {
     const target = event.currentTarget;
     if (tableRef.current) {
       dispatch(setScrollPosition(target.scrollTop));
-      console.log(target.scrollTop)
     }
     if (target.scrollTop + target.clientHeight >= target.scrollHeight) {
-    
       if (proteinDataState.link) {
         const string = proteinDataState.link.replace(/<|>/g, "");
         const match = string.match(/[^;]+/);
@@ -82,7 +79,7 @@ const DataTable = () => {
         {item?.organism?.scientificName}
       </TableCell>
       <TableCell sx={{ maxWidth: "150px" }}>
-        {item?.comments[0]
+        {item?.comments?.length > 1
           ? item.comments[0].subcellularLocations
               .map((item) => item.location.value)
               .join(" ")
