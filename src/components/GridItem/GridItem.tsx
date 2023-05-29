@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import './GridItem.css'
-import {useState } from 'react';
+import {useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { fetchProteinData, fetchProteinReferencesData, setNewSelectedProteinName } from '../../store/selectedProtein';
@@ -13,6 +13,8 @@ const GridItem = (props: any) => {
     const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
 
     const [locations, setLocations] = useState<string[]>([]);
+    const [dataLoaded, setDataLoaded] = useState(false); // Track whether data has loaded
+
 
     if (props.item.comments && props.item.comments.length > 0) {
         if(props.item.comments[0].subcellularLocations && props.item.comments[0].subcellularLocations.length>0){
@@ -44,6 +46,10 @@ const GridItem = (props: any) => {
         dispatch(fetchProteinReferencesData(props.item.primaryAccession));
     };
 
+    useEffect(()=>{
+        setDataLoaded(true);
+    }, [props.item.primaryAccession, dispatch])
+
     return(
         <div className='itemWrapper'>
             <div className='numberDiv'>{props.index+1}</div>
@@ -68,7 +74,11 @@ const GridItem = (props: any) => {
                 ))}
             </div>
             <div className='organismDiv'><div className='organismInsideDiv'>{props.item.organism.scientificName}</div></div>
-            <div className='subcelDiv'>{formatArray(locations)}</div>
+            {dataLoaded ? (
+                <div className='subcelDiv'>{formatArray(locations)}</div>
+                ) : (
+                    <div className='subcelDiv'>Loading...</div>
+                )}
             <div className='lengthDiv'>{props.item.sequence.length}</div>
         </div>
     )

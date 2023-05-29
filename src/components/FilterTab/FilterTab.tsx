@@ -77,7 +77,9 @@ const FilterTab = (props: any) => {
             url+= ` AND (model_organism:${filterOptions.organism})`;
         }
         if(filterOptions.sequenceLength__from && filterOptions.sequenceLength__to){
-            url+= ` AND (length:[${filterOptions.sequenceLength__from} TO ${filterOptions.sequenceLength__to}])`;
+            const from = filterOptions.sequenceLength__from;
+            const to = filterOptions.sequenceLength__to;
+            url+= ` AND (length:[${from} TO ${to}])`;
         }
         if(filterOptions.annotationScore && filterOptions.annotationScore!=''){
             url+=` AND (annotation_score:${filterOptions.annotationScore})`;
@@ -85,6 +87,7 @@ const FilterTab = (props: any) => {
         if(filterOptions.proteinWith && filterOptions.proteinWith!=''){
             url+=` AND (proteins_with:${filterOptions.proteinWith})`;
         }
+        console.log(url);
         dispatch(setNewValueFilter({isOpen: false}));
         dispatch(removeItems());
         dispatch(setNewValueSort({selected: 0, type: 0}))
