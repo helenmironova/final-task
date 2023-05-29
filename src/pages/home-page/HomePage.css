@@ -12,7 +12,7 @@
 
 .resultsWrapper{
     width: 80%;
-    max-height: 642px;
+    min-height: 642px;
     justify-content: center;
     display: flex;
 }
@@ -48,7 +48,7 @@
 .itemsWrapper{
     overflow: scroll;
     overflow-x: hidden;
-    height: 764px;
+    max-height: 532px;
 }
 
 .loadingWrapper{
