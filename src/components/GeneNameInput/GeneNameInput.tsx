@@ -27,7 +27,7 @@ const GeneNameInput = () => {
     return(
         <div className='geneNameWrapper'>
             <p className='geneName__title'>Gene Name</p>
-            <input type='text' ref={nameInput} className='geneName__input' placeholder='Enter Gene Name' onChange={(e)=>handleChange(e)}></input>
+            <input type='text' ref={nameInput} className='geneName__input' placeholder='Enter Gene Name' onChange={(e)=>handleChange(e)} name='geneName'></input>
         </div>
     )
 }

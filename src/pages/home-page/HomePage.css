@@ -49,6 +49,7 @@
     overflow: scroll;
     overflow-x: hidden;
     max-height: 532px;
+    width: 100%;
 }
 
 .loadingWrapper{

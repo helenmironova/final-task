@@ -94,6 +94,7 @@ const SearchBar = (props: any) => {
                 className='searchInput'
                 value={searchText}
                 onChange={handleSearchTextChange}
+                name='search'
             />
             <button type='submit' className='searchButton' onClick={()=>handleSubmit(searchText)}>
                 Search

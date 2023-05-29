@@ -13,7 +13,7 @@ const OrganismInput = ()=>{
     return(
         <div className='organism__wrapper'>
             <p className='organism__title'>Organism</p>
-            <select className='organism__select'   value={filterOptions.organism || ''} onChange={(e)=>dispatch(setNewValueFilter({organism: e.target.value}))}>
+            <select className='organism__select'   value={filterOptions.organism || ''} onChange={(e)=>dispatch(setNewValueFilter({organism: e.target.value}))} name='organism'>
                 <option value="">Select an option</option>
                 {selectorOptions.organismOptions.map((option: any) => (
                     <option key={uuidv4()} value={option.value}>

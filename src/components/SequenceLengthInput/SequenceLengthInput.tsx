@@ -24,6 +24,7 @@ const SequenceLengthInput = () => {
           placeholder='from'
           onChange={handleFromInputChange}
           value={filterOptions.sequenceLength__from || ''}
+          name='from'
         />
         <div className='dec'></div>
         <input
@@ -32,6 +33,7 @@ const SequenceLengthInput = () => {
           placeholder='to'
           onChange={handleToInputChange}
           value={filterOptions.sequenceLength__to || ''}
+          name='to'
         />
       </div>
     </div>

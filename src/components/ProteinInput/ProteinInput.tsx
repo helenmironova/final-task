@@ -28,7 +28,7 @@ const ProteinInput = () => {
     return(
         <div className='protein__wrapper'>
             <p className='protein__title'>Protein With</p>
-            <select className='protein__select' ref={selectRef} value={filterOptions.proteinWith || ''} onChange={(e)=>dispatch(setNewValueFilter({proteinWith: e.target.value}))}>
+            <select className='protein__select' ref={selectRef} value={filterOptions.proteinWith || ''} onChange={(e)=>dispatch(setNewValueFilter({proteinWith: e.target.value}))} name='protein'>
                 <option value="" disabled hidden>Select an option</option>
                 {selectorOptions.proteinWithOptions.map((option: any) => (
                     <option key={uuidv4()} value={option.value}>

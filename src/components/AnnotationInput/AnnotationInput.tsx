@@ -12,7 +12,7 @@ const AnnotationInput = () => {
     return (
         <div className='annotation__wrapper'>
             <p className='annotation__title'>Annotation score</p>
-            <select className='annotation__select' value={filterOptions.annotationScore || ''} onChange={(e)=>dispatch(setNewValueFilter({annotationScore: e.target.value}))}>
+            <select className='annotation__select' value={filterOptions.annotationScore || ''} onChange={(e)=>dispatch(setNewValueFilter({annotationScore: e.target.value}))} name='annotation'>
                 <option value="">Select an option</option>
                 {selectorOptions.annotationOptions.map((option: any) => (
                     <option key={uuidv4()} value={option.value}>
