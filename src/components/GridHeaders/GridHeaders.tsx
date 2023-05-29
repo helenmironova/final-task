@@ -47,7 +47,9 @@ const GridHeaders = (props: any) => {
           url+= ` AND (model_organism:${filterOptions.organism})`;
       }
       if(filterOptions.sequenceLength__from && filterOptions.sequenceLength__to){
-          url+= ` AND (length:[${filterOptions.sequenceLength__from} TO ${filterOptions.sequenceLength__to}])`;
+        const from = filterOptions.sequenceLength__from;
+        const to = filterOptions.sequenceLength__to;
+        url += ` AND (length:%5B${from} TO ${to}%5D)`;
       }
       if(filterOptions.annotationScore && filterOptions.annotationScore!=''){
           url+=` AND (annotation_score:${filterOptions.annotationScore})`;

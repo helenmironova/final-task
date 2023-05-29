@@ -10,6 +10,7 @@ import ProteinInput from '../ProteinInput/ProteinInput';
 import { removeItems } from '../../store/listItems';
 import { setNewValueFilter } from '../../store/filterOptions';
 import { setNewValueSort } from '../../store/sortOptions';
+import { setNewSelectedProteinName } from '../../store/selectedProtein';
 
 
 const FilterTab = (props: any) => {
@@ -87,8 +88,10 @@ const FilterTab = (props: any) => {
         if(filterOptions.proteinWith && filterOptions.proteinWith!=''){
             url+=` AND (proteins_with:${filterOptions.proteinWith})`;
         }
+        dispatch(setNewSelectedProteinName(filterOptions.geneName));
         dispatch(setNewValueFilter({isOpen: false}));
         dispatch(removeItems());
+        console.log("here")
         dispatch(setNewValueSort({selected: 0, type: 0}))
         props.fetchData(url);
     }

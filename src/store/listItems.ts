@@ -34,10 +34,12 @@ export const fetchItems = createAsyncThunk(
       const nextUrl = parseNextLink(linkHeader);
       const [data, newNextUrl] = await Promise.all([response.json(), nextUrl]);
       const newItems = data.results;
+      if(newItems.length===0) return;
+      dispatch(removeItems());
       dispatch(setNextUrl(newNextUrl || ''));
       dispatch(addListItems(newItems));
-      dispatch(setNewSelectedProteinName(newItems[0].primaryAccession))
-      dispatch(fetchProteinData(newItems[0].primaryAccession))
+      dispatch(setNewSelectedProteinName(newItems[0]?.primaryAccession))
+      dispatch(fetchProteinData(newItems[0]?.primaryAccession))
     } catch (error) {
       console.error(error);
     }
