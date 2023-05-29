@@ -4,8 +4,9 @@ import { ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
+  isDisabled: boolean;
 }
-const ModalButton = ({ children }: Props): JSX.Element => {
+const ModalButton = ({ children, isDisabled }: Props): JSX.Element => {
   return (
     <Button
       type="submit"
@@ -25,6 +26,7 @@ const ModalButton = ({ children }: Props): JSX.Element => {
         },
         boxShadow: "none",
       }}
+      disabled={isDisabled}
     >
       {children}
     </Button>

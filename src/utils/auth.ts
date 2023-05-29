@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { FirebaseError, initializeApp } from "firebase/app";
 import {
   connectAuthEmulator,
   createUserWithEmailAndPassword,
@@ -27,17 +27,32 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 connectAuthEmulator(auth, "http://localhost:9099");
 
+const validateEmail = (email: string) => {
+  return email
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+};
+
+const validatePassword = (password: string) => {
+  return (
+    /[a-z]/.test(password) && /[A-Z]/.test(password) && /\d/.test(password)
+  );
+};
+
 export const loginEmailPassword = async (
   loginEmail: string | undefined,
   loginPassword: string | undefined
 ): Promise<void> => {
   if (loginEmail && loginPassword) {
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      loginEmail,
-      loginPassword
-    );
-    console.log(userCredential.user);
+    if (loginPassword.length < 6) {
+      throw new Error("Password should have a minimum of 6 symbols");
+    } else if (validateEmail(loginEmail)) {
+      await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+    } else {
+      throw new Error("Please enter a valid email");
+    }
   } else {
     throw new Error("Empty email or password");
   }
@@ -59,16 +74,22 @@ export const createAccount = async (
   loginRepeatPassword: string | undefined
 ): Promise<void> => {
   if (loginEmail && loginPassword && loginRepeatPassword) {
-    if (loginPassword === loginRepeatPassword) {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        loginEmail,
-        loginPassword
+    if (!validateEmail(loginEmail)) {
+      throw new Error("Please enter a valid email");
+    }
+    if (!validatePassword(loginPassword)) {
+      throw new Error(
+        "Passwords must contain lowercase letters, uppercase letters and numbers"
       );
-      console.log(userCredential.user);
-    } else {
+    }
+    if (loginPassword !== loginRepeatPassword) {
       throw new Error("Passwords do not match");
     }
+
+    if (loginPassword.length < 6) {
+      throw new Error("Password should have a minimum of 6 symbols");
+    }
+    await createUserWithEmailAndPassword(auth, loginEmail, loginPassword);
   } else {
     throw new Error("Empty email or password");
   }

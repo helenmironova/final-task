@@ -5,25 +5,41 @@ import ModalButton from "../ModalButton";
 import ModalTextInput from "../ModalTextInput";
 import { FirebaseError } from "firebase/app";
 
-interface Props {
-  onPageChange: () => void;
-}
-
-const SignUpModal = ({ onPageChange }: Props) => {
+const AuthModal = (): JSX.Element => {
+  const [isLoginPage, setIsLoginPage] = useState(true);
+  const togglePage = () => {
+    setIsLoginPage(!isLoginPage);
+  };
   const [formError, setFormError] = useState("");
+  const [email, setEmail] = useState("");
+
+  const [password, setPassword] = useState("");
+  const [passwordRepeat, setPasswordRepeat] = useState("");
+
+  const resetForm = () => {
+    setFormError("");
+    setEmail("");
+    setPassword("");
+    if (!isLoginPage) {
+      setPasswordRepeat("");
+    }
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      const data = new FormData(event.currentTarget);
-      const email = data.get("email")?.toString();
-      const password = data.get("password")?.toString();
-      const repeat_password = data.get("repeat-password")?.toString();
-      await createAccount(email, password, repeat_password);
+      if (isLoginPage) {
+        await loginEmailPassword(email, password);
+      } else {
+        await createAccount(email, password, passwordRepeat);
+      }
       setFormError("");
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
-        setFormError("No such email or password");
+        setFormError(
+          "Login failed! Please,  check you password and email and try again"
+        );
       } else if (error instanceof Error) {
         setFormError(error.message);
       } else {
@@ -32,6 +48,21 @@ const SignUpModal = ({ onPageChange }: Props) => {
       }
     }
   };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    if (name === "email") {
+      setEmail(value);
+    } else if (name === "password") {
+      setPassword(value);
+    } else if (name === "repeat-password") {
+      setPasswordRepeat(value);
+    }
+  };
+  const isButtonDisabled =
+    email.trim() === "" ||
+    password.trim() === "" ||
+    (!isLoginPage && passwordRepeat.trim() === "");
 
   return (
     <Container component="main" maxWidth="xs">
@@ -48,7 +79,7 @@ const SignUpModal = ({ onPageChange }: Props) => {
         }}
       >
         <Typography component="h1" fontSize={18} fontWeight={700}>
-          Sign up
+          {isLoginPage ? "Login" : "Sign up"}
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate width={"100%"}>
           <ModalTextInput
@@ -57,6 +88,8 @@ const SignUpModal = ({ onPageChange }: Props) => {
             labelText="Email"
             placeholderText="Enter your email"
             formError={formError}
+            onChange={handleInputChange}
+            value={email}
           ></ModalTextInput>
           <ModalTextInput
             inputName="password"
@@ -64,15 +97,23 @@ const SignUpModal = ({ onPageChange }: Props) => {
             labelText="Password"
             placeholderText="Enter your password"
             formError={formError}
+            onChange={handleInputChange}
+            value={password}
           ></ModalTextInput>
-          <ModalTextInput
-            inputName="repeat-password"
-            inputType={"password"}
-            labelText="Repeat Password"
-            placeholderText="Enter your password again"
-            formError={formError}
-          ></ModalTextInput>
-          <ModalButton>Create Account</ModalButton>
+          {!isLoginPage && (
+            <ModalTextInput
+              inputName="repeat-password"
+              inputType={"password"}
+              labelText="Repeat Password"
+              placeholderText="Enter your password again"
+              formError={formError}
+              onChange={handleInputChange}
+              value={passwordRepeat}
+            ></ModalTextInput>
+          )}
+          <ModalButton isDisabled={isButtonDisabled}>
+            {isLoginPage ? "Login" : "Create Account"}
+          </ModalButton>
           <Container
             sx={{
               display: "flex",
@@ -81,10 +122,15 @@ const SignUpModal = ({ onPageChange }: Props) => {
             }}
           >
             <Typography variant="caption" fontSize="12">
-              Already have an account?
+              {isLoginPage
+                ? "Don’t have an account? "
+                : "Already have an account? "}
             </Typography>
             <Button
-              onClick={onPageChange}
+              onClick={() => {
+                togglePage();
+                resetForm();
+              }}
               sx={{
                 fontSize: "12px",
                 textTransform: "capitalize",
@@ -95,29 +141,24 @@ const SignUpModal = ({ onPageChange }: Props) => {
                 padding: "0 0 0 2px",
                 display: "flex",
                 justifyContent: "flex-start",
+                ":focus": {
+                  outline: "none",
+                },
               }}
               variant="text"
             >
-              Login
+              {isLoginPage ? "Sign up" : "Login"}
             </Button>
           </Container>
           {formError && (
-            <Container
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+            <Typography
+              color="#EC3030"
+              variant="caption"
+              fontWeight={600}
+              fontSize={12}
             >
-              <Typography
-                color="#EC3030"
-                variant="caption"
-                fontWeight={600}
-                fontSize={12}
-              >
-                {formError}
-              </Typography>
-            </Container>
+              {formError}
+            </Typography>
           )}
         </Box>
       </Box>
@@ -125,4 +166,4 @@ const SignUpModal = ({ onPageChange }: Props) => {
   );
 };
 
-export default SignUpModal;
+export default AuthModal;

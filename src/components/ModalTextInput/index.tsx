@@ -7,6 +7,8 @@ interface Props {
   labelText: string;
   placeholderText: string;
   formError: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
 }
 const ModalTextInput = ({
   inputName,
@@ -14,6 +16,8 @@ const ModalTextInput = ({
   labelText,
   placeholderText,
   formError,
+  onChange,
+  value,
 }: Props): JSX.Element => {
   return (
     <>
@@ -46,6 +50,8 @@ const ModalTextInput = ({
         InputLabelProps={{
           style: { fontSize: "12px" },
         }}
+        onChange={onChange}
+        value={value}
       />
     </>
   );

@@ -1,13 +1,8 @@
 import background from "../../public/img/dna-representation-collage1.png";
-import LoginModal from "../components/LoginModal";
-import { useState } from "react";
-import SignUpModal from "../components/SignUpModal";
+
+import AuthModal from "../components/AuthModal";
 
 const PageAuth = (): JSX.Element => {
-  const [isLoginPage, setIsLoginPage] = useState(true);
-  const togglePage = () => {
-    setIsLoginPage(!isLoginPage);
-  };
   return (
     <div
       style={{
@@ -21,11 +16,7 @@ const PageAuth = (): JSX.Element => {
         backgroundSize: "cover",
       }}
     >
-      {isLoginPage ? (
-        <LoginModal onPageChange={togglePage} />
-      ) : (
-        <SignUpModal onPageChange={togglePage} />
-      )}
+      <AuthModal></AuthModal>
     </div>
   );
 };
