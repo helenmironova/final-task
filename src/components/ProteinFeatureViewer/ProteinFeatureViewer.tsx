@@ -1,5 +1,4 @@
 // @ts-nocheck
-import "./proteinFeatureViewer.css";
 import { useAppSelector } from "../../app/hooks";
 import { selectProteinDetails } from "../../features/proteinData/proteinDetailsSlice";
 

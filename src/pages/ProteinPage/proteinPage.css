@@ -54,10 +54,14 @@
   line-height: 19px;
 }
 .proteinPage__navigation {
-  margin-top: 20px;
+  margin: 20px 0 50px 0;
   display: flex;
   gap: 20px;
 }
 .proteinPage__details {
   width: 100%;
+}
+.proteinPage__back{
+  text-decoration: none;
+  color: #3c86f4;
 }

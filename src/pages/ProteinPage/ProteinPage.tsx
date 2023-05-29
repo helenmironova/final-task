@@ -1,17 +1,22 @@
 import "./proteinPage.css";
 import Header from "../../components/Header/Header";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectProteinDetails } from "../../features/proteinData/proteinDetailsSlice";
 import { NavLink, Outlet } from "react-router-dom";
+import { fetchProteinPublications } from "../../features/proteinData/proteinPublications";
 
 const ProteinPage = () => {
+  const dispatch = useAppDispatch();
   const proteinDetails = useAppSelector(selectProteinDetails);
   const proteinData = proteinDetails?.data;
+  const entry = proteinData?.primaryAccession ? proteinData?.primaryAccession : "";
   return (
     <div className="proteinPage__wrapper">
       <Header />
       <div className="proteinPage">
+       
         <div className="proteinPage__content">
+        <NavLink to="/search" className="proteinPage__back">Back to search</NavLink>
           <div className="proteinPage__header">
             <h2>
               {proteinData?.primaryAccession} / {proteinData?.uniProtkbId}
@@ -51,6 +56,9 @@ const ProteinPage = () => {
               Feature viewer
             </NavLink>
             <NavLink
+            onClick={() => {
+              dispatch(fetchProteinPublications({entry: entry})) }
+          }
               to={`/protein/${proteinData?.primaryAccession}/publications`}
               className={({ isActive }) =>
                 isActive ? "proteinPage__link--active" : "proteinPage__link "
