@@ -64,6 +64,7 @@ const LoginForm = () => {
         setIsFormSubmitted(false);
         emailInput.style.border = '2px solid #EC3030';
         passwordInput.style.border = '2px solid #EC3030';
+        console.clear();
       });
   };
 
@@ -96,7 +97,7 @@ const LoginForm = () => {
 
   return (
     <form className="login__form" onSubmit={handleSubmit}>
-      <label className="email__label">
+      <label className="email__label" htmlFor='email'>
         <b>Email</b>
       </label>
       <input
@@ -104,9 +105,12 @@ const LoginForm = () => {
         placeholder="Enter your email"
         className="email__input"
         onChange={(e) => setEmail(e.target.value)}
+        name='email'
+        id="email"
+        autoComplete='on'
       />
       {!isValidEmail && <div className="invalidEmailText">Please enter a valid email address.</div>}
-      <label className="password__label">
+      <label className="password__label" htmlFor='password'>
         <b>Password</b>
       </label>
       <input
@@ -114,6 +118,8 @@ const LoginForm = () => {
         placeholder="Enter your password"
         className="password__input"
         onChange={(e) => setPassword(e.target.value)}
+        name='password'
+        id='password'
       />
       {!isValidPassword && (
         <div className="invalidPasswordText">Password must be at least 6 characters long.</div>

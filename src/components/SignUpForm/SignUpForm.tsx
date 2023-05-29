@@ -95,18 +95,18 @@ const SignUpForm = () => {
 
     return(
         <form className='signUpForm' onSubmit={handleSubmit}>
-            <label className='label'><b>Email</b></label>
-            <input type='text' className='emailInput' placeholder='Enter your email' onChange={(e)=>setEmail(e.target.value)}></input>
+            <label className='label' htmlFor="email"><b>Email</b></label>
+            <input type='text' className='emailInput' placeholder='Enter your email' onChange={(e)=>setEmail(e.target.value)} id="email" name="email" autoComplete="on"></input>
             {!isValidEmail && (
                 <div className='invalidTextSU'>Please enter a valid email address.</div>
             )}
-            <label className='label'><b>Password</b></label>
-            <input type='text' className='passwordInput' placeholder='Enter your password' onChange={(e)=>setPassword(e.target.value)}></input>
+            <label className='label' htmlFor="password"><b>Password</b></label>
+            <input type='text' className='passwordInput' placeholder='Enter your password' onChange={(e)=>setPassword(e.target.value)} id="password" name="password"></input>
             {!isValidPassword && (
                 <div className='invalidTextSU'> {"Must be at least 6 symbols: lowercase letter, uppercase letter and a number."}</div>
             )}
-            <label className='label'><b>Repeat Password</b></label>
-            <input type='text' className='repeatPasswordInput' placeholder='Enter your password again' onChange={(e)=>setRepeatPassword(e.target.value)}></input>
+            <label className='label' htmlFor="repassword"><b>Repeat Password</b></label>
+            <input type='text' className='repeatPasswordInput' placeholder='Enter your password again' onChange={(e)=>setRepeatPassword(e.target.value)} id="repassword" name="repassword"></input>
             {!isValidRepeat && (
                 <div className='invalidTextSU'> {"Passwords must match."}</div>
             )}

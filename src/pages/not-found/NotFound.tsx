@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
 const NotFound = () => {
     const user = useSelector((state: any)=>state.user);
     const navigate = useNavigate();
-
+    console.clear();
 
     const handleClick = () => {
         console.log("clicked")

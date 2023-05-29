@@ -3,6 +3,7 @@ import {Link } from "react-router-dom";
 
 
 const MainPage = () => {
+  console.clear();
   return (
     <div>
       <h1 className='header'>{"Q-1 Search"}</h1>
