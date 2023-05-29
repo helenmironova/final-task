@@ -3,6 +3,17 @@ import './BasicData.css'
 const BasicData = (props: any) => {
     const protein = props.protein;
     console.log(protein)
+
+    const fullName =
+        protein?.proteinDescription?.recommendedName?.fullName?.value ||
+        (protein?.proteinDescription?.alternativeNames &&
+        protein.proteinDescription.alternativeNames.length > 0 &&
+        protein.proteinDescription.alternativeNames[0].fullName?.value) ||
+        (protein?.proteinDescription?.submissionNames &&
+        protein.proteinDescription.submissionNames.length > 0 &&
+        protein.proteinDescription.submissionNames[0].fullName?.value) ||
+    "";
+
     return(
         <div className='basicDataWrapper'>
             <div className='bdwTop'>
@@ -13,7 +24,7 @@ const BasicData = (props: any) => {
             <div className='info'>
                 <div className='infoTop'>
                     <p className='infoTopHeader'>Protein</p>
-                    <p className='infoTopData'>{protein?.primaryAccession}</p>
+                    <p className='infoTopData'>{fullName}</p>
                 </div>
                 <div className='infoBottom'>
                     <p className='infoBottomHeader'>Gene</p>
