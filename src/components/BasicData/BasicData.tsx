@@ -2,7 +2,6 @@ import './BasicData.css'
 
 const BasicData = (props: any) => {
     const protein = props.protein;
-    console.log(protein)
 
     const fullName =
         protein?.proteinDescription?.recommendedName?.fullName?.value ||
