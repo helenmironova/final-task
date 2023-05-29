@@ -15,17 +15,6 @@ const GridItem = (props: any) => {
     const [locations, setLocations] = useState<string[]>([]);
     const [dataLoaded, setDataLoaded] = useState(false); // Track whether data has loaded
 
-
-    if (props.item.comments && props.item.comments.length > 0) {
-        if(props.item.comments[0].subcellularLocations && props.item.comments[0].subcellularLocations.length>0){
-            props.item.comments[0].subcellularLocations.forEach((loc: any) => {
-                if (!locations.includes(loc.location.value)) {
-                    setLocations(prevLocations => [...prevLocations, loc.location.value]);
-                }
-            });   
-        }
-    }
-
     function formatArray(array: string[]): string {
         const words: string[] = [];
       
@@ -46,9 +35,28 @@ const GridItem = (props: any) => {
         dispatch(fetchProteinReferencesData(props.item.primaryAccession));
     };
 
+    const resetLocations = () => {
+        if (props.item.comments && props.item.comments.length > 0) {
+            props.item.comments.forEach((comment: any) => {
+              if (comment.commentType === 'SUBCELLULAR LOCATION' && comment.subcellularLocations && comment.subcellularLocations.length > 0) {
+                comment.subcellularLocations.forEach((loc: any) => {
+                  if (!locations.includes(loc.location.value)) {
+                    setLocations((prevLocations) => [...prevLocations, loc.location.value]);
+                  }
+                });
+              }
+            });
+          }
+          
+    }
+
     useEffect(()=>{
+        resetLocations();
         setDataLoaded(true);
+        console.log(props.item);
+        console.log(locations);
     }, [props.item.primaryAccession, dispatch])
+   
 
     return(
         <div className='itemWrapper'>

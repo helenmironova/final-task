@@ -31,8 +31,8 @@ const HomePage = () => {
         dispatches new items;
     */
     const fetchData = (url: string) => {
-        setDataToDisplay(true);
         dispatch(fetchItems(url));
+        setDataToDisplay(true);
     };
 
     /*
