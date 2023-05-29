@@ -55,7 +55,7 @@ export const fetchProteins = createAsyncThunk(
   async ({ query, options }: { query: string; options?: QueryOptions }) => {
     const queryOptions = extractFilterOptions(options);
     const responce = await fetch(
-      `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,cc_subcellular_location&query=(${query})${queryOptions}`
+      `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,cc_subcellular_location&query=(${query})${queryOptions}&sort=accession%20desc`
     );
     const link = responce.headers.get("link");
     const data = await responce.json();

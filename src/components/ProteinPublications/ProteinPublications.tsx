@@ -3,7 +3,7 @@ import { useAppSelector } from "../../app/hooks";
 import { selectProteinPublications } from "../../features/proteinData/proteinPublications";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import "./proteinPublications.css";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const ProteinPublications = () => {
   const publications = useAppSelector(selectProteinPublications);
@@ -11,33 +11,37 @@ const ProteinPublications = () => {
 
   return (
     <div className="proteinPublications">
-      {publications.data?.map((publication) => (
+      {publications?.data?.map((publication) => (
         <div className="publicationCard" key={counter++}>
-          <h3>{publication.citation.title}</h3>
+          <h3>{publication?.citation?.title}</h3>
           <div className="publicationCard__authors">
-            {publication.citation.authors.join(", ").length > 200
-              ? publication.citation.authors.join(", ").substring(0, 200) +
+            {publication?.citation?.authors?.join(", ").length > 200
+              ? publication?.citation?.authors?.join(", ").substring(0, 200) +
                 "  ..."
               : publication.citation.authors.join(", ")}
           </div>
           <div>
             <span className="publicationCard__title--small">Categories: </span>
-            {publication.references[0].sourceCategories.join(", ")}
+            {publication?.references[0]
+              ? publication.references[0].sourceCategories.join(", ")
+              : ""}
           </div>
           <div>
             <span className="publicationCard__title--small"> Cited for: </span>
-            {publication.references[0].referencePositions?.join(", ")}
+            {publication?.references[0]
+              ? publication?.references[0].referencePositions?.join(", ")
+              : ""}
           </div>
           <div>
             <span className="publicationCard__title--small">Source: </span>
 
-            {publication.references
-              ? publication.references[0].source.name
+            {publication?.references
+              ? publication?.references[0].source?.name
               : ""}
           </div>
           <div>
-            {publication.citation.citationCrossReferences?.map((item) =>
-              item.database === "PubMed" ? (
+            {publication?.citation?.citationCrossReferences?.map((item) =>
+              item?.database === "PubMed" ? (
                 <span>
                   <NavLink
                     to={`https://pubmed.ncbi.nlm.nih.gov/${item.id}`}
@@ -81,17 +85,21 @@ const ProteinPublications = () => {
                 ""
               )
             )}
+
             <span>
               <NavLink
-                to={`https://dx.doi.org/${publication.citation.citationCrossReferences
-                  .map((item) => (item.database === "DOI" ? item.id : ""))
-                  .filter((item) => item !== "")}`}
+                to={
+                  publication?.citation?.citationCrossReferences?.length > 1
+                    ? `https://dx.doi.org/${publication?.citation?.citationCrossReferences?.filter( item => item.database === "DOI").map(item => item.id).join("")}`
+                    : ""
+                }
                 target="_blank"
                 onClick={(e) => {
+                  if (!publication.citation.citationCrossReferences) {
+                    e.preventDefault();
+                  }
                   if (
-                    publication.citation.citationCrossReferences.filter(
-                      (item) => item.database === "DOI"
-                    ).length <= 0
+                    publication?.citation?.citationCrossReferences?.length <= 1
                   ) {
                     e.preventDefault();
                   }
@@ -99,9 +107,11 @@ const ProteinPublications = () => {
               >
                 <Button
                   disabled={
-                    publication.citation.citationCrossReferences.filter(
-                      (item) => item.database === "DOI"
-                    ).length <= 0
+                    publication.citation.citationCrossReferences
+                      ? publication.citation.citationCrossReferences.filter(
+                          (item) => item.database === "DOI"
+                        ).length <= 0
+                      : true
                   }
                   sx={{
                     borderRadius: "4px",
@@ -109,12 +119,13 @@ const ProteinPublications = () => {
                     height: "25px",
                     textTransform: "capitalize",
                     marginRight: "10px",
-                    border:
-                      publication.citation.citationCrossReferences.filter(
-                        (item) => item.database === "DOI"
-                      ).length > 0
+                    border: publication.citation.citationCrossReferences
+                      ? publication.citation.citationCrossReferences.filter(
+                          (item) => item.database === "DOI"
+                        ).length > 0
                         ? "1px solid #3C86F4"
-                        : "none",
+                        : "none"
+                      : "none",
                   }}
                   variant="text"
                 >
