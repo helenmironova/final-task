@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
 import { createAccount, loginEmailPassword } from "../../utils/auth";
 import ModalButton from "../ModalButton";
@@ -7,25 +7,28 @@ import { FirebaseError } from "firebase/app";
 
 const AuthModal = (): JSX.Element => {
   const [isLoginPage, setIsLoginPage] = useState(true);
-  const togglePage = () => {
+  const togglePage = useCallback(() => {
     setIsLoginPage(!isLoginPage);
-  };
+  }, [isLoginPage]);
+
   const [formError, setFormError] = useState("");
   const [email, setEmail] = useState("");
 
   const [password, setPassword] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setFormError("");
     setEmail("");
     setPassword("");
     if (!isLoginPage) {
       setPasswordRepeat("");
     }
-  };
+  }, [isLoginPage]);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ): void => {
     event.preventDefault();
 
     try {
@@ -49,16 +52,19 @@ const AuthModal = (): JSX.Element => {
     }
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    if (name === "email") {
-      setEmail(value);
-    } else if (name === "password") {
-      setPassword(value);
-    } else if (name === "repeat-password") {
-      setPasswordRepeat(value);
-    }
-  };
+  const handleInputChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = event.target;
+      if (name === "email") {
+        setEmail(value);
+      } else if (name === "password") {
+        setPassword(value);
+      } else if (name === "repeat-password") {
+        setPasswordRepeat(value);
+      }
+    },
+    []
+  );
   const isButtonDisabled =
     email.trim() === "" ||
     password.trim() === "" ||

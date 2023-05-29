@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { FirebaseError, initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app";
 import {
   connectAuthEmulator,
   createUserWithEmailAndPassword,
@@ -27,15 +27,13 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 connectAuthEmulator(auth, "http://localhost:9099");
 
-const validateEmail = (email: string) => {
-  return email
-    .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
+const validateEmail = (email: string): boolean => {
+  const emailRegex =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return emailRegex.test(email.toLowerCase());
 };
 
-const validatePassword = (password: string) => {
+const validatePassword = (password: string): boolean => {
   return (
     /[a-z]/.test(password) && /[A-Z]/.test(password) && /\d/.test(password)
   );
@@ -95,7 +93,7 @@ export const createAccount = async (
   }
 };
 
-export const monitorAuthState = () => {
+export const monitorAuthState = (): void => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log(" LOgged in");
