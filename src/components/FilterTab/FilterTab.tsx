@@ -79,7 +79,7 @@ const FilterTab = (props: any) => {
         if(filterOptions.sequenceLength__from && filterOptions.sequenceLength__to){
             const from = filterOptions.sequenceLength__from;
             const to = filterOptions.sequenceLength__to;
-            url+= ` AND (length:[${from} TO ${to}])`;
+            url += ` AND (length:%5B${from} TO ${to}%5D)`;
         }
         if(filterOptions.annotationScore && filterOptions.annotationScore!=''){
             url+=` AND (annotation_score:${filterOptions.annotationScore})`;
@@ -87,7 +87,6 @@ const FilterTab = (props: any) => {
         if(filterOptions.proteinWith && filterOptions.proteinWith!=''){
             url+=` AND (proteins_with:${filterOptions.proteinWith})`;
         }
-        console.log(url);
         dispatch(setNewValueFilter({isOpen: false}));
         dispatch(removeItems());
         dispatch(setNewValueSort({selected: 0, type: 0}))

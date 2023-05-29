@@ -53,8 +53,6 @@ const GridItem = (props: any) => {
     useEffect(()=>{
         resetLocations();
         setDataLoaded(true);
-        console.log(props.item);
-        console.log(locations);
     }, [props.item.primaryAccession, dispatch])
    
 
