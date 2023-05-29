@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { selectProteinDetails } from "./features/proteinData/proteinDetailsSlice";
 import {getAuthState} from "./features/auth/authSlice";
 import { selectAuth } from "./features/auth/authSlice";
+import ProteinFeatureViewer from "./components/ProteinFeatureViewer/ProteinFeatureViewer";
 
 const App = () => {
   const authState = useAppSelector(selectAuth);
@@ -45,6 +46,10 @@ const App = () => {
           <Route
             path={`/protein/${proteinDetails.id}/details`}
             element={authState.isLoggedIn ? <ProteinDetails /> : <MainPage /> }
+          />
+           <Route
+            path={`/protein/${proteinDetails.id}/feature-viewer`}
+            element={authState.isLoggedIn ? <ProteinFeatureViewer /> : <MainPage /> }
           />
         </Route>
       </Routes>
