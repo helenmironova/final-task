@@ -1,7 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { monitorAuthState } from "../utils/auth";
+import Header from "../components/Header";
 
 const PageSearch = (): JSX.Element => {
-  return <div>Search</div>;
+  return <Header />;
 };
 
 export default PageSearch;

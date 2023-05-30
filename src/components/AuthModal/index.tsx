@@ -28,7 +28,7 @@ const AuthModal = (): JSX.Element => {
 
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
-  ): void => {
+  ): Promise<void> => {
     event.preventDefault();
 
     try {
