@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './ReferenceItem.css'
-import linkImg from '../../assets/linkImg.png'
-import linkImgInactive from '../../assets/linkImgInactive.png'
+import linkImg from '../../../assets/linkImg.png'
+import linkImgInactive from '../../../assets/linkImgInactive.png'
 
 const ReferenceItem = (props: any) => {
     const reference = props.reference;

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './SequenceLength.css';
-import { setNewValueFilter } from '../../store/filterOptions';
+import { setNewValueFilter } from '../../../store/filterOptions';
 
 const SequenceLengthInput = () => {
   const filterOptions = useSelector((state: any) => state.filterOptions);

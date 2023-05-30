@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import './AnnotationInput.css'
 import { v4 as uuidv4 } from 'uuid';
-import { setNewValueFilter } from '../../store/filterOptions';
+import { setNewValueFilter } from '../../../store/filterOptions';
 
 const AnnotationInput = () => {
     const dispatch = useDispatch();

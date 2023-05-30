@@ -1,6 +1,6 @@
-import SequenceData from '../../components/SequenceData/SequenceData';
+import SequenceData from '../SequenceData/SequenceData';
 import './DetailsTab.css'
-import copyImage from '../../assets/copy.png'
+import copyImage from '../../../assets/copy.png'
 import { useSelector } from 'react-redux';
 import { useRef } from 'react';
 const DetailsTab = () => {

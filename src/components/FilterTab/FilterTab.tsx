@@ -2,11 +2,11 @@ import './FilterTab.css'
 import { useSelector, useDispatch } from 'react-redux';
 import { setAnnotationOptions, setProteinWithOptions, setOrganismOptions, setAlreadyFetched } from '../../store/selectorOptions';
 import { useEffect, useState } from 'react';
-import GeneNameInput from '../GeneNameInput/GeneNameInput';
-import OrganismInput from '../OrganismInput/OrganismInput';
-import SequenceLengthInput from '../SequenceLengthInput/SequenceLengthInput';
-import AnnotationInput from '../AnnotationInput/AnnotationInput'
-import ProteinInput from '../ProteinInput/ProteinInput';
+import GeneNameInput from '../FilterInputs/GeneNameInput/GeneNameInput';
+import OrganismInput from '../FilterInputs/OrganismInput/OrganismInput';
+import SequenceLengthInput from '../FilterInputs/SequenceLengthInput/SequenceLengthInput';
+import AnnotationInput from '../FilterInputs/AnnotationInput/AnnotationInput'
+import ProteinInput from '../FilterInputs/ProteinInput/ProteinInput';
 import { fetchItems, removeItems } from '../../store/listItems';
 import { setNewValueFilter } from '../../store/filterOptions';
 import { setNewValueSort } from '../../store/sortOptions';

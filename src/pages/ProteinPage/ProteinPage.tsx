@@ -2,10 +2,10 @@ import {useDispatch, useSelector } from 'react-redux';
 import HomePageHeader from '../../components/HomePageHeader/HomePageHeader';
 import './ProteinPage.css';
 import { useEffect, useRef, useState } from 'react';
-import BasicData from '../../components/BasicData/BasicData';
-import Paths from '../../components/Paths/Paths';
-import DetailsTab from '../../components/DetailsTab/DetailsTab';
-import PublicationsTab from '../../components/PublicationsTab/PublicationsTab';
+import BasicData from '../../components/ProteinPageComponents/BasicData/BasicData';
+import Paths from '../../components/ProteinPageComponents/Paths/Paths';
+import DetailsTab from '../../components/ProteinPageComponents/DetailsTab/DetailsTab';
+import PublicationsTab from '../../components/ProteinPageComponents/PublicationsTab/PublicationsTab';
 import { useNavigate } from 'react-router';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -16,11 +16,17 @@ window.customElements.define("protvista-uniprot", ProtvistaUniprot);
 
 const ProteinPage = () => {
     console.clear();
-
-    const protein = useSelector((state: any) => state.selectedProtein);
     const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
-    const navigate = useNavigate();
     const initialRender = useRef(true);
+    const navigate = useNavigate();
+
+    /*
+      current selected protein:
+      on default is first element of the fetched items array 
+      (becouse fetching is assyncronus, for some miliseconds displays default value and then changes);
+    */
+    const protein = useSelector((state: any) => state.selectedProtein);
+    //determines which tab is opened;
     const [tab, setTab] = useState('details'); //details || feature || publications
 
     const setParams = (arg: string) => {
@@ -30,6 +36,7 @@ const ProteinPage = () => {
         window.history.replaceState({}, '', `${currentUrl.pathname}?${params}`);
     }  
 
+    //checks if api has information about given protein;
     const isValid = (testProtein: string) => {
         return fetch(`https://rest.uniprot.org/uniprotkb/${testProtein}`)
           .then(response => response.json())

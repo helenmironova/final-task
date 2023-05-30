@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import './GeneNameInput.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { setNewValueFilter } from '../../store/filterOptions';
-import { setNewSelectedProteinName } from '../../store/selectedProtein';
+import { setNewValueFilter } from '../../../store/filterOptions';
+import { setNewSelectedProteinName } from '../../../store/selectedProtein';
 
 const GeneNameInput = () => {
     const dispatch = useDispatch();

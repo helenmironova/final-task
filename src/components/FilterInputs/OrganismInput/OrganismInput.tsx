@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './OrganismInput.css'
 import { v4 as uuidv4 } from 'uuid';
-import { setNewValueFilter } from '../../store/filterOptions';
+import { setNewValueFilter } from '../../../store/filterOptions';
 
 
 const OrganismInput = ()=>{
