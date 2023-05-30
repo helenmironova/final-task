@@ -72,7 +72,10 @@ const LoginForm = () => {
     event.preventDefault();
     console.log('submitted');
     checkInputs();
-    if (!(isValidEmail && isValidPassword)) return;
+    if (!(isValidEmail && isValidPassword)){
+      setIsFormSubmitted(false);
+      return;
+    } 
     setIsFormSubmitted(true);
 
   };

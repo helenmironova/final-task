@@ -79,18 +79,29 @@ const SignUpForm = () => {
           })
           .catch((error) => {
             console.log(error)
+            console.clear();
           });
         
     }
       
-    
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         checkEmail();
         checkPasswords();
-        if(!isValidEmail || !isValidPassword || !isValidRepeat) return;
-        signUp();
+        // if(!isValidEmail || !isValidPassword || !isValidRepeat) return;
+        // signUp();
+        setIsSubmitted(true);
     }
+
+    useEffect(()=>{
+         if(!isValidEmail || !isValidPassword || !isValidRepeat || !isSubmitted){
+            setIsSubmitted(false);
+            return;
+         }
+         signUp();
+    }, [isSubmitted])
     
     useEffect(() => {
         checkButtonValidation();
@@ -105,12 +116,12 @@ const SignUpForm = () => {
                 <div className='invalidTextSU'>Please enter a valid email address.</div>
             )}
             <label className='label' htmlFor="password"><b>Password</b></label>
-            <input type='text' className='passwordInput' placeholder='Enter your password' onChange={(e)=>setPassword(e.target.value)} id="password" name="password"></input>
+            <input type='password' className='passwordInput' placeholder='Enter your password' onChange={(e)=>setPassword(e.target.value)} id="password" name="password"></input>
             {!isValidPassword && (
                 <div className='invalidTextSU'> {"Must be at least 6 symbols: lowercase letter, uppercase letter and a number."}</div>
             )}
             <label className='label' htmlFor="repassword"><b>Repeat Password</b></label>
-            <input type='text' className='repeatPasswordInput' placeholder='Enter your password again' onChange={(e)=>setRepeatPassword(e.target.value)} id="repassword" name="repassword"></input>
+            <input type='password' className='repeatPasswordInput' placeholder='Enter your password again' onChange={(e)=>setRepeatPassword(e.target.value)} id="repassword" name="repassword"></input>
             {!isValidRepeat && (
                 <div className='invalidTextSU'> {"Passwords must match."}</div>
             )}
