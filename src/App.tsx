@@ -13,7 +13,6 @@ import { selectProteinDetails } from "./features/proteinData/proteinDetailsSlice
 import {getAuthState} from "./features/auth/authSlice";
 import { selectAuth } from "./features/auth/authSlice";
 import ProteinFeatureViewer from "./components/ProteinFeatureViewer/ProteinFeatureViewer";
-import ProteinPublications from "./components/ProteinPublications/ProteinPublications";
 
 const App = () => {
   const authState = useAppSelector(selectAuth);
@@ -51,10 +50,6 @@ const App = () => {
            <Route
             path={`/protein/${proteinDetails.id}/feature-viewer`}
             element={authState.isLoggedIn ? <ProteinFeatureViewer /> : <MainPage /> }
-          />
-            <Route
-            path={`/protein/${proteinDetails.id}/publications`}
-            element={authState.isLoggedIn ? <ProteinPublications /> : <MainPage /> }
           />
         </Route>
       </Routes>

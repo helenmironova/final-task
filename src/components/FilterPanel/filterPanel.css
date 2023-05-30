@@ -31,3 +31,7 @@
     display: flex;
     justify-content: space-between;
 }
+.filterPanel__header{
+  display: flex;
+  justify-content: space-between;
+}

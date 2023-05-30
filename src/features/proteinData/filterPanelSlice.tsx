@@ -16,11 +16,13 @@ interface FilterOprions {
 interface Filter {
   isOpen: boolean;
   data: [FilterOprions] | null;
+  loading: boolean
 }
 
 const initialState: Filter = {
   isOpen: false,
   data: null,
+  loading: false
 };
 
 export const fetchFilterOptions = createAsyncThunk(
@@ -48,8 +50,15 @@ export const filterSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchFilterOptions.pending, (state) => {
+      state.loading = true;
+    });
     builder.addCase(fetchFilterOptions.fulfilled, (state, action) => {
       state.data = action.payload.facets;
+      state.loading = false;
+    });
+    builder.addCase(fetchFilterOptions.rejected, (state) => {
+      state.loading = false;
     });
   },
 });

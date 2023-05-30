@@ -92,24 +92,27 @@ const SearchPage = () => {
               <TuneIcon />
             </Button>
           </form>
+          <div className="dna_spinner">
+         { proteinDataState.loading ? (
+           
+              <Dna
+                visible={true}
+                height="58"
+                width="58"
+                ariaLabel="dna-loading"
+                wrapperStyle={{}}
+                wrapperClass="dna-wrapper"
+              />
+           
+          ) :   "" }
+          </div>
           {proteinDataState.data === null ? (
             <Placeholder text="No data to display. Please start search to display results" />
           ) : proteinDataState?.data?.length < 1 ? (
             <Placeholder text="Could not find anything. Please search for something else" />
           ) : proteinDataState.error ? (
             <Placeholder text="An error occured" />
-          ) : proteinDataState.loading && proteinDataState?.link === null ? (
-            <div className="dna_spinner">
-              <Dna
-                visible={true}
-                height="180"
-                width="180"
-                ariaLabel="dna-loading"
-                wrapperStyle={{}}
-                wrapperClass="dna-wrapper"
-              />
-            </div>
-          ) : (
+          ) :  (
             <DataTable />
           )}
         </div>

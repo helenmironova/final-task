@@ -10,8 +10,9 @@ import {
   fetchFilterOptions,
 } from "../../features/proteinData/filterPanelSlice";
 import { fetchProteins } from "../../features/proteinData/proteinsSearchSlice";
-import {  useRef } from "react";
+import { useRef } from "react";
 import { useLocation } from "react-router-dom";
+import { Dna } from "react-loader-spinner";
 
 const FilterPanel = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -75,7 +76,21 @@ const FilterPanel = () => {
       onSubmit={formik.handleSubmit}
       onChange={handleChange}
     >
-      <h3>Filters</h3>
+      <div className="filterPanel__header">
+        <h3>Filters</h3>
+        {filterState.loading ? (
+          <Dna
+            visible={true}
+            height="58"
+            width="58"
+            ariaLabel="dna-loading"
+            wrapperStyle={{}}
+            wrapperClass="dna-wrapper"
+          />
+        ) : (
+          ""
+        )}
+      </div>
       <div className="filterPanel__section">
         <InputLabel sx={{ color: "#000", fontSize: "14px", fontWeight: "600" }}>
           Gene Name

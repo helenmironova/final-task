@@ -33,6 +33,12 @@ interface protein {
     }
   ];
 }
+interface Search {
+  
+    type: "accession" | "id" | "gene" | "organism_name" | "length" | "default";
+    value: "asc" | "desc" | "default"
+  
+}
 
 interface ProteinData {
   link: string | null;
@@ -40,6 +46,8 @@ interface ProteinData {
   loading: boolean;
   error: string | null;
   scrollPosition: number;
+  sort: Search
+ 
 }
 
 const initialState: ProteinData = {
@@ -48,18 +56,25 @@ const initialState: ProteinData = {
   loading: false,
   error: null,
   scrollPosition: 0,
+  sort: {
+    type: "default",
+    value: "default"
+  }
 };
 
 export const fetchProteins = createAsyncThunk(
   "proteinData/fetch",
-  async ({ query, options }: { query: string; options?: QueryOptions }) => {
+  async ({ query, options, sort }: { query: string; options?: QueryOptions; sort?: Search}) => {
+
+    const currentSort = sort?.type === "default" ? {type: "accession", value: "asc"} : sort ?  sort : {type: "accession", value: "asc"};
     const queryOptions = extractFilterOptions(options);
     const responce = await fetch(
-      `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,cc_subcellular_location&query=(${query})${queryOptions}&sort=accession%20desc`
+      `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,cc_subcellular_location&query=(${query !== "" ? query : "*"})${queryOptions}&sort=${currentSort.type}%20${currentSort.value}`
     );
     const link = responce.headers.get("link");
     const data = await responce.json();
     return { data, link };
+
   }
 );
 export const scrollProteins = createAsyncThunk(
@@ -79,6 +94,9 @@ export const proteinsSearchSlice = createSlice({
     setScrollPosition: (state, action: PayloadAction<number>) => {
       state.scrollPosition = action.payload;
     },
+    setSortValue: (state, action: PayloadAction<Search>) => {
+      state.sort = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -114,6 +132,6 @@ export const proteinsSearchSlice = createSlice({
   },
 });
 
-export const { setScrollPosition } = proteinsSearchSlice.actions;
+export const { setScrollPosition, setSortValue } = proteinsSearchSlice.actions;
 export const selectProteinData = (state: RootState) => state.proteinData;
 export default proteinsSearchSlice.reducer;

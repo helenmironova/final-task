@@ -2,7 +2,7 @@ import "./proteinPage.css";
 import Header from "../../components/Header/Header";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectProteinDetails } from "../../features/proteinData/proteinDetailsSlice";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { fetchProteinPublications } from "../../features/proteinData/proteinPublications";
 
 const ProteinPage = () => {
@@ -10,6 +10,9 @@ const ProteinPage = () => {
   const proteinDetails = useAppSelector(selectProteinDetails);
   const proteinData = proteinDetails?.data;
   const entry = proteinData?.primaryAccession ? proteinData?.primaryAccession : "";
+  const location = useLocation();
+  const pathname = location.pathname;
+  console.log(location);
   return (
     <div className="proteinPage__wrapper">
       <Header />

@@ -12,6 +12,9 @@
   gap: 10px;
 }
 .dna_spinner {
-  display: flex;
-  justify-content: center;
+  position: absolute;
+  height: 50px;
+  z-index: 20;
+  top: 16vh;
+  right: 50vw;
 }

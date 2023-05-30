@@ -9,17 +9,20 @@ import {
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   selectProteinData,
   scrollProteins,
   setScrollPosition,
+  setSortValue,
+  fetchProteins,
 } from "../../features/proteinData/proteinsSearchSlice";
 import {
   selectProteinDetails,
   fetchProteinDetails,
   setId,
 } from "../../features/proteinData/proteinDetailsSlice";
+import { selectFilter } from "../../features/proteinData/filterPanelSlice";
 
 import React, { useEffect, useRef } from "react";
 
@@ -27,9 +30,15 @@ const DataTable = () => {
   const tableRef = useRef<HTMLTableElement>(null);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const proteinDataState = useAppSelector(selectProteinData);
   const proteinDetails = useAppSelector(selectProteinDetails);
   const proteins = proteinDataState.data;
+  const sortType = proteinDataState.sort.type;
+  const sortValue = proteinDataState.sort.value;
+  const filter = useAppSelector(selectFilter);
+  const filterOptions = filter.data?.values;
+  const searchValue = location.search.split("=")[1];
   let counter = 1;
 
   useEffect(() => {
@@ -38,7 +47,7 @@ const DataTable = () => {
     }
   });
 
-  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleSearch = (event: React.MouseEvent<HTMLDivElement>) => {
     const rowId = (
       (event.target as HTMLTableCellElement)
         .parentElement as HTMLTableRowElement
@@ -66,9 +75,44 @@ const DataTable = () => {
       }
     }
   };
+  const handleSort = (
+    typeOfSortIcon:
+      | "id"
+      | "accession"
+      | "gene"
+      | "organism_name"
+      | "length"
+      | "default"
+  ) => {
+    if (sortType === typeOfSortIcon && sortValue === "asc") {
+      dispatch(setSortValue({ type: typeOfSortIcon, value: "desc" }));
+      dispatch(
+        fetchProteins({
+          query: searchValue,
+          sort: { type: typeOfSortIcon, value: "desc" },
+        })
+      );
+    } else if (sortType === typeOfSortIcon && sortValue === "desc") {
+      dispatch(setSortValue({ type: "default", value: "default" }));
+      dispatch(
+        fetchProteins({
+          query: searchValue,
+          sort: { type: "accession", value: "asc" },
+        })
+      );
+    } else {
+      dispatch(setSortValue({ type: typeOfSortIcon, value: "asc" }));
+      dispatch(
+        fetchProteins({
+          query: searchValue,
+          sort: { type: typeOfSortIcon, value: "asc" },
+        })
+      );
+    }
+  };
 
   const tableRows = proteins?.map((item) => (
-    <TableRow key={++counter} id={item.primaryAccession} onClick={handleClick}>
+    <TableRow key={++counter} id={item.primaryAccession} onClick={handleSearch}>
       <TableCell>{counter}</TableCell>
       <TableCell sx={{ color: "#175BC0" }}>{item.primaryAccession}</TableCell>
       <TableCell sx={{ maxWidth: "150px" }}>{item.uniProtkbId}</TableCell>
@@ -91,7 +135,7 @@ const DataTable = () => {
 
   return (
     <div className="dataTable">
-      <Paper sx={{ width: "100%", overflow: "hidden" }}>
+      <Paper sx={{ width: "100%", overflow: "hidden", marginTop:"30px" }}>
         <TableContainer
           sx={{ maxHeight: "70vh" }}
           ref={tableRef}
@@ -120,7 +164,26 @@ const DataTable = () => {
                 >
                   Entry{" "}
                   <FilterListIcon
-                    color="disabled"
+                    onClick={() => handleSort("accession")}
+                    color={sortType === "accession" ? "info" : "disabled"}
+                    sx={{
+                      position: "absolute",
+                      top: "15px",
+                      marginLeft: "8px",
+                      cursor: "pointer",
+                    }}
+                  />
+                </TableCell>
+                <TableCell
+                  sx={{
+                    backgroundColor: "#F5F5F5",
+                    fontWeight: "700",
+                  }}
+                >
+                  Entry Names
+                  <FilterListIcon
+                   onClick={() => handleSort("id")}
+                    color={sortType === "id" ? "info" : "disabled"}
                     sx={{
                       position: "absolute",
                       top: "15px",
@@ -134,9 +197,10 @@ const DataTable = () => {
                     fontWeight: "700",
                   }}
                 >
-                  Entry Names{" "}
+                  Genes
                   <FilterListIcon
-                    color="disabled"
+                  onClick={() => handleSort("gene")}
+                    color={sortType === "gene" ? "info" : "disabled"}
                     sx={{
                       position: "absolute",
                       top: "15px",
@@ -150,25 +214,10 @@ const DataTable = () => {
                     fontWeight: "700",
                   }}
                 >
-                  Genes{" "}
+                  Organism
                   <FilterListIcon
-                    color="disabled"
-                    sx={{
-                      position: "absolute",
-                      top: "15px",
-                      marginLeft: "10px",
-                    }}
-                  />
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#F5F5F5",
-                    fontWeight: "700",
-                  }}
-                >
-                  Organism{" "}
-                  <FilterListIcon
-                    color="disabled"
+                  onClick={() => handleSort("organism_name")}
+                    color={sortType === "organism_name" ? "info" : "disabled"}
                     sx={{
                       position: "absolute",
                       top: "15px",
@@ -190,9 +239,10 @@ const DataTable = () => {
                     fontWeight: "700",
                   }}
                 >
-                  Length{" "}
+                  Length
                   <FilterListIcon
-                    color="disabled"
+                  onClick={() => handleSort("length")}
+                    color={sortType === "length" ? "info" : "disabled"}
                     sx={{
                       position: "absolute",
                       top: "15px",
