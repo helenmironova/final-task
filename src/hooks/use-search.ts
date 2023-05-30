@@ -17,7 +17,7 @@ export interface SearchResult {
   };
 }
 
-export const useSearch = (query: string, size: number) => {
+export const useSearch = (url: string, query: string, size: number) => {
   const [error, setError] = useState<boolean>(false);
   const [result, setResult] = useState<SearchResult[]>([]);
 
@@ -36,17 +36,13 @@ export const useSearch = (query: string, size: number) => {
       cancelToken = axios.CancelToken.source();
 
       if (!query) return;
-
       try {
         const response = await axios.get<{
           results: SearchResult[];
           docs: any[];
-        }>(
-          `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=(${query})&cursor=1mkycb2xwxbouw39b98v99ymv0kejlbmk6r7&size=${size}`,
-          {
-            cancelToken: cancelToken.token,
-          }
-        );
+        }>(url, {
+          cancelToken: cancelToken.token,
+        });
 
         const results = response.data.results;
         setResult(results);

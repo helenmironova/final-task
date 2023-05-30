@@ -1,10 +1,6 @@
 .filter {
   width: 40px;
   height: 40px;
-}
-/* filter.module.css */
-
-.filter {
   cursor: pointer;
 }
 
@@ -61,6 +57,7 @@
 
 .rangeContainer {
   display: flex;
+  flex-direction: column;
 }
 
 .rangeContainer input {
