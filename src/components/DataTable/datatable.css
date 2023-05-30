@@ -1,9 +1,10 @@
-.dataTable__headerCell {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.dataTable{
+  margin-top: 50px;
+  font-size: 14px;
 }
-.dataTable__organism {
-  background-color: #d8e7ff;
-  border-radius: 12px;
+.dataTable__organism{
+  background-color: #D8E7FF;
+  border-radius: 24px;
+  padding: 5px 15px;
+  width: fit-content;
 }

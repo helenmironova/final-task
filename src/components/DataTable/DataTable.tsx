@@ -1,12 +1,6 @@
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import { TableCell } from "@mui/material";
+import { Table, Column, RowMouseEventHandlerParams } from "react-virtualized";
+import "react-virtualized/styles.css";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -22,9 +16,9 @@ import {
   fetchProteinDetails,
   setId,
 } from "../../features/proteinData/proteinDetailsSlice";
-import { selectFilter } from "../../features/proteinData/filterPanelSlice";
+import "./datatable.css";
 
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const DataTable = () => {
   const tableRef = useRef<HTMLTableElement>(null);
@@ -36,10 +30,10 @@ const DataTable = () => {
   const proteins = proteinDataState.data;
   const sortType = proteinDataState.sort.type;
   const sortValue = proteinDataState.sort.value;
-  const filter = useAppSelector(selectFilter);
-  const filterOptions = filter.data?.values;
   const searchValue = location.search.split("=")[1];
-  let counter = 1;
+  const rowHeight = 50; // Set the height of each row in pixels
+  const tableHeight = 500; // Set the desired height of the table in pixels
+  const rowCount = proteins ? proteins.length : 1;
 
   useEffect(() => {
     if (tableRef.current) {
@@ -47,11 +41,8 @@ const DataTable = () => {
     }
   });
 
-  const handleSearch = (event: React.MouseEvent<HTMLDivElement>) => {
-    const rowId = (
-      (event.target as HTMLTableCellElement)
-        .parentElement as HTMLTableRowElement
-    ).id;
+  const openProtein = (info: RowMouseEventHandlerParams) => {
+    const rowId = info.rowData.primaryAccession;
     dispatch(setId(rowId));
     dispatch(fetchProteinDetails({ entry: rowId }));
     if (proteinDetails.loading === false) {
@@ -59,12 +50,18 @@ const DataTable = () => {
     }
   };
 
-  const handleScroll = (event: React.UIEvent<HTMLTableElement>) => {
-    const target = event.currentTarget;
-    if (tableRef.current) {
-      dispatch(setScrollPosition(target.scrollTop));
-    }
-    if (target.scrollTop + target.clientHeight >= target.scrollHeight) {
+  const handleScroll = ({
+    clientHeight,
+    scrollTop,
+    scrollHeight,
+  }: {
+    scrollTop: number;
+    scrollHeight: number;
+    clientHeight: number;
+  }) => {
+    dispatch(setScrollPosition(scrollTop));
+
+    if (scrollTop + clientHeight >= scrollHeight) {
       if (proteinDataState.link) {
         const string = proteinDataState.link.replace(/<|>/g, "");
         const match = string.match(/[^;]+/);
@@ -111,151 +108,162 @@ const DataTable = () => {
     }
   };
 
-  const tableRows = proteins?.map((item) => (
-    <TableRow key={++counter} id={item.primaryAccession} onClick={handleSearch}>
-      <TableCell>{counter}</TableCell>
-      <TableCell sx={{ color: "#175BC0" }}>{item.primaryAccession}</TableCell>
-      <TableCell sx={{ maxWidth: "150px" }}>{item.uniProtkbId}</TableCell>
-      <TableCell sx={{ maxWidth: "150px" }}>
-        {item?.genes?.map((item) => item.geneName?.value).join(", ")}
-      </TableCell>
-      <TableCell sx={{ maxWidth: "150px" }}>
-        {item?.organism?.scientificName}
-      </TableCell>
-      <TableCell sx={{ maxWidth: "150px" }}>
-        {item?.comments?.length > 1
-          ? item.comments[0].subcellularLocations
-              .map((item) => item.location.value)
-              .join(" ")
-          : ""}
-      </TableCell>
-      <TableCell sx={{ maxWidth: "150px" }}>{item?.sequence?.length}</TableCell>
-    </TableRow>
-  ));
-
   return (
     <div className="dataTable">
-      <Paper sx={{ width: "100%", overflow: "hidden", marginTop:"30px" }}>
-        <TableContainer
-          sx={{ maxHeight: "70vh" }}
-          ref={tableRef}
-          onScroll={handleScroll}
-        >
-          <Table
-            stickyHeader
-            aria-label="sticky table"
-            sx={{ borderRadius: "10px" }}
-          >
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#F5F5F5",
-                    fontWeight: "700",
-                  }}
-                >
-                  #
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#F5F5F5",
-                    fontWeight: "700",
-                  }}
-                >
-                  Entry{" "}
-                  <FilterListIcon
-                    onClick={() => handleSort("accession")}
-                    color={sortType === "accession" ? "info" : "disabled"}
-                    sx={{
-                      position: "absolute",
-                      top: "15px",
-                      marginLeft: "8px",
-                      cursor: "pointer",
-                    }}
-                  />
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#F5F5F5",
-                    fontWeight: "700",
-                  }}
-                >
-                  Entry Names
-                  <FilterListIcon
-                   onClick={() => handleSort("id")}
-                    color={sortType === "id" ? "info" : "disabled"}
-                    sx={{
-                      position: "absolute",
-                      top: "15px",
-                      marginLeft: "10px",
-                    }}
-                  />
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#F5F5F5",
-                    fontWeight: "700",
-                  }}
-                >
-                  Genes
-                  <FilterListIcon
-                  onClick={() => handleSort("gene")}
-                    color={sortType === "gene" ? "info" : "disabled"}
-                    sx={{
-                      position: "absolute",
-                      top: "15px",
-                      marginLeft: "10px",
-                    }}
-                  />
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#F5F5F5",
-                    fontWeight: "700",
-                  }}
-                >
-                  Organism
-                  <FilterListIcon
-                  onClick={() => handleSort("organism_name")}
-                    color={sortType === "organism_name" ? "info" : "disabled"}
-                    sx={{
-                      position: "absolute",
-                      top: "15px",
-                      marginLeft: "10px",
-                    }}
-                  />
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#F5F5F5",
-                    fontWeight: "700",
-                  }}
-                >
-                  Subcellular Location
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#F5F5F5",
-                    fontWeight: "700",
-                  }}
-                >
-                  Length
-                  <FilterListIcon
-                  onClick={() => handleSort("length")}
-                    color={sortType === "length" ? "info" : "disabled"}
-                    sx={{
-                      position: "absolute",
-                      top: "15px",
-                      marginLeft: "10px",
-                    }}
-                  />
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>{tableRows}</TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
+      <Table
+        width={1150}
+        height={tableHeight}
+        headerHeight={50}
+        rowHeight={rowHeight}
+        rowCount={rowCount}
+        rowGetter={({ index }) => (proteins ? proteins[index] : "")}
+        onScroll={handleScroll}
+        onRowClick={openProtein}
+        headerStyle={{
+          backgroundColor: "#F5F5F5",
+          height: "40px",
+          display: "flex",
+          alignItems: "center",
+          borderRadius: "8px",
+          justifyContent: "space-between",
+          padding: "0 10px",
+        }}
+      >
+        <Column
+          label="#"
+          dataKey="primaryAccession"
+          width={50}
+          style={{ paddingLeft: "10px" }}
+          cellRenderer={({ rowIndex }) => rowIndex + 1}
+        />
+        <Column
+          label={
+            <>
+              Entry
+              <FilterListIcon
+                onClick={() => handleSort("accession")}
+                color={sortType === "accession" ? "info" : "disabled"}
+                sx={{
+                  cursor: "pointer",
+                  marginLeft: "60px"
+                }}
+              />
+            </>
+          }
+          dataKey="primaryAccession"
+          width={150}
+          style={{ paddingLeft: "20px", color: "#175BC0" }}
+          cellRenderer={({ rowData }) => <div>{rowData.primaryAccession}</div>}
+        />
+        <Column
+          label={
+            <>
+              Entry names
+              <FilterListIcon
+                onClick={() => handleSort("id")}
+                color={sortType === "id" ? "info" : "disabled"}
+                sx={{
+                  cursor: "pointer",
+                  marginLeft: "10px"
+                }}
+              />
+            </>
+          }
+          dataKey="uniProtkbId"
+          width={150}
+          style={{ paddingLeft: "20px" }}
+          cellRenderer={({ rowData }) => <div>{rowData.uniProtkbId}</div>}
+        />
+        <Column
+          label={
+            <>
+              Genes
+              <FilterListIcon
+                onClick={() => handleSort("gene")}
+                color={sortType === "gene" ? "info" : "disabled"}
+                sx={{
+                  cursor: "pointer",
+                  marginLeft: "60px"
+                }}
+              />
+            </>
+          }
+          dataKey="genes"
+          width={150}
+          style={{ paddingLeft: "20px" }}
+          cellRenderer={({ rowData }) => (
+            <div>
+              {rowData?.genes
+                ?.map(
+                  (item: { geneName: { value: string } }) =>
+                    item.geneName?.value
+                )
+                .join(", ")}
+            </div>
+          )}
+        />
+        <Column
+          label={
+            <>
+              Organism
+              <FilterListIcon
+                onClick={() => handleSort("organism_name")}
+                color={sortType === "organism_name" ? "info" : "disabled"}
+                sx={{
+                  cursor: "pointer",
+                  marginLeft: "120px"
+                }}
+              />
+            </>
+          }
+          dataKey="organism"
+          width={250}
+          cellRenderer={({ rowData }) => (
+            <div className="dataTable__organism">
+              {rowData?.organism?.scientificName?.substring(0, 25) + "..."}
+            </div>
+          )}
+        />
+        <Column
+          label="Subcellular Location"
+          dataKey="comments"
+          width={200}
+          headerStyle={{ margin: "5px" }}
+          cellRenderer={({ rowData }) => (
+            <TableCell sx={{ maxWidth: "150px" }}>
+              {rowData?.comments?.length > 1
+                ? rowData.comments[0].subcellularLocations
+                    .map(
+                      (location: {
+                        location: {
+                          value: string;
+                        };
+                      }) => location.location.value
+                    )
+                    .join(" ")
+                : ""}
+            </TableCell>
+          )}
+        />
+        <Column
+          label={
+            <>
+              Length
+              <FilterListIcon
+                onClick={() => handleSort("length")}
+                color={sortType === "length" ? "info" : "disabled"}
+                sx={{
+                  cursor: "pointer",
+                  marginLeft: "7px"
+                }}
+              />
+            </>
+          }
+          dataKey="sequence"
+          width={100}
+          cellRenderer={({ rowData }) => <div>{rowData?.sequence?.length}</div>}
+        />
+      </Table>
     </div>
   );
 };

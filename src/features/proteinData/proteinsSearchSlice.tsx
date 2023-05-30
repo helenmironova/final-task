@@ -5,7 +5,7 @@ import {
   QueryOptions,
 } from "../../components/FilterPanel/extractFilterOptions";
 
-interface protein {
+export interface protein {
   primaryAccession: string;
   uniProtkbId: string;
   organism: {
