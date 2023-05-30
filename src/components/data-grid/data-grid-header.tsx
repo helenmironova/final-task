@@ -6,11 +6,10 @@ import { SearchResult } from "../../hooks/use-search";
 
 interface DataGriHeaderdProps {
   setData: React.Dispatch<React.SetStateAction<SearchResult[]>>;
-  result: SearchResult[];
   data: SearchResult[];
 }
 
-const DataGridHeader = ({ setData, result, data }: DataGriHeaderdProps) => {
+const DataGridHeader = ({ setData, data }: DataGriHeaderdProps) => {
   const [order, setOrder] = useState("ASC");
 
   const getValueByColumns = (item: SearchResult, columns: string[]) => {
@@ -59,9 +58,9 @@ const DataGridHeader = ({ setData, result, data }: DataGriHeaderdProps) => {
     <Fragment>
       {data.length !== 0 && (
         <div className={classes.grid_container}>
-          <div className={classes.grid_header}>#</div>
+          <h4 className={classes.grid_header}>#</h4>
           <div className={classes.grid_header}>
-            Entry{" "}
+            <h4>Entry </h4>
             <img
               src={Sorting}
               alt="Sorting Icon"
@@ -69,15 +68,15 @@ const DataGridHeader = ({ setData, result, data }: DataGriHeaderdProps) => {
             />
           </div>
           <div className={classes.grid_header}>
-            Entry Names{" "}
+            <h4>Entry Names </h4>
             <img
               src={Sorting}
               alt="Sorting Icon"
-              onClick={() => sortingHandler([])}
+              onClick={() => sortingHandler(["uniProtkbId"])}
             />
           </div>
           <div className={classes.grid_header}>
-            Genes{" "}
+            <h4>Genes </h4>
             <img
               src={Sorting}
               alt="Sorting Icon"
@@ -87,7 +86,7 @@ const DataGridHeader = ({ setData, result, data }: DataGriHeaderdProps) => {
             />
           </div>
           <div className={classes.grid_header}>
-            Organism
+            <h4>Organism</h4>
             <img
               src={Sorting}
               alt="Sorting Icon"
@@ -95,15 +94,23 @@ const DataGridHeader = ({ setData, result, data }: DataGriHeaderdProps) => {
             />
           </div>
           <div className={classes.grid_header}>
-            Subcellular Location
+            <h4>Subcellular Location</h4>
             <img
               src={Sorting}
               alt="Sorting Icon"
-              // onClick={() => sortingHandler(["organism", "scientificName"])}
+              onClick={() =>
+                sortingHandler([
+                  "comments",
+                  "0",
+                  "subcellularLocations",
+                  "0",
+                  "location",
+                ])
+              }
             />
           </div>
           <div className={classes.grid_header}>
-            Length{" "}
+            <h4>Length</h4>
             <img
               src={Sorting}
               alt="Sorting Icon"

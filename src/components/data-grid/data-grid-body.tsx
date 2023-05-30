@@ -21,26 +21,26 @@ const DataGridBody = ({ data, lastBookElementRef }: DataGridBodyProps) => {
           >
             <div className={classes.grid_item}>{index}</div>
             <Link
-              className={classes.grid_item}
+              className={classes.primaryAccession}
               to={`/protein/${item.primaryAccession}`}
             >
               {item.primaryAccession}
             </Link>
-            <div className={classes.grid_item}>{item.uniProtkbId}</div>
-            <div className={classes.grid_item}>
+            <div className={classes.uniProtkbId}>{item.uniProtkbId}</div>
+            <div className={classes.genes}>
               {item.genes && item.genes.length > 0 && item.genes[0].geneName
                 ? item.genes[0].geneName.value
                 : "N/A"}
             </div>
-            <div className={classes.grid_item}>
+            <div className={classes.organism}>
               {item.organism.scientificName}
             </div>
             <div className={classes.grid_item}>
               {item.comments &&
-              item.comments.length > 0 &&
-              item.comments[0].subcellularLocations.length > 0 &&
+              item.comments?.length > 0 &&
+              item.comments[0].subcellularLocations?.length > 0 &&
               item.comments[0].subcellularLocations[0]?.location?.value
-                ? item.comments[0].subcellularLocations[0].location.value
+                ? item.comments[0].subcellularLocations[0].location?.value
                 : "N/A"}
             </div>
             <div className={classes.grid_item}>{item.sequence.length}</div>

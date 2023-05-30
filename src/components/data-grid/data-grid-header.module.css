@@ -1,14 +1,15 @@
 .grid_container {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: 0.5fr 2fr 2fr 2fr 2fr 2fr 2fr;
   padding: 5px;
-  background-color: #f0f0f0;
   border-radius: 8px;
+  background-color: #f0f0f0;
 }
 
 .grid_header {
   padding: 5px;
-  justify-self: center;
-  align-self: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }

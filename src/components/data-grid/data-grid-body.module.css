@@ -2,7 +2,7 @@
 .item_container {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: 0.5fr 2fr 2fr 2fr 2fr 2fr 2fr;
   padding: 5px;
   background-color: #f0f0f0;
   border-radius: 8px;
@@ -14,14 +14,60 @@
   overflow-y: auto;
 }
 
-
 .item_container {
   background-color: #fff;
 }
 
-.grid_item {
+.grid_item,
+.primaryAccession,
+.uniProtkbId,
+.genes {
+  font-weight: 500;
   background-color: #fff;
   padding: 5px;
+  font-size: 14px;
+  line-height: 19px;
   justify-self: center;
   align-self: center;
+}
+
+.primaryAccession {
+  color: #175bc0;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.uniProtkbId {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 19px;
+  color: #2b2b2b;
+}
+
+.genes {
+  color: #2b2b2b;
+  font-weight: 700;
+}
+
+.organism {
+  background-color: #d8e7ff;
+  border-radius: 12px;
+  padding: 2px 12px;
+  align-self: center;
+  justify-self: center;
+}
+
+.grid_scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.grid_scroll::-webkit-scrollbar-track {
+  background: #f8f5f5;
+  border-radius: 12px;
+}
+
+.grid_scroll::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 20px;
+  border: 3px solid #ccc;
 }
