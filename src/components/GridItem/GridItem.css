@@ -89,6 +89,7 @@
     max-width: 138px;
     margin-top: 14.5px;
     margin-bottom: 14.5px;
+    word-break: break-all;
 }
 
 .subcelDiv{

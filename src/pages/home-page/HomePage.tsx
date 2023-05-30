@@ -57,6 +57,7 @@ const HomePage = () => {
       searchText = searchParams.get('query') as string;
     }
 
+    console.clear();
     return(
         <div className='body'>
             <HomePageHeader />

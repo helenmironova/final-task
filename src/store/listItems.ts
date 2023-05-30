@@ -29,14 +29,12 @@ const parseNextLink = (linkHeader: string | null): string | null => {
 export const fetchItems = createAsyncThunk(
   'listItems/fetchItems',
   async (url: string,  { dispatch }) => {
-    console.log(url);
     try {
       const response = await fetch(url);
       const linkHeader = response.headers.get("Link");
       const nextUrl = parseNextLink(linkHeader);
       const [data, newNextUrl] = await Promise.all([response.json(), nextUrl]);
       const newItems = data.results;
-      console.log(newItems)
       if(newItems.length===0) return;
       dispatch(setTotalResults(response?.headers?.get("x-total-results")));
       if(JSON.stringify(initialState?.items)===JSON.stringify(newItems)) dispatch(removeItems())

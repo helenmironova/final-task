@@ -87,6 +87,7 @@ const ProteinPage = () => {
         }
     }, []);
 
+    setTimeout(() => console.clear(), 3000);
   return (
     <div className='body'>
       <>
