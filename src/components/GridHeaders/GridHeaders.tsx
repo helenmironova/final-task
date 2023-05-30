@@ -10,14 +10,16 @@ import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 
 const GridHeaders = () => {
-    const searchText = useSelector((state: any)=>state.searchText);
-    const filterOptions = useSelector((state: any)=> state.filterOptions);
-    const sortOptions = useSelector((state: any)=>state.sortOptions);
-
     const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
 
-  
+    //current search text stored in redux;
+    const searchText = useSelector((state: any)=>state.searchText);
+    //current filter options stored in redux;
+    const filterOptions = useSelector((state: any)=> state.filterOptions);
+    //current sort options stored in redux;
+    const sortOptions = useSelector((state: any)=>state.sortOptions);  
 
+    //given url, returns same url but with current sort querry;
     const addSortType = (url: string) => {
       let sortBy = "";
       let sortType = "";
@@ -41,6 +43,7 @@ const GridHeaders = () => {
       return url;
     }
 
+    //given url, returns same url but with current filter querry;
     const addFilter = (url: string) => {
       if(filterOptions.geneName && filterOptions.geneName!=''){
         url+=` AND (gene:${filterOptions.geneName})`;
@@ -62,6 +65,7 @@ const GridHeaders = () => {
       return url;
     }
 
+    //changes sort icon visual on click;
     const changeVisual = (clicked: number) => {
       if(sortOptions.selected===clicked){
         if(sortOptions.type===1) dispatch(setNewValueSort({selected: 0})); //if I clicked on a sorting icon that was sorting desc, selected points to 0 (nothing);
@@ -72,6 +76,13 @@ const GridHeaders = () => {
       }
     }
 
+    /*
+      if neccessary:
+      adds filter querries to url;
+      adds sort querries to url;
+      removes previous items from redux;
+      fetches new items;
+    */
     const fetchData = () => {
       let url = `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=(${(searchText==='' || searchText===null) ? "*" : searchText})`;
         url = addFilter(url);
@@ -82,10 +93,7 @@ const GridHeaders = () => {
       dispatch(fetchItems(url));
     }
 
-    const handleLogoClick = (clicked: number) => {
-        changeVisual(clicked);
-    };
-
+    //when sorting type changes, fetches new data;
     useEffect(()=>fetchData(), [sortOptions.selected, sortOptions.type]);
   
   return (
@@ -93,26 +101,26 @@ const GridHeaders = () => {
       <div className='number'>#</div>
       <div className='entry'>
         <p className='entryP'>Entry</p>
-        <img src={sortOptions.selected===1 ? (sortOptions.type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(1)} />
+        <img src={sortOptions.selected===1 ? (sortOptions.type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>changeVisual(1)} />
       </div>
       <div className='entryName'>
         <p className='entryP'>Entry Names</p>
-        <img src={sortOptions.selected===2 ? (sortOptions.type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(2)} />
+        <img src={sortOptions.selected===2 ? (sortOptions.type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>changeVisual(2)} />
       </div>
       <div className='entryName'>
         <p className='entryP'>Genes</p>
-        <img src={sortOptions.selected===3 ? (sortOptions.type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(3)} />
+        <img src={sortOptions.selected===3 ? (sortOptions.type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>changeVisual(3)} />
       </div>
       <div className='entryName'>
         <p className='entryP'>Organism</p>
-        <img src={sortOptions.selected===4 ? (sortOptions.type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(4)} />
+        <img src={sortOptions.selected===4 ? (sortOptions.type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>changeVisual(4)} />
       </div>
       <div className='subcel'>
         <p className='entryP'>Subcellular Location</p>
       </div>
       <div className='length'>
         <p className='entryP'>Length</p>
-        <img src={sortOptions.selected===5 ? (sortOptions.type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>handleLogoClick(5)} />
+        <img src={sortOptions.selected===5 ? (sortOptions.type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>changeVisual(5)} />
       </div>
     </div>
   );

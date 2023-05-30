@@ -7,14 +7,26 @@ import { fetchProteinData, fetchProteinReferencesData, setNewSelectedProteinName
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 
-
-
 const GridItem = (props: any) => {   
     const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
 
     const [locations, setLocations] = useState<string[]>([]);
     const [dataLoaded, setDataLoaded] = useState(false); // Track whether data has loaded
 
+     /*
+        when user clicks link item:
+        clicked protein name becomes selected (in redux);
+        selected protein's data gets fetched;
+        selected protein's references data gets fetched;
+    */
+    const handleLinkClick = () => {
+            dispatch(setNewSelectedProteinName(props.item.primaryAccession));
+            dispatch(fetchProteinData(props.item.primaryAccession));
+            dispatch(fetchProteinReferencesData(props.item.primaryAccession));
+    };
+
+
+    //below functions make subcellular locations data ready to be displaied;
     function formatArray(array: string[]): string {
         const words: string[] = [];
       
@@ -28,12 +40,6 @@ const GridItem = (props: any) => {
       
         return words.slice(0, 2).join(', ') + ', ...';
     }
-
-    const handleLinkClick = () => {
-        dispatch(setNewSelectedProteinName(props.item.primaryAccession));
-        dispatch(fetchProteinData(props.item.primaryAccession));
-        dispatch(fetchProteinReferencesData(props.item.primaryAccession));
-    };
 
     const resetLocations = () => {
         if (props.item.comments && props.item.comments.length > 0) {
