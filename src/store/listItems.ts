@@ -8,6 +8,7 @@ const initialState: any = persistedState || {
   items: [],
   isLoading: false,
   nextUrl: '',
+  totalResults: 0,
 };
 
 // Helper function to parse the next URL from the Link header
@@ -34,8 +35,16 @@ export const fetchItems = createAsyncThunk(
       const nextUrl = parseNextLink(linkHeader);
       const [data, newNextUrl] = await Promise.all([response.json(), nextUrl]);
       const newItems = data.results;
-      if(newItems.length===0) return;
+      response.headers.forEach((value, name) => {
+        console.log(`${name}: ${value}`);
+      });
+      if(newItems.length===0){
+        dispatch(removeItems());
+        dispatch(setTotalResults(0));
+        return;
+      }
       if(JSON.stringify(persistedState.items)===JSON.stringify(newItems)) dispatch(removeItems())
+      dispatch(setTotalResults(response.headers.get("x-total-results")));
       dispatch(setNextUrl(newNextUrl || ''));
       dispatch(addListItems(newItems));
       dispatch(setNewSelectedProteinName(newItems[0]?.primaryAccession))
@@ -58,6 +67,9 @@ export const listItemsSlice = createSlice({
     },
     setNextUrl: (state, action) => {
       state.nextUrl = action.payload;
+    },
+    setTotalResults: (state, action) =>{
+      state.totalResults = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -73,6 +85,6 @@ export const listItemsSlice = createSlice({
   }
 });
 
-export const { addListItems, removeItems, setNextUrl } = listItemsSlice.actions;
+export const { addListItems, removeItems, setNextUrl, setTotalResults } = listItemsSlice.actions;
 
 export default listItemsSlice.reducer;

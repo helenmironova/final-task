@@ -3,7 +3,7 @@ import HomePageHeader from '../../components/HomePageHeader/HomePageHeader';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import GridHeaders from '../../components/GridHeaders/GridHeaders';
 import GridItem from '../../components/GridItem/GridItem';
-import {useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { fetchItems} from '../../store/listItems';
@@ -13,12 +13,16 @@ import { AnyAction } from 'redux';
 const HomePage = () => {
     const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
 
+
     //holds list of proteins that must be displaied in table;
     const listItems = useSelector((state: any) => state.listItems.items);
     //holds url for next chunk of items that will be fetched;
     const nextUrl = useSelector((state: any) => state.listItems.nextUrl);
     //determines if items are fetched or not;
     const loading = useSelector((state: any) => state.listItems.isLoading);
+    //number of total results;
+    const totRes = useSelector((state: any) => state.listItems.totalResults);
+    //search text;
     //determines if there is data to be displaied;
     const [dataToDisplay, setDataToDisplay] = useState(false);
 
@@ -44,12 +48,19 @@ const HomePage = () => {
         }
     }
 
+    let searchText: string = "";
+    const searchParams = new URLSearchParams(document.location.search);
+    if(searchParams.has("query")){
+        searchText = searchParams.get("query") as string;
+    }
+
     return(
         <div className='body'>
             <HomePageHeader />
             <SearchBar/>
             <div className='resultsWrapper'>
                 {!dataToDisplay && <p className='noDataToDisplayP'>No data to display.<br/> Please start a search to display results.</p>}
+                {dataToDisplay && <p className='totResP'>{totRes} Search Results for {searchText}</p>}
                 {dataToDisplay && <div className='dataWrapper'>
                   <GridHeaders/>
                     <div className='itemsWrapper' onScroll={handleScroll}>

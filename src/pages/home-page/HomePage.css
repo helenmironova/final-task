@@ -15,6 +15,7 @@
     min-height: 642px;
     justify-content: center;
     display: flex;
+    position: relative;
 }
 
 .noDataToDisplayP{
@@ -36,6 +37,7 @@
     margin-top: 70px;
     color: #000000;
     align-items: center;
+    position: relative;
 }
 
 .gridHeaders{
@@ -67,4 +69,16 @@
     transform: translate(-50%, -50%);
     width: 200px;
     height: 60px;
+}
+
+.totResP{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: #2B2B2B;
+
+    position: absolute;
+    left: 0;
+    top: 28px;
 }
