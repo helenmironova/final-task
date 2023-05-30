@@ -10,6 +10,9 @@ import { useNavigate } from 'react-router';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { setNewSelectedProteinName, fetchProteinReferencesData, fetchProteinData } from '../../store/selectedProtein';
+import ProtvistaUniprot from 'protvista-uniprot'
+
+window.customElements.define("protvista-uniprot", ProtvistaUniprot);
 
 const ProteinPage = () => {
     const protein = useSelector((state: any) => state.selectedProtein);
@@ -75,8 +78,7 @@ const ProteinPage = () => {
             setParams(protein.name)
         }
     }, []);
-  
-
+    
   return (
     <div className='body'>
       <>
@@ -87,7 +89,10 @@ const ProteinPage = () => {
           {/* Render content based on the selected tab */}
           <div className='content'>
             {tab === 'details' && <DetailsTab />}
-            {tab === 'feature' && <div>Feature Viewer Content</div>}
+            {tab === 'feature' && 
+              <div className='protvistaWrapper'>
+                <protvista-uniprot accession={protein.name} />
+              </div>}
             {tab === 'publications' && <PublicationsTab />}
           </div>
         </div>

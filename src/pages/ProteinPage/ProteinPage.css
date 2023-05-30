@@ -25,3 +25,8 @@
 .content{
     width: 100%;
 }
+
+.protvistaWrapper{
+    width: 1024px;
+    margin-top: 19px;
+}
