@@ -27,6 +27,17 @@
 }
 
 .protvistaWrapper{
-    width: 1024px;
+    width: 100%;
+    margin-top: 19px;
+}
+
+.loadingP{
+    color: black;
+    font-size: 16px;
+}
+
+.protvistaWrapper--hidden{
+    display: none;
+    width: 100%;
     margin-top: 19px;
 }
