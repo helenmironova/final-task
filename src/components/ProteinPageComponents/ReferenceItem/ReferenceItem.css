@@ -58,6 +58,13 @@
     gap: 9px;
 }
 
+@media only screen and (max-width: 430px){
+    .linksDiv{
+        flex-direction: column;
+        align-items: ceter;
+    }
+}
+
 .link{
     height: 100%;
     display: flex;

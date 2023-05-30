@@ -63,7 +63,9 @@ const HomePage = () => {
             <SearchBar/>
             <div className='resultsWrapper'>
                 {!dataToDisplay && <p className='noDataToDisplayP'>No data to display.<br/> Please start a search to display results.</p>}
-                {dataToDisplay && <p className='totResP'>{totRes} Search Results for {searchText}</p>}
+                {dataToDisplay && 
+                    <p className='totResP'>{totRes} Search Results for {searchText}</p>
+                }
                 {dataToDisplay && <div className='dataWrapper'>
                   <GridHeaders/>
                     <div className='itemsWrapper' onScroll={handleScroll} ref={scrollContainerRef}>

@@ -30,7 +30,6 @@
     display: flex;
     max-width: 998px;
     justify-content: right;
-    gap: 8px;
     font-style: normal;
     font-weight: 600;
     font-size: 12px;
@@ -52,4 +51,10 @@
     font-size: 12px;
     line-height: 16px;
     color: #000000;
+}
+
+.copyWrapper{
+    display: flex;
+    gap: 8px;
+    cursor: copy;
 }

@@ -18,7 +18,12 @@ const DetailsTab = () => {
         <div className='detailsTab'>
             <SequenceData />
             <div className='sequenceItselfWrapper'>
-                <div className='imgWrapper' onClick={handleCopyClick}><img src={copyImage}/>Copy</div>
+                <div className='imgWrapper' onClick={handleCopyClick}>
+                  <div className='copyWrapper'>
+                    <img src={copyImage}/>
+                    Copy
+                  </div>
+                </div>
                 <div className='sequenceItself' ref={paragraphRef}>
                     {protein?.sequence?.value}
                 </div>

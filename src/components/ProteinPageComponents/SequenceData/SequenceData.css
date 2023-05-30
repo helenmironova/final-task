@@ -40,3 +40,10 @@
 .dataCellPHeader, .dataCellPInfo{
     text-align: left;
 }
+
+
+@media only screen and (max-width: 430px){
+    .dataCol{
+        width: 100px;
+    }
+}
