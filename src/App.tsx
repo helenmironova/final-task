@@ -43,7 +43,7 @@ const App = () => {
         <Route path="/not-found" element={ authState.isLoggedIn ? <NotFoundPage /> : <MainPage />} />
         <Route path="*" element={authState.isLoggedIn ? <Navigate to="/not-found" /> : <MainPage />} />
         <Route path="/search" element={authState.isLoggedIn ? <SearchPage /> : <MainPage />} />
-        <Route path={`/protein/${proteinDetails.id}`} element={ authState.isLoggedIn ? <ProteinPage /> : <MainPage /> }>
+        <Route path={`/protein/${proteinDetails.id}/`} element={ authState.isLoggedIn ? <ProteinPage /> : <MainPage /> }>
           <Route
             path={`/protein/${proteinDetails.id}/details`}
             element={authState.isLoggedIn ? <ProteinDetails /> : <MainPage /> }
