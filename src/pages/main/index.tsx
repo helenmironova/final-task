@@ -33,7 +33,6 @@ const MainPage = () => {
   }
 
   const { result } = useSearch(url, searchParam, size);
-  console.log(result);
 
   useEffect(() => {
     setData(result);

@@ -15,6 +15,14 @@ export interface SearchResult {
   sequence: {
     length: number;
   };
+
+  comments: {
+    subcellularLocations: {
+      location: {
+        value: string;
+      };
+    }[];
+  }[];
 }
 
 export const useSearch = (url: string, query: string, size: number) => {

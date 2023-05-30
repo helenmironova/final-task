@@ -2,6 +2,9 @@ import { useState } from "react";
 import classes from "./filter.module.css";
 import filter from "../../assets/filter.svg";
 
+import Button from "../button";
+import FormInput from "../form-input";
+
 interface FilterProps {
   setFilterQuery: React.Dispatch<React.SetStateAction<string>>;
   setSize: React.Dispatch<React.SetStateAction<number>>;
@@ -51,7 +54,6 @@ const Filter = ({ setFilterQuery, setSize, setRequestType }: FilterProps) => {
   const buildQuery = () => {
     const filters = [];
 
-    
     if (geneName) {
       filters.push(`gene:${geneName}`);
     }
@@ -97,12 +99,12 @@ const Filter = ({ setFilterQuery, setSize, setRequestType }: FilterProps) => {
             </div>
             <div className={classes.modalBody}>
               <div className={classes.formGroup}>
-                <label htmlFor="geneName">Gene Name</label>
-                <input
+                <FormInput
+                  label="Gene Name"
                   type="text"
-                  id="geneName"
                   value={geneName}
                   onChange={(e) => setGeneName(e.target.value)}
+                  name="geneName"
                 />
               </div>
               <div className={classes.formGroup}>
@@ -112,7 +114,7 @@ const Filter = ({ setFilterQuery, setSize, setRequestType }: FilterProps) => {
                   value={organism}
                   onChange={(e) => setOrganism(e.target.value)}
                 >
-                  <option value="">Select an organism</option>
+                  <option value="">Select</option>
                   {organismOptions.map((option) => (
                     <option key={option} value={option}>
                       {option}
@@ -121,23 +123,21 @@ const Filter = ({ setFilterQuery, setSize, setRequestType }: FilterProps) => {
                 </select>
               </div>
               <div className={classes.rangeContainer}>
-                <label htmlFor="sequenceLengthFrom">Sequence Length</label>
-                <div>
-                  <input
-                    placeholder="From"
-                    type="text"
-                    id="sequenceLengthFrom"
-                    value={sequenceLengthFrom}
-                    onChange={(e) => setSequenceLengthFrom(e.target.value)}
-                  />
-                  <input
-                    placeholder="To"
-                    type="text"
-                    id="sequenceLengthTo"
-                    value={sequenceLengthTo}
-                    onChange={(e) => setSequenceLengthTo(e.target.value)}
-                  />
-                </div>
+                <FormInput
+                  label="Sequence Length"
+                  placeholder="From"
+                  type="text"
+                  name="sequenceLengthFrom"
+                  value={sequenceLengthFrom}
+                  onChange={(e) => setSequenceLengthFrom(e.target.value)}
+                />
+                <FormInput
+                  placeholder="To"
+                  type="text"
+                  name="sequenceLengthTo"
+                  value={sequenceLengthTo}
+                  onChange={(e) => setSequenceLengthTo(e.target.value)}
+                />
               </div>
 
               <div className={classes.formGroup}>
@@ -147,7 +147,7 @@ const Filter = ({ setFilterQuery, setSize, setRequestType }: FilterProps) => {
                   value={annotationScore}
                   onChange={(e) => setAnnotationScore(e.target.value)}
                 >
-                  <option value="">Select an annotation score</option>
+                  <option value="">Select</option>
                   {annotationScoreOptions.map((option) => (
                     <option key={option} value={option}>
                       {option}
@@ -163,7 +163,7 @@ const Filter = ({ setFilterQuery, setSize, setRequestType }: FilterProps) => {
                   value={proteinWith}
                   onChange={(e) => setProteinWith(e.target.value)}
                 >
-                  <option value="">Select a protein</option>
+                  <option value="">Select</option>
                   {proteinWithOptions.map((option) => (
                     <option key={option} value={option}>
                       {option}
@@ -173,12 +173,19 @@ const Filter = ({ setFilterQuery, setSize, setRequestType }: FilterProps) => {
               </div>
             </div>
             <div className={classes.modalFooter}>
-              <button className={classes.cancelButton} onClick={closeModal}>
-                Cancel
-              </button>
-              <button className={classes.filterButton} onClick={handleFilter}>
-                Filter
-              </button>
+              <Button
+                variant="outline"
+                onClick={closeModal}
+                placeholder="Cancel"
+                type="button"
+              />
+
+              <Button
+                variant="fill"
+                onClick={handleFilter}
+                placeholder="Apply Filter"
+                type="button"
+              />
             </div>
           </div>
         </div>

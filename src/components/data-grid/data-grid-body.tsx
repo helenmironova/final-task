@@ -9,6 +9,7 @@ interface DataGridBodyProps {
   lastBookElementRef: React.RefCallback<HTMLTableRowElement>;
 }
 const DataGridBody = ({ data, lastBookElementRef }: DataGridBodyProps) => {
+  console.log(data);
   return (
     <Fragment>
       <div className={classes.grid_scroll}>
@@ -33,6 +34,14 @@ const DataGridBody = ({ data, lastBookElementRef }: DataGridBodyProps) => {
             </div>
             <div className={classes.grid_item}>
               {item.organism.scientificName}
+            </div>
+            <div className={classes.grid_item}>
+              {item.comments &&
+              item.comments.length > 0 &&
+              item.comments[0].subcellularLocations.length > 0 &&
+              item.comments[0].subcellularLocations[0]?.location?.value
+                ? item.comments[0].subcellularLocations[0].location.value
+                : "N/A"}
             </div>
             <div className={classes.grid_item}>{item.sequence.length}</div>
           </div>

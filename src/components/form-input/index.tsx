@@ -7,7 +7,7 @@ interface FormInputProps {
   name: string;
   placeholder?: string;
   value?: string;
-  required: boolean;
+  required?: boolean;
   label?: string;
   styles?: string;
 }

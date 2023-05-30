@@ -42,13 +42,15 @@
   margin-bottom: 15px;
 }
 
-.formGroup label {
+.formGroup label,
+.rangeContainer label {
   font-weight: bold;
   display: block;
   margin-bottom: 5px;
 }
 
-.formGroup input {
+.formGroup input,
+.formGroup select {
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
@@ -56,18 +58,27 @@
 }
 
 .rangeContainer {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: 1fr 1fr;
+}
+
+.rangeContainer label {
+  grid-row: 1;
+  grid-column: 1 / -1;
 }
 
 .rangeContainer input {
-  flex: 1;
-  margin-right: 5px;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 15px;
 }
 
 .modalFooter {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .cancelButton {

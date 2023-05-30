@@ -95,6 +95,14 @@ const DataGridHeader = ({ setData, result, data }: DataGriHeaderdProps) => {
             />
           </div>
           <div className={classes.grid_header}>
+            Subcellular Location
+            <img
+              src={Sorting}
+              alt="Sorting Icon"
+              // onClick={() => sortingHandler(["organism", "scientificName"])}
+            />
+          </div>
+          <div className={classes.grid_header}>
             Length{" "}
             <img
               src={Sorting}
