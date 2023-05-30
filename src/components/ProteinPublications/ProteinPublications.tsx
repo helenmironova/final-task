@@ -18,12 +18,12 @@ const ProteinPublications = () => {
             {publication?.citation?.authors?.join(", ").length > 200
               ? publication?.citation?.authors?.join(", ").substring(0, 200) +
                 "  ..."
-              : publication.citation.authors.join(", ")}
+              : publication?.citation?.authors?.join(", ")}
           </div>
           <div>
             <span className="publicationCard__title--small">Categories: </span>
             {publication?.references[0]
-              ? publication.references[0].sourceCategories.join(", ")
+              ? publication.references[0].sourceCategories?.join(", ")
               : ""}
           </div>
           <div>
