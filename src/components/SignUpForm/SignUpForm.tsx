@@ -2,9 +2,12 @@ import {createUserWithEmailAndPassword } from "firebase/auth";
 import './SignUpForm.css'
 import React, { useEffect, useState } from 'react';
 import {auth} from '../../firebase'
+import { useNavigate } from "react-router";
 
 
 const SignUpForm = () => {
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
@@ -72,6 +75,7 @@ const SignUpForm = () => {
         createUserWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             console.log(userCredential);
+            navigate("/auth/login")
           })
           .catch((error) => {
             console.log(error)
