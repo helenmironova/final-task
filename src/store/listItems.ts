@@ -27,7 +27,7 @@ const parseNextLink = (linkHeader: string | null): string | null => {
 // Define the async thunk action
 export const fetchItems = createAsyncThunk(
   'listItems/fetchItems',
-  async (url: string, { dispatch }) => {
+  async (url: string,  { dispatch }) => {
     try {
       const response = await fetch(url);
       const linkHeader = response.headers.get("Link");
@@ -35,7 +35,7 @@ export const fetchItems = createAsyncThunk(
       const [data, newNextUrl] = await Promise.all([response.json(), nextUrl]);
       const newItems = data.results;
       if(newItems.length===0) return;
-      dispatch(removeItems());
+      if(JSON.stringify(persistedState.items)===JSON.stringify(newItems)) dispatch(removeItems())
       dispatch(setNextUrl(newNextUrl || ''));
       dispatch(addListItems(newItems));
       dispatch(setNewSelectedProteinName(newItems[0]?.primaryAccession))

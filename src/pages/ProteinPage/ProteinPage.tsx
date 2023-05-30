@@ -15,12 +15,13 @@ import ProtvistaUniprot from 'protvista-uniprot'
 window.customElements.define("protvista-uniprot", ProtvistaUniprot);
 
 const ProteinPage = () => {
-    const protein = useSelector((state: any) => state.selectedProtein);
-    const [tab, setTab] = useState('details'); //details || feature || publications
+    console.clear();
 
+    const protein = useSelector((state: any) => state.selectedProtein);
     const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
-    const initialRender = useRef(true);
     const navigate = useNavigate();
+    const initialRender = useRef(true);
+    const [tab, setTab] = useState('details'); //details || feature || publications
 
     const setParams = (arg: string) => {
         const currentUrl = new URL(window.location.href);
@@ -78,7 +79,7 @@ const ProteinPage = () => {
             setParams(protein.name)
         }
     }, []);
-    
+
   return (
     <div className='body'>
       <>

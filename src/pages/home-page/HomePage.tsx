@@ -13,50 +13,45 @@ import { AnyAction } from 'redux';
 const HomePage = () => {
     const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
 
+    //holds list of proteins that must be displaied in table;
     const listItems = useSelector((state: any) => state.listItems.items);
+    //holds url for next chunk of items that will be fetched;
     const nextUrl = useSelector((state: any) => state.listItems.nextUrl);
+    //determines if items are fetched or not;
     const loading = useSelector((state: any) => state.listItems.isLoading);
-    
+    //determines if there is data to be displaied;
     const [dataToDisplay, setDataToDisplay] = useState(false);
 
-
+    /*
+        when listItems change:
+        if api returned some items: data must be displaied;
+    */
     useEffect(()=>{
         if(listItems.length>0){
-            setDataToDisplay(true)
+            setDataToDisplay(true);
         }
     }, [listItems])
 
     /*
-        fethes data from given url;
-        sets nextUrl to appropriate url;
-        dispatches new items;
-    */
-    const fetchData = (url: string) => {
-        dispatch(fetchItems(url));
-        setDataToDisplay(true);
-    };
-
-    /*
         detects when user scrolles to the end of itemsWrapper div;
         then fetches new data, if nextUrl is not an empty string;
-        removes selected results filter;
     */
     const handleScroll = (e: any) => {
         const { scrollTop, clientHeight, scrollHeight } = e.target;
         const scrolledToBottom = scrollTop + clientHeight >= scrollHeight - 1;
         if (scrolledToBottom && nextUrl!='') {
-            fetchData(nextUrl);
+            dispatch(fetchItems(nextUrl));
         }
     }
 
     return(
         <div className='body'>
             <HomePageHeader />
-            <SearchBar fetchData={fetchData}/>
+            <SearchBar/>
             <div className='resultsWrapper'>
                 {!dataToDisplay && <p className='noDataToDisplayP'>No data to display.<br/> Please start a search to display results.</p>}
                 {dataToDisplay && <div className='dataWrapper'>
-                  <GridHeaders fetchData={fetchData}/>
+                  <GridHeaders/>
                     <div className='itemsWrapper' onScroll={handleScroll}>
                         {listItems?.map((item: any, index: number) => (
                             <GridItem item={item} index={index} key={uuidv4()}/>

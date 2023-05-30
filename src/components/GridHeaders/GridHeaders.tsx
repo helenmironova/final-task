@@ -4,15 +4,17 @@ import logo1 from '../../assets/Vector.png';
 import logo2 from '../../assets/Vector2.png';
 import logo3 from '../../assets/desc.png'
 import {useSelector, useDispatch } from 'react-redux';
-import { removeItems } from '../../store/listItems';
+import { fetchItems, removeItems } from '../../store/listItems';
 import { setNewValueSort } from '../../store/sortOptions';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
 
-const GridHeaders = (props: any) => {
+const GridHeaders = () => {
     const searchText = useSelector((state: any)=>state.searchText);
     const filterOptions = useSelector((state: any)=> state.filterOptions);
     const sortOptions = useSelector((state: any)=>state.sortOptions);
 
-    const dispatch = useDispatch();
+    const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
 
   
 
@@ -77,7 +79,7 @@ const GridHeaders = (props: any) => {
         url = addSortType(url);
       }
       dispatch(removeItems());
-      props.fetchData(url);
+      dispatch(fetchItems(url));
     }
 
     const handleLogoClick = (clicked: number) => {

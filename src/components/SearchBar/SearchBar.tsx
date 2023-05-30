@@ -7,23 +7,29 @@ import { useSelector, useDispatch } from 'react-redux';
 import  { setNewValueFilter } from '../../store/filterOptions';
 import { setNewSearchText } from '../../store/searchText';
 import logoOpened from '../../assets/opened.png'
-import { removeItems } from '../../store/listItems';
+import { fetchItems, removeItems } from '../../store/listItems';
 import { setNewValueSort } from '../../store/sortOptions';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
 
-const SearchBar = (props: any) => {
+const SearchBar = () => {
     const location = useLocation();
-    const dispatch = useDispatch();
+    const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
     const navigate = useNavigate();
 
+    //search text stored in redux;
     const searchText = useSelector((state: any) => state.searchText);
+    //filters stord in redux;
     const filterOptions = useSelector((state: any) => state.filterOptions);
-    const filterPopupIsOpen = useSelector((state: any) => state.filterOptions.isOpen);
-
+    //determines if little dot above the filters button should be visible;
     const [dotVisible, setDotVisible] = useState(false);
 
     /*
         changes url query;
-        fetches data (without filter options and grid filter);
+        removes previous list items stored in redux;
+        sets filter options to no options (default);
+        sets sorting options to no sort (default);
+        fetches new data;
     */
     const handleSubmit = (searchText: string) => {
         const query = searchText.trim() || "*";
@@ -40,10 +46,14 @@ const SearchBar = (props: any) => {
             proteinWith: null,
         }));
         dispatch(setNewValueSort({selected: 0, type: 0}))
-        props.fetchData(apiUrl);
+        dispatch(fetchItems(apiUrl));
     }
 
-    //changes dot visability when filterOptions changes;
+    /*
+        when filter option changes checks if there are any filters
+        if yes: sets little dot visible;
+        else not;
+    */
     useEffect(()=>{
         for (const value of Object.values(filterOptions)) {
             if (typeof value !== 'boolean' && value !== null && value !== '') {
@@ -55,7 +65,7 @@ const SearchBar = (props: any) => {
           return;
     }, [filterOptions])
  
-    //when searchText is changed, new query is added;
+    //when searchText is changed, new query is added to url;
     useEffect(() => {
         const searchQuery = searchText.trim() || '*';
         const currentUrl = new URL(window.location.href);
@@ -64,7 +74,7 @@ const SearchBar = (props: any) => {
         window.history.replaceState({}, '', `${currentUrl.pathname}?${params}`);
     }, [searchText]);
 
-    //sets new searchText when user changes input value;
+    //sets new searchText (in redux) when user changes input value;
     const handleSearchTextChange = (e: any) => {
         const newSearchText = e.target.value;
         dispatch(setNewSearchText(newSearchText));
@@ -99,11 +109,11 @@ const SearchBar = (props: any) => {
             <button type='submit' className='searchButton' onClick={()=>handleSubmit(searchText)}>
                 Search
             </button>
-            <button className={filterPopupIsOpen ? 'filter filter-opened' : 'filter'} onClick={()=>dispatch(setNewValueFilter({isOpen: !filterPopupIsOpen}))}>
-                {filterPopupIsOpen ? <img src={logoOpened} alt='Filter__opened'></img> : <img src={logo} alt='Filter'/> }
+            <button className={filterOptions.isOpen ? 'filter filter-opened' : 'filter'} onClick={()=>dispatch(setNewValueFilter({isOpen: !filterOptions.isOpen}))}>
+                {filterOptions.isOpen ? <img src={logoOpened} alt='Filter__opened'></img> : <img src={logo} alt='Filter'/> }
                 {dotVisible && <span className='dot'></span>}
             </button>
-            {filterPopupIsOpen && <FilterTab fetchData={props.fetchData}/>}
+            {filterOptions.isOpen && <FilterTab/>}
         </div>
     );
 };

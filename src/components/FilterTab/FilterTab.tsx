@@ -7,23 +7,32 @@ import OrganismInput from '../OrganismInput/OrganismInput';
 import SequenceLengthInput from '../SequenceLengthInput/SequenceLengthInput';
 import AnnotationInput from '../AnnotationInput/AnnotationInput'
 import ProteinInput from '../ProteinInput/ProteinInput';
-import { removeItems } from '../../store/listItems';
+import { fetchItems, removeItems } from '../../store/listItems';
 import { setNewValueFilter } from '../../store/filterOptions';
 import { setNewValueSort } from '../../store/sortOptions';
 import { setNewSelectedProteinName } from '../../store/selectedProtein';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
 
 
-const FilterTab = (props: any) => {
-    const dispatch = useDispatch();
+const FilterTab = () => {
+    const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
 
+    //filters stored in redux;
     const filterOptions = useSelector((state: any) => state.filterOptions);
+    //selector options stored in redux;
     const selectorOptions = useSelector((state: any) => state.selectorOptions);
+    //search text stored in redux;
     const searchText = useSelector((state: any) => state.searchText);
     
+    //determines when 'apply filters' button should be valid;
     const [applyButtonValid, setApplyButtonValid] = useState(false);
 
     /*
-        fetches new data (without filter options);
+        removes previous list items from redux;
+        sets filters to no filters (default);
+        sets sort to no sort (default);
+        fetches new list items with just searchText;
     */
     const cancelFunction = () => {
         dispatch(removeItems());
@@ -37,7 +46,7 @@ const FilterTab = (props: any) => {
             proteinWith: null,
         }));
         dispatch(setNewValueSort({selected: 0, type: 0}))
-        props.fetchData(`https://rest.uniprot.org/uniprotkb/search?facets=model_organism,proteins_with,annotation_score&query=(${(searchText==='' || searchText===null) ? "*" : searchText})`);
+       dispatch(fetchItems(`https://rest.uniprot.org/uniprotkb/search?facets=model_organism,proteins_with,annotation_score&query=(${(searchText==='' || searchText===null) ? "*" : searchText})`));
     }
 
     /*
@@ -60,13 +69,18 @@ const FilterTab = (props: any) => {
 
     //changes apply button visual based on filterOptions change;
     useEffect(()=>{
-        const isFilterChanged = Object.values(filterOptions).some(value => value !== null && value !== "");
+        const isFilterChanged = Object.values(filterOptions).some(value => value !== null && value !== "" && typeof(value)!=='boolean');
         setApplyButtonValid(isFilterChanged);
     }, [filterOptions])
     
     /*
         if button is valid: 
-        fetches new data (dispatch);
+        adds filter options to url;
+        defaultly selects geneName as selected protein name; !!!!!
+        closes filter tab;
+        removes previous list items from redux;
+        sets sort options to no sort (default);
+        fetches new list items;
     */
     const applyFilters = () => {
         if(!applyButtonValid) return;
@@ -91,9 +105,8 @@ const FilterTab = (props: any) => {
         dispatch(setNewSelectedProteinName(filterOptions.geneName));
         dispatch(setNewValueFilter({isOpen: false}));
         dispatch(removeItems());
-        console.log("here")
         dispatch(setNewValueSort({selected: 0, type: 0}))
-        props.fetchData(url);
+        dispatch(fetchItems(url));
     }
     
     return(

@@ -6,9 +6,14 @@ import { signOut } from 'firebase/auth';
 import { setNewUser } from '../../store/user';
 
 const HomePageHeader = () => {
-    const email = useSelector((state: any)=>state.user)
     const dispatch = useDispatch();
+    //email of current user;
+    const email = useSelector((state: any)=>state.user)
 
+    /*
+        signs out of firebase account;
+        sets user (in redux) to an empty string (no user);
+    */
     const logOut = () => {
         signOut(auth).then(() => {
             dispatch(setNewUser(""))
