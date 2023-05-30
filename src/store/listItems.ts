@@ -39,7 +39,7 @@ export const fetchItems = createAsyncThunk(
       console.log(newItems)
       if(newItems.length===0) return;
       dispatch(setTotalResults(response?.headers?.get("x-total-results")));
-      if(JSON.stringify(initialState.items?.items)===JSON.stringify(newItems)) dispatch(removeItems())
+      if(JSON.stringify(initialState?.items)===JSON.stringify(newItems)) dispatch(removeItems())
       dispatch(setNextUrl(newNextUrl || ''));
       dispatch(addListItems(newItems));
       dispatch(setNewSelectedProteinName(newItems[0]?.primaryAccession))
