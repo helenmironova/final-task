@@ -17,6 +17,9 @@ const HomePageHeader = () => {
     const logOut = () => {
         signOut(auth).then(() => {
             dispatch(setNewUser(""))
+            //removes previous searched etc data;
+            window.location.reload();
+            sessionStorage.clear();
         }).catch((error) => {console.log(error)});
     }
 
