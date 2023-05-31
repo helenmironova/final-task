@@ -2,17 +2,28 @@ import Button from "@mui/material/Button";
 import "./index.css";
 import { ReactNode } from "react";
 import { Box, Container, Typography } from "@mui/material";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { searchEntries } from "../../utils/search";
 import { SearchItem } from "../../interfaces/SearchItem";
 
+interface Props {
+  searchItem: SearchItem;
+  isTHeader: boolean;
+}
 const SearchResultComponent = ({
   searchItem,
-}: {
-  searchItem: SearchItem;
-}): JSX.Element => {
+  isTHeader,
+}: Props): JSX.Element => {
+  const navigate = useNavigate();
   return (
-    <tr className="search-result">
+    <tr
+      className="search-result"
+      onClick={() => {
+        if (!isTHeader) {
+          navigate(searchItem.entry);
+        }
+      }}
+    >
       <td className="search-result__id">
         <Typography>{searchItem.searchId}</Typography>
       </td>

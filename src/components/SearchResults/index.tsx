@@ -1,7 +1,7 @@
 import "./index.css";
 import { useEffect, useRef, useState } from "react";
 import { Box, Typography } from "@mui/material";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { searchEntries } from "../../utils/search";
 import SearchResultComponent from "../SearchResultComponent";
 import { SearchItem } from "../../interfaces/SearchItem";
@@ -19,7 +19,9 @@ const getTableHeader = (): JSX.Element => {
     subcellularLocation: "Subcellular Location",
     length: "Length",
   };
-  return <SearchResultComponent searchItem={headerStr} key={0} />;
+  return (
+    <SearchResultComponent searchItem={headerStr} key={0} isTHeader={true} />
+  );
 };
 
 const SearchResults = (): JSX.Element => {
@@ -84,6 +86,7 @@ const SearchResults = (): JSX.Element => {
 
   const searchItemComponents = searchItems.map((entry) => (
     <SearchResultComponent
+      isTHeader={false}
       searchItem={entry}
       key={searchItemsNumber + entry.searchId + 1}
     />
