@@ -54,8 +54,6 @@ const ProteinPage = () => {
   const [view, setView] = useState("details");
   const { Id } = useParams();
 
-  console.log("publications", publications);
-
   useEffect(() => {
     const url = `https://rest.uniprot.org/uniprotkb/${Id}/publications`;
     fetchData(url).then((res) => setPublications(res.results));
