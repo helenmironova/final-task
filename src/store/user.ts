@@ -9,9 +9,9 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setNewUser: (state: string, action: PayloadAction<string>) => {
-        return action.payload;
-    }
+    setNewUser: (_, action: PayloadAction<string>) => {
+      return action.payload;
+    },  
   },
 })
 

@@ -9,9 +9,9 @@ export const searchTextSlice = createSlice({
   name: 'searchText',
   initialState,
   reducers: {
-    setNewSearchText: (state: string, action: PayloadAction<string>) => {
-        return action.payload;
-    }
+    setNewSearchText: (_, action: PayloadAction<string>) => {
+      return action.payload;
+    },
   },
 })
 
