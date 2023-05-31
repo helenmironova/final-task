@@ -70,7 +70,7 @@ const MainPage = () => {
               setRequestType={setRequestType}
             />
           </div>
-          {query && data.length === 0 ? (
+          {(query || searchParam) && data.length === 0 ? (
             <LoadingSpinner />
           ) : data.length === 0 ? (
             <div className={classes.no_data}>
