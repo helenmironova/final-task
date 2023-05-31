@@ -11,13 +11,13 @@ import {
   useNavigate,
 } from "react-router-dom"
 
-import { store } from "./redux/store"
+import { store } from "./app/store"
 import { auth } from "./firebase"
-import AuthPage from "./pages/AuthPage"
-import ErrorPage from "./pages/ErrorPage"
-import MainPage from "./pages/MainPage"
-import SearchPage from "./pages/SearchPage"
-import SingleProteinPage from "./pages/SingleProteinPage"
+import AuthPage from "./pages/auth-page"
+import ErrorPage from "./pages/error-page"
+import MainPage from "./pages/main-page"
+import SearchPage from "./pages/search-page"
+import SingleProteinPage from "./pages/single-protein-page"
 
 const ProtectedRoute = ({ element: Component, ...rest }: any) => {
   const [loading, setLoading] = useState(true)
@@ -31,7 +31,7 @@ const ProtectedRoute = ({ element: Component, ...rest }: any) => {
         setAuthenticated(true)
       } else {
         setAuthenticated(false)
-        navigate("/auth", { state: { from: location.pathname } })
+        navigate("/auth", { state: { from: location } })
       }
 
       setLoading(false)

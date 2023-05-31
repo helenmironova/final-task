@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { onAuthStateChanged } from "firebase/auth"
 import styled from "styled-components"
 
-import { useAppDispatch, useAppSelector } from "../redux/hooks"
+import { useAppDispatch, useAppSelector } from "../app/hooks"
 import backgroundImg from "../assets/background-img.png"
 import { setCurrentUser, signIn, signUp } from "../features/search/searchSlice"
 import { auth } from "../firebase"
@@ -20,12 +20,19 @@ const AuthPage = () => {
   const authError = useAppSelector((state) => state.search.error)
 
   const [isFormValid, setIsFormValid] = useState(false)
+  const location = useLocation()
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        dispatch(setCurrentUser(user.email!))
-        navigate("/search")
+        if (location.state) {
+          const { pathname, search } = location.state.from as any
+
+          navigate(`${pathname}${search}`)
+        } else {
+          dispatch(setCurrentUser(user.email!))
+          navigate("/search")
+        }
       } else {
         console.log("no user")
       }
@@ -74,7 +81,18 @@ const AuthPage = () => {
 
     try {
       await dispatch(signIn({ email, password })).then(() => {
-        navigate("/search")
+        if (location.state) {
+          const { pathname, search } = location.state.from as any
+
+          console.log(location.state)
+
+          console.log(`${pathname}${search}`)
+
+          navigate(`${pathname}${search}`)
+        } else {
+          dispatch(setCurrentUser(auth.currentUser!.email!))
+          navigate("/search")
+        }
       })
     } catch (error_: any) {
       setError(error_.message)
@@ -94,7 +112,9 @@ const AuthPage = () => {
     }
 
     if (!validatePassword(password)) {
-      setError("Please enter a valid password (min. 6 characters and includes at least one lowercase letter, one uppercase letter, and one number)")
+      setError(
+        "Please enter a valid password (min. 6 characters and includes at least one lowercase letter, one uppercase letter, and one number)",
+      )
 
       return
     }
@@ -133,12 +153,12 @@ const AuthPage = () => {
   }
 
   const validatePassword = (password: string) => {
-    const hasLowerCase = /[a-z]/.test(password);
-  const hasUpperCase = /[A-Z]/.test(password);
-  const hasNumber = /\d/.test(password);
-  const hasMinLength = password.length >= 6;
+    const hasLowerCase = /[a-z]/.test(password)
+    const hasUpperCase = /[A-Z]/.test(password)
+    const hasNumber = /\d/.test(password)
+    const hasMinLength = password.length >= 6
 
-  return hasLowerCase && hasUpperCase && hasNumber && hasMinLength;
+    return hasLowerCase && hasUpperCase && hasNumber && hasMinLength
   }
 
   return (
@@ -183,7 +203,7 @@ const AuthPage = () => {
             <button type="submit" disabled={!isFormValid}>
               {isLogin ? "Login" : "Create Account"}
             </button>
-            <p className="error-message">{error ? error : ""}</p>
+            {error && <p className="error-message">{error}</p>}
             <span>
               {isLogin ? "Don't have an account?" : "Already have an account?"}
               <button
