@@ -1,4 +1,3 @@
-import { TableCell } from "@mui/material";
 import { Table, Column, RowMouseEventHandlerParams } from "react-virtualized";
 import "react-virtualized/styles.css";
 import FilterListIcon from "@mui/icons-material/FilterList";
@@ -127,47 +126,48 @@ const DataTable = () => {
           borderRadius: "8px",
           justifyContent: "space-between",
           padding: "0 10px",
+          fontSize: "14px",
         }}
       >
         <Column
           label="#"
           dataKey="primaryAccession"
           width={50}
-          style={{ paddingLeft: "10px" }}
+          style={{ paddingLeft: "10px", display: "flex" }}
           cellRenderer={({ rowIndex }) => rowIndex + 1}
         />
         <Column
           label={
-            <>
+            <div className="text_wrapper">
               Entry
               <FilterListIcon
                 onClick={() => handleSort("accession")}
                 color={sortType === "accession" ? "info" : "disabled"}
                 sx={{
                   cursor: "pointer",
-                  marginLeft: "60px"
+                  marginLeft: "10px",
                 }}
               />
-            </>
+            </div>
           }
           dataKey="primaryAccession"
-          width={150}
+          width={100}
           style={{ paddingLeft: "20px", color: "#175BC0" }}
           cellRenderer={({ rowData }) => <div>{rowData.primaryAccession}</div>}
         />
         <Column
           label={
-            <>
+            <div className="text_wrapper">
               Entry names
               <FilterListIcon
                 onClick={() => handleSort("id")}
                 color={sortType === "id" ? "info" : "disabled"}
                 sx={{
                   cursor: "pointer",
-                  marginLeft: "10px"
+                  marginLeft: "10px",
                 }}
               />
-            </>
+            </div>
           }
           dataKey="uniProtkbId"
           width={150}
@@ -176,17 +176,17 @@ const DataTable = () => {
         />
         <Column
           label={
-            <>
+            <div className="text_wrapper">
               Genes
               <FilterListIcon
                 onClick={() => handleSort("gene")}
                 color={sortType === "gene" ? "info" : "disabled"}
                 sx={{
                   cursor: "pointer",
-                  marginLeft: "60px"
+                  marginLeft: "60px",
                 }}
               />
-            </>
+            </div>
           }
           dataKey="genes"
           width={150}
@@ -199,39 +199,45 @@ const DataTable = () => {
                     item.geneName?.value
                 )
                 .join(", ")}
+              {rowData?.genes
+                ?.map((item: { orfNames: [] }) => item.orfNames)
+                .map((item: { value: string }) => item?.value)
+                .join(", ")}
             </div>
           )}
         />
         <Column
           label={
-            <>
+            <div className="text_wrapper">
               Organism
               <FilterListIcon
                 onClick={() => handleSort("organism_name")}
                 color={sortType === "organism_name" ? "info" : "disabled"}
                 sx={{
                   cursor: "pointer",
-                  marginLeft: "120px"
+                  marginLeft: "120px",
                 }}
               />
-            </>
+            </div>
           }
           dataKey="organism"
           width={250}
           cellRenderer={({ rowData }) => (
             <div className="dataTable__organism">
-              {rowData?.organism?.scientificName?.substring(0, 25) + "..."}
+              {rowData?.organism?.scientificName?.length > 25
+                ? rowData?.organism?.scientificName?.substring(0, 25) + "..."
+                : rowData?.organism?.scientificName}
             </div>
           )}
         />
         <Column
-          label="Subcellular Location"
+          label={<div className="text_wrapper">Subcellular Location</div>}
           dataKey="comments"
           width={200}
           headerStyle={{ margin: "5px" }}
           cellRenderer={({ rowData }) => (
-            <TableCell sx={{ maxWidth: "150px" }}>
-              {rowData?.comments?.length > 1
+            <div className="subcell_location">
+              {rowData?.comments?.length >= 1
                 ? rowData.comments[0].subcellularLocations
                     .map(
                       (location: {
@@ -242,22 +248,22 @@ const DataTable = () => {
                     )
                     .join(" ")
                 : ""}
-            </TableCell>
+            </div>
           )}
         />
         <Column
           label={
-            <>
+            <div className="text_wrapper">
               Length
               <FilterListIcon
                 onClick={() => handleSort("length")}
                 color={sortType === "length" ? "info" : "disabled"}
                 sx={{
                   cursor: "pointer",
-                  marginLeft: "7px"
+                  marginLeft: "7px",
                 }}
               />
-            </>
+            </div>
           }
           dataKey="sequence"
           width={100}

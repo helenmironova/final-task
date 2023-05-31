@@ -19,6 +19,9 @@ export interface protein {
       geneName: {
         value: string;
       };
+      orfNames: [{
+        value: string
+      }]
     }
   ];
   comments: [

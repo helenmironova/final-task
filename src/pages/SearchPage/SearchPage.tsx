@@ -18,7 +18,7 @@ import { Dna } from "react-loader-spinner";
 import FilterPanel from "../../components/FilterPanel/FilterPanel";
 
 const SearchPage = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [,setSearchParams] = useSearchParams();
   const dispatch = useAppDispatch();
   const proteinDataState = useAppSelector(selectProteinData);
   const filterState = useAppSelector(selectFilter);
