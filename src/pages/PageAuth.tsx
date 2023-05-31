@@ -1,4 +1,4 @@
-import background from "../../public/img/dna-representation-collage1.png";
+import background from "../assets/img/dna-representation-collage1.png";
 
 import AuthModal from "../components/AuthModal";
 

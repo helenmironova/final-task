@@ -1,12 +1,19 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import {
+  User,
   connectAuthEmulator,
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
+import { useEffect } from "react";
+import { NavigateFunction, To, useNavigate } from "react-router-dom";
+import { setEmail, setUser } from "../store/userSlice";
+import { useAppDispatch } from "../hooks/useAppDispatch";
+import { AnyAction, Dispatch } from "redux";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -24,8 +31,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
-connectAuthEmulator(auth, "http://localhost:9099");
+export const auth = getAuth(app);
+connectAuthEmulator(auth, "http://127.0.0.1:9099");
 
 const validateEmail = (email: string): boolean => {
   const emailRegex =
@@ -92,13 +99,45 @@ export const createAccount = async (
     throw new Error("Empty email or password");
   }
 };
+export const loginEvent = document.createEvent("Event");
 
-export const monitorAuthState = (): void => {
+export const monitorAuthState = (dispatch: Dispatch<AnyAction>): void => {
   onAuthStateChanged(auth, (user) => {
+    let destination: To = "";
     if (user) {
-      console.log(" LOgged in");
+      // User is logged in
+      const currentPath = window.location.pathname;
+      dispatch(setEmail(user.email));
+
+      if (
+        currentPath === "/" ||
+        currentPath === "/auth" ||
+        currentPath === "/auth/"
+      ) {
+        // Redirect to /search if on root or /auth path
+        destination = "/search";
+      }
     } else {
-      console.log("Not LOgged in");
+      // User is not logged in
+      const currentPath = window.location.pathname;
+      console.log("user not logged in");
+      if (currentPath !== "/auth" && currentPath !== "/") {
+        // Redirect to / if not on root path
+        destination = "/";
+      }
+
+      dispatch(setEmail(null));
+    }
+    if (destination) {
+      window.location.href = destination;
     }
   });
+};
+
+export const logout = (): void => {
+  signOut(auth);
+};
+
+export const getCurrentUser = (): User | null => {
+  return auth.currentUser;
 };

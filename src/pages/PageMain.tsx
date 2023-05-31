@@ -1,4 +1,5 @@
-import background from "../../public/img/dna-representation-collage1.png";
+import { useNavigate } from "react-router-dom";
+import background from "../assets/img/dna-representation-collage1.png";
 import LoginBlock from "../components/LoginBlock";
 
 const PageMain = (): JSX.Element => {
