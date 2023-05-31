@@ -5,7 +5,31 @@ const persistedState = loadState('state')?.selectedProtein;
 
 const initialState = persistedState || {
   name: '',
-  protein: {},
+  protein: {
+    primaryAccession: "",
+    uniProtkbId: "",
+    sequence: {
+      value: "",
+      length: 0,
+      molWeight: 0,
+      crc64: 0,
+    },
+    proteinDescription: {
+      recommendedName: {
+        fullName: {
+          value: "",
+        }
+      }
+    },
+    genes: [{
+      geneName: {
+        value: "",
+      }
+    }],
+    entryAudit: {
+      lastSequenceUpdateDate: "",
+    }
+  },
   references: {},
 };
 

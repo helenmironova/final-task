@@ -15,7 +15,6 @@ import ProtvistaUniprot from 'protvista-uniprot'
 window.customElements.define("protvista-uniprot", ProtvistaUniprot);
 
 const ProteinPage = () => {
-    console.clear();
     const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
     const initialRender = useRef(true);
     const navigate = useNavigate();
@@ -50,6 +49,7 @@ const ProteinPage = () => {
           .catch(() => false);
     };
 
+
     /*
         on first render does the following:
         checks if query has parameter 'protein'
@@ -70,12 +70,12 @@ const ProteinPage = () => {
             isValid(searchParams.get("protein") as string)
             .then(valid => {
                 if (valid) {
-                // console.log("Query is valid");
+                 console.log("Query is valid");
                     dispatch(setNewSelectedProteinName(searchParams.get("protein") as string));
                     dispatch(fetchProteinReferencesData(searchParams.get("protein") as string));
                     dispatch(fetchProteinData(searchParams.get("protein") as string));
                 } else {
-                // console.log("Sorry, not a valid query");
+                 console.log("Sorry, not a valid query");
                     navigate('/not-found');
                 }
             })
@@ -87,20 +87,19 @@ const ProteinPage = () => {
         }
     }, []);
 
-    setTimeout(() => console.clear(), 3000);
   return (
     <div className='body'>
       <>
         <HomePageHeader />
         <div className='proteinDataWrapper'>
-          <BasicData protein={protein.protein} />
+          <BasicData protein={protein?.protein} />
           <Paths tab={tab} setTab={setTab} />
           {/* Render content based on the selected tab */}
           <div className='content'>
             {tab === 'details' && <DetailsTab />}
             {tab === 'feature' && 
               <div className='protvistaWrapper'>
-                <protvista-uniprot accession={protein.name} />
+                <protvista-uniprot accession={protein?.name} />
               </div>}
             {tab === 'publications' && <PublicationsTab />}
           </div>

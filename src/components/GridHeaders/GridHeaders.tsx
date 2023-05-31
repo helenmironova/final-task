@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 import './GridHeaders.css';
 import logo1 from '../../assets/Vector.png';
 import logo2 from '../../assets/Vector2.png';
@@ -93,8 +93,17 @@ const GridHeaders = () => {
       dispatch(fetchItems(url));
     }
 
+    const initialRender = useRef(true);
+
+
     //when sorting type changes, fetches new data;
-    useEffect(()=>fetchData(), [sortOptions.selected, sortOptions.type]);
+    useEffect(()=>{
+      if (initialRender.current) {
+        initialRender.current = false;
+        return;
+      }
+      fetchData()}
+    , [sortOptions.selected, sortOptions.type]);
   
   return (
     <div className='gridHeaders'>
