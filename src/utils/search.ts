@@ -19,3 +19,12 @@ export const searchEntries = (req: string, updateReq) => {
       return error;
     });
 };
+
+export const getProteinInfo = (entry: string) => {
+  return fetch(`https://rest.uniprot.org/uniprotkb/${entry}`)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("data: ", data);
+      return data;
+    });
+};

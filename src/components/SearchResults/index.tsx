@@ -121,8 +121,7 @@ const SearchResults = (): JSX.Element => {
     <Box
       height="100%"
       display="flex"
-      alignItems="center"
-      justifyContent="center"
+      justifyContent="flex-start"
       flexDirection="column"
     >
       {searchItems ? (

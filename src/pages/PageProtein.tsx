@@ -1,19 +1,35 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { monitorAuthState } from "../utils/auth";
 import Header from "../components/Header";
-import SearchResults from "../components/SearchResults";
-import SearchBar from "../components/SearchBar";
 import { Stack } from "@mui/material";
+import ProteinDetails from "../components/ProteinDetails";
+import ProteinInfo from "../components/ProteinInfo";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { getProteinInfo } from "../utils/search";
 
 const PageSearch = (): JSX.Element => {
+  const { id } = useParams();
+  const [proteinInfoData, setProteinInfoData] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      getProteinInfo(id).then((data) => {
+        setProteinInfoData({
+          primaryAccession: data.primaryAccession,
+          uniProtkbId: data.uniProtkbId,
+          organismName: data.organism.scientificName,
+          feature: data.features[0].description,
+          geneName: data.genes[0].geneName.value,
+          sequence: data.sequence.value,
+        });
+      });
+    }
+  }, [id]);
+
   return (
     <Stack width="100%" height="100%">
       <Header />
-      <Stack padding="30px 130px" height="100%">
-        <SearchBar></SearchBar>
-        <SearchResults></SearchResults>
-      </Stack>
+      <ProteinInfo proteinInfoData={proteinInfoData} />
+      <ProteinDetails proteinInfoData={proteinInfoData} />
     </Stack>
   );
 };

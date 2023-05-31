@@ -20,7 +20,7 @@ const SearchResultComponent = ({
       className="search-result"
       onClick={() => {
         if (!isTHeader) {
-          navigate(searchItem.entry);
+          navigate(`/protein/${searchItem.entry}`);
         }
       }}
     >
