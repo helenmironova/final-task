@@ -1,11 +1,11 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { onAuthStateChanged } from "firebase/auth"
-import styled from "styled-components"
 
-import { useAppDispatch } from "../app/hooks"
-import { signOut } from "../features/search/searchSlice"
-import { auth } from "../firebase"
+import { useAppDispatch } from "../../app/hooks"
+import { auth } from "../../firebase"
+import { signOut } from "../../slices/search-slice"
+import Wrapper from "./header-styled"
 
 const Header = () => {
   const dispatch = useAppDispatch()
@@ -36,31 +36,5 @@ const Header = () => {
     </Wrapper>
   )
 }
-
-const Wrapper = styled.header`
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  border-bottom: 1px solid var(--light-blue);
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    align-self: center;
-    margin: 0 auto;
-    width: 80%;
-    padding: 16px 0;
-  }
-  button {
-    border-radius: none;
-    padding: 0;
-    background-color: transparent;
-    border: none;
-    color: var(--greyish-blue);
-    margin-left: 30px;
-    cursor: pointer;
-    font-weight: 600;
-  }
-`
 
 export default Header

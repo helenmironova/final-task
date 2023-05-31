@@ -2,7 +2,7 @@ import { useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
-import backgroundImg from "../assets/background-img.png"
+import backgroundImg from "../../assets/background-img.png"
 
 const MainPage = () => {
   const navigate = useNavigate()

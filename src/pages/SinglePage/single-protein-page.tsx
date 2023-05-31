@@ -1,20 +1,20 @@
 import { useCallback, useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import styled from "styled-components"
 import React from "react"
+import { useParams } from "react-router-dom"
 
-import Header from "../components/header"
-import ProteinTabs from "../components/protein-tabs"
+import Header from "../../components/Header/header"
+import ProteinTabs from "../../components/Protein/protein-tabs"
+import Wrapper from "./single-protein-page-styled"
 
 const SingleProteinPage = () => {
-    const { id } = useParams();
+  const { id } = useParams()
 
-  const url = `https://rest.uniprot.org/uniprotkb/${id}`;
-  const [data, setData] = useState({} as any);
+  const url = `https://rest.uniprot.org/uniprotkb/${id}`
+  const [data, setData] = useState({} as any)
 
   const fetchSingleProtein = useCallback(async () => {
-    const response = await fetch(url);
-    const responseData = await response.json();
+    const response = await fetch(url)
+    const responseData = await response.json()
 
     setData({
       accession: responseData.primaryAccession || "N/A",
@@ -29,12 +29,12 @@ const SingleProteinPage = () => {
       checksum: responseData.sequence?.crc64 || "N/A",
       sequence: responseData.sequence?.value || "N/A",
       organism: responseData.organism?.scientificName || "N/A",
-    });
-  }, [url]);
+    })
+  }, [url])
 
   useEffect(() => {
-    fetchSingleProtein();
-  }, [id, fetchSingleProtein]);
+    fetchSingleProtein()
+  }, [id, fetchSingleProtein])
 
   return (
     <React.Fragment>
@@ -61,50 +61,5 @@ const SingleProteinPage = () => {
     </React.Fragment>
   )
 }
-
-const Wrapper = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 80%;
-  margin-top: 30px;
-  main {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-left: 130px;
-    header {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      width: 100%;
-      .title-container {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 12px;
-        span {
-          background-color: var(--light-blue);
-          border-radius: 12px;
-          padding: 2px 12px;
-          margin-left: 13px;
-        }
-      }
-    }
-    h1 {
-      font-size: 22px;
-      font-weight: 600;
-    }
-    h2 {
-      color: var(--dark-grey-3);
-      margin-bottom: 12px;
-    }
-
-    p {
-      margin-bottom: 12px;
-    }
-  }
-`
 
 export default SingleProteinPage

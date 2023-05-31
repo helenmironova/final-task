@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { Link } from "react-router-dom"
 import { useVirtual } from "react-virtual"
 import {
   QueryClient,
@@ -15,88 +14,18 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table"
-import styled from "styled-components"
 
-import { useAppDispatch, useAppSelector } from "../app/hooks"
-import SortIconAsc from "../assets/sort-icon-asc"
-import SortIconDesc from "../assets/sort-icon-desc"
-import SortIconInactive from "../assets/sort-icon-inactive"
-import { setFilters } from "../features/search/searchSlice"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import SortIconAsc from "../../assets/sort-icon-asc"
+import SortIconDesc from "../../assets/sort-icon-desc"
+import SortIconInactive from "../../assets/sort-icon-inactive"
+import { setFilters } from "../../slices/search-slice"
+import columns from "./table-columns"
+import Wrapper from "./table-styled"
 
 const fetchSize = 25
 
 const queryClient = new QueryClient()
-
-const columns = [
-  {
-    accessorKey: "number",
-    header: "#",
-    size: 60,
-    cell: (info: any) => info.row.index + 1,
-  },
-  {
-    accessorKey: "accession",
-    header: "Entry",
-    cell: (info: any) => {
-      const value = info.getValue() as string
-
-      return (
-        <Link to={`/protein/${value}`} className="entry-link" target="_blank">
-          {value}
-        </Link>
-      )
-    },
-  },
-  {
-    accessorKey: "id",
-    header: "Entry Name",
-    cell: (info: any) => info.getValue(),
-  },
-  {
-    accessorKey: "gene",
-    header: "Genes",
-    cell: (info: any) => info.getValue(),
-  },
-  {
-    accessorKey: "organism_name",
-    header: "Organism",
-    cell: (info: any) => {
-      return (
-        <span className="organism-name">
-          {info.getValue() as React.ReactNode}
-        </span>
-      )
-    },
-  },
-  {
-    accessorKey: "subcellularLocation",
-    header: "Subcellular Location",
-    cell: (info: any) => {
-      const value = info.getValue() as string
-
-      if (value.length > 30) {
-        const words = value.split(" ")
-        const truncatedValue = words.slice(0, 2).join(" ")
-
-        return (
-          <span className="subcellular-location">
-            {truncatedValue}
-            {"..."}
-          </span>
-        )
-      }
-
-      return value
-    },
-  },
-  {
-    accessorKey: "length",
-    header: "Length",
-    cell: (info: any) => {
-      return info.getValue()
-    },
-  },
-]
 
 const Table = () => {
   const searchQuery = useAppSelector((state) => state.search.searchQuery)
@@ -520,73 +449,5 @@ const TableWithReactQuery = () => {
     </QueryClientProvider>
   )
 }
-
-const Wrapper = styled.div`
-  min-width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  table {
-    border-collapse: collapse;
-    min-width: 100%;
-    text-align: left;
-  }
-  th {
-    position: sticky;
-    top: 0;
-    background-color: var(--grey);
-    padding: 12px;
-    font-weight: 600;
-    border-left: 1px solid var(--white);
-  }
-  td {
-    padding: 12px 15px;
-    white-space: nowrap;
-    overflow: hidden;
-    word-wrap: normal;
-  }
-
-  th:first-of-type {
-    border-radius: 8px 0 0 8px;
-  }
-
-  th:last-of-type {
-    border-radius: 0 8px 8px 0;
-  }
-
-  th {
-    width: fit-content;
-  }
-
-  .entry-link {
-    color: var(--blue);
-    font-weight: 600;
-  }
-
-  .container {
-    height: 100%;
-    width: 100%;
-    overflow: scroll;
-  }
-
-  .container::-webkit-scrollbar {
-    display: none;
-  }
-  h3 {
-    text-align: left;
-    margin-bottom: 20px;
-    font-weight: 600;
-  }
-  .cursor-pointer {
-    cursor: pointer;
-  }
-
-  .sorted-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-`
 
 export default TableWithReactQuery

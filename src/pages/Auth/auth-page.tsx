@@ -3,10 +3,10 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { onAuthStateChanged } from "firebase/auth"
 import styled from "styled-components"
 
-import { useAppDispatch, useAppSelector } from "../app/hooks"
-import backgroundImg from "../assets/background-img.png"
-import { setCurrentUser, signIn, signUp } from "../features/search/searchSlice"
-import { auth } from "../firebase"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import backgroundImg from "../../assets/background-img.png"
+import { auth } from "../../firebase"
+import { setCurrentUser, signIn, signUp } from "../../slices/search-slice"
 
 const AuthPage = () => {
   const dispatch = useAppDispatch()

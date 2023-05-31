@@ -13,11 +13,11 @@ import {
 
 import { store } from "./app/store"
 import { auth } from "./firebase"
-import AuthPage from "./pages/auth-page"
-import ErrorPage from "./pages/error-page"
-import MainPage from "./pages/main-page"
-import SearchPage from "./pages/search-page"
-import SingleProteinPage from "./pages/single-protein-page"
+import AuthPage from "./pages/Auth/auth-page"
+import ErrorPage from "./pages/Error/error-page"
+import MainPage from "./pages/Main/main-page"
+import SearchPage from "./pages/Search/search-page"
+import SingleProteinPage from "./pages/SinglePage/single-protein-page"
 
 const ProtectedRoute = ({ element: Component, ...rest }: any) => {
   const [loading, setLoading] = useState(true)

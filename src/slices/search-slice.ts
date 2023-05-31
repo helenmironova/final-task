@@ -4,8 +4,8 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth"
 
-import { auth } from "../../firebase"
-import { Filter, Filters, SearchState } from "../../types"
+import { auth } from "../firebase"
+import { Filter, Filters, SearchState } from "../types"
 
 const initialState: SearchState = {
   currentUser: null,
