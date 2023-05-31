@@ -50,6 +50,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setRegistered }) => {
           label="Email"
           placeholder="Enter your email"
           styles="formInput"
+          error={error}
         />
         <FormInput
           type="password"
@@ -60,6 +61,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setRegistered }) => {
           label="Password"
           placeholder="Enter your password"
           styles="formInput"
+          error={error}
         />
         <FormInput
           type="password"
@@ -70,10 +72,11 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setRegistered }) => {
           label="Confirm Password"
           placeholder="Enter your password again"
           styles="formInput"
+          error={error}
         />
         {error && <span className={classes.error}>{error}</span>}
         <div className={classes.buttonsAndText_container}>
-          <Button type="submit" placeholder="Sign Up" variant="text" />
+          <Button type="submit" placeholder="Sign Up" variant="fill" />
           <span>
             Already have an account?{" "}
             <a onClick={() => setRegistered(true)}>Login</a>

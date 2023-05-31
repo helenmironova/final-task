@@ -10,18 +10,24 @@ interface FormInputProps {
   required?: boolean;
   label?: string;
   styles?: string;
+  error?: string;
 }
 
 const FormInput: React.FC<FormInputProps> = ({
   label,
   styles = "searchField",
-  required = "false",
+  required = false,
+  error,
+
   ...rest
 }) => {
   return (
     <Fragment>
       <label>{label}</label>
-      <input className={classes[styles]} {...rest} />
+      <input
+        className={`${classes[styles]} ${error ? classes.error : ""}`}
+        {...rest}
+      />
     </Fragment>
   );
 };
