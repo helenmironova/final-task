@@ -1,5 +1,6 @@
 .grid_container {
   width: 100%;
+  height: 50px;
   display: grid;
   grid-template-columns: 0.5fr 2fr 2fr 2fr 2fr 2fr 2fr;
   padding: 5px;

@@ -38,7 +38,14 @@ interface Publications {
     title: string;
     authors: string;
     journal: string;
+    citationCrossReferences: {}[];
   };
+  references: {
+    source: {
+      name: string;
+    };
+    sourceCategories: {}[];
+  }[];
 }
 
 const ProteinPage = () => {
@@ -72,7 +79,7 @@ const ProteinPage = () => {
               {state.organism.scientificName}
             </div>
           </div>
-          <div>
+          <div className={classes.content}>
             <h4>Protein</h4>
             <p>{state.proteinDescription.recommendedName.fullName.value}</p>
             <h4>Gene</h4>
@@ -116,7 +123,7 @@ const ProteinPage = () => {
                 />
               )}
 
-              {view === "feature" && <FeatureViewer accession={Id} /> }
+              {view === "feature" && <FeatureViewer accession={Id} />}
 
               {view === "publications" &&
                 publications !== null &&
@@ -126,7 +133,10 @@ const ProteinPage = () => {
                       key={index}
                       title={item.citation.title}
                       authors={item.citation.authors}
+                      categories={item.references[0]?.sourceCategories}
+                      source={item.references[0].source.name}
                       journals={item.citation.journal}
+                      link={item.citation.citationCrossReferences}
                     />
                   );
                 })}

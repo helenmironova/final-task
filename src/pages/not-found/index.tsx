@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import classes from "./not-found.module.css"
+import classes from "./not-found.module.css";
 import { useNavigate } from "react-router-dom";
 
 import Button from "../../components/button";
@@ -21,7 +21,7 @@ const NotFound: React.FC = () => {
           <Button
             placeholder="back to search"
             onClick={handleClick}
-            variant="text"
+            variant="fill"
           />
         </div>
       </div>

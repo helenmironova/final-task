@@ -16,13 +16,13 @@ const Navigation = () => {
   };
   return (
     <header className={classes.navigation_container}>
-      <div>{user?.email}</div>
+      <div className={classes.email}>{user?.email}</div>
       {user ? (
         <div onClick={signOutHandler} className={classes.logOut}>
           Log out
         </div>
       ) : (
-        <div>Sign In</div>
+        <div className={classes.logIn}>Log In</div>
       )}
     </header>
   );

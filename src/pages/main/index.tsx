@@ -81,7 +81,6 @@ const MainPage = () => {
             <DataGrid
               data={data}
               setData={setData}
-              result={result}
               lastBookElementRef={lastBookElementRef}
             />
           )}

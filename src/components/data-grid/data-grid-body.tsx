@@ -9,7 +9,6 @@ interface DataGridBodyProps {
   lastBookElementRef: React.RefCallback<HTMLTableRowElement>;
 }
 const DataGridBody = ({ data, lastBookElementRef }: DataGridBodyProps) => {
-  console.log(data);
   return (
     <Fragment>
       <div className={classes.grid_scroll}>
