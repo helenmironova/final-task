@@ -14,19 +14,17 @@ const Header = (): JSX.Element => {
   );
 
   return (
-    <>
-      <Stack
-        direction="row"
-        justifyContent="flex-end"
-        alignItems="center"
-        className="header"
-      >
-        <Typography className="header__email">{email}</Typography>
-        <Button className="header__logout" onClick={logout}>
-          Log out
-        </Button>
-      </Stack>
-    </>
+    <Stack
+      direction="row"
+      justifyContent="flex-end"
+      alignItems="center"
+      className="header"
+    >
+      <Typography className="header__email">{email}</Typography>
+      <Button className="header__logout" onClick={logout}>
+        Log out
+      </Button>
+    </Stack>
   );
 };
 

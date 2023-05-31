@@ -1,0 +1,19 @@
+.searchbar{}
+    
+      
+.searchbar__input{
+    width: 100%;
+}
+button.searchbar__search{
+    min-width: 180px;
+    height: 40px;
+    background-color: #3C86F433;
+    margin: 0 13px 0 9px;
+    border-radius: 8px;
+}
+button.searchbar__filters{
+    border-radius: 8px;
+    min-width: 40px;
+    height: 40px;
+    background-color: #3C86F433;
+}
