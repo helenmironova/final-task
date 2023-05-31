@@ -60,7 +60,7 @@ const MainPage = () => {
   return (
     <Fragment>
       <Navigation />
-      <div className={classes.container}>
+      <main className={classes.container}>
         <div className={classes.content}>
           <div className={classes.searchBarAndFilterContainer}>
             <SearchBar query={query} handleSearch={handleSearch} />
@@ -85,7 +85,7 @@ const MainPage = () => {
             />
           )}
         </div>
-      </div>
+      </main>
     </Fragment>
   );
 };

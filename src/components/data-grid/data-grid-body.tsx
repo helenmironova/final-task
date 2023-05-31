@@ -11,7 +11,7 @@ interface DataGridBodyProps {
 const DataGridBody = ({ data, lastBookElementRef }: DataGridBodyProps) => {
   return (
     <Fragment>
-      <div className={classes.grid_scroll}>
+      <main className={classes.grid_scroll}>
         {data.map((item: SearchResult, index: number) => (
           <div
             className={classes.item_container}
@@ -45,7 +45,7 @@ const DataGridBody = ({ data, lastBookElementRef }: DataGridBodyProps) => {
             <div className={classes.grid_item}>{item.sequence.length}</div>
           </div>
         ))}
-      </div>
+      </main>
     </Fragment>
   );
 };

@@ -6,6 +6,10 @@
   align-items: flex-start;
   color: #616161;
   margin-bottom: 50px;
+
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
 }
 
 .lengthAndMass {
@@ -19,6 +23,7 @@
 }
 
 .section {
+  font-size: 14px;
   width: 100%;
   background-color: #f5f6f8;
   border-radius: 8px;

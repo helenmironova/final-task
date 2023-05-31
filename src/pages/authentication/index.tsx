@@ -8,12 +8,12 @@ const Authentication: React.FC = () => {
   const [registered, setRegistered] = useState(true);
 
   return (
-    <div className={classes.container}>
+    <main className={classes.container}>
       <div className={classes.content}>
         {registered && <SignInForm setRegistered={setRegistered} />}
         {!registered && <SignUpForm setRegistered={setRegistered} />}
       </div>
-    </div>
+    </main>
   );
 };
 

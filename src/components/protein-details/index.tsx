@@ -16,34 +16,34 @@ const ProteinDetails = ({
   sectionText,
 }: ProteinDetails) => {
   return (
-    <div className={classes.details}>
+    <main className={classes.details}>
       <h4 className={classes.sequence}>Sequence</h4>
       <div className={classes.description}>
         <div className={classes.lengthAndMass}>
           <div className={classes.margin_bottom}>
-            <div>Length</div>
-            <div>{length}</div>
+            <p>Length</p>
+            <p>{length}</p>
           </div>
           <div>
-            <div>Mass(Da)</div>
-            <div>{weight}</div>
+            <p>Mass(Da)</p>
+            <p>{weight}</p>
           </div>
         </div>
         <div className={classes.lengthAndMass}>
           <div className={classes.margin_bottom}>
-            <div>Last updated</div>
-            <div>{lastUpdateDate.toString()}</div>
+            <p>Last updated</p>
+            <p>{lastUpdateDate.toString()}</p>
           </div>
           <div>
-            <div>Checksum</div>
-            <div>{checkSum}</div>
+            <p>Checksum</p>
+            <p>{checkSum}</p>
           </div>
         </div>
       </div>
       <section className={classes.section}>
         <p>{sectionText}</p>
       </section>
-    </div>
+    </main>
   );
 };
 

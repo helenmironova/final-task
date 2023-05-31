@@ -7,7 +7,7 @@ interface ProteinPageProps {
   categories?: string[];
   journals: string;
   source?: string;
-  link?: string[];
+  link?: { id: string }[];
 }
 
 const ProteinPublications = ({
@@ -28,7 +28,7 @@ const ProteinPublications = ({
         <p className={classes.categories}>
           Categories:{" "}
           {categories.map((item: string, index: number) => (
-            <span key={item}>
+            <span key={index}>
               {item}
               {index !== categories.length - 1 && ", "}
             </span>
@@ -48,7 +48,7 @@ const ProteinPublications = ({
       )}
       {link && (
         <div>
-          {link.map((item: any, index: number) => (
+          {link.map((item: { id: string }, index: number) => (
             <span key={index}>
               <a
                 className={classes.link}

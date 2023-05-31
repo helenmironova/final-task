@@ -57,7 +57,7 @@ const DataGridHeader = ({ setData, data }: DataGriHeaderdProps) => {
   return (
     <Fragment>
       {data.length !== 0 && (
-        <div className={classes.grid_container}>
+        <header className={classes.grid_container}>
           <h4 className={classes.grid_header}>#</h4>
           <div className={classes.grid_header}>
             <h4>Entry </h4>
@@ -117,7 +117,7 @@ const DataGridHeader = ({ setData, data }: DataGriHeaderdProps) => {
               onClick={() => sortingHandler(["sequence", "length"])}
             />
           </div>
-        </div>
+        </header>
       )}
     </Fragment>
   );

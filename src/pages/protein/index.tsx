@@ -38,13 +38,13 @@ interface Publications {
     title: string;
     authors: string;
     journal: string;
-    citationCrossReferences: {}[];
+    citationCrossReferences: { id: string }[];
   };
   references: {
     source: {
       name: string;
     };
-    sourceCategories: {}[];
+    sourceCategories: string[];
   }[];
 }
 
@@ -53,6 +53,8 @@ const ProteinPage = () => {
   const [publications, setPublications] = useState<Publications[] | null>(null);
   const [view, setView] = useState("details");
   const { Id } = useParams();
+
+  console.log("publications", publications);
 
   useEffect(() => {
     const url = `https://rest.uniprot.org/uniprotkb/${Id}/publications`;

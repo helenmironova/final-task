@@ -6,7 +6,7 @@ import Button from "../../components/button";
 
 const Home: React.FC = () => {
   return (
-    <div className={classes.container}>
+    <main className={classes.container}>
       <div className={classes.content}>
         <h1 className={classes.heading}>{"Q1 - Search"}</h1>
         <p className={classes.text}>
@@ -18,7 +18,7 @@ const Home: React.FC = () => {
           <Button placeholder="Sign In" type="button" variant="text" />
         </Link>
       </div>
-    </div>
+    </main>
   );
 };
 

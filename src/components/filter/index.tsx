@@ -92,7 +92,7 @@ const Filter = ({ setFilterQuery, setSize, setRequestType }: FilterProps) => {
       />
 
       {showModal && (
-        <div className={classes.modal}>
+        <main className={classes.modal}>
           <div className={classes.modalContent}>
             <div className={classes.modalHeader}>
               <h2>Filter</h2>
@@ -188,7 +188,7 @@ const Filter = ({ setFilterQuery, setSize, setRequestType }: FilterProps) => {
               />
             </div>
           </div>
-        </div>
+        </main>
       )}
     </div>
   );

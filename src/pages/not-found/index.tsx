@@ -14,7 +14,7 @@ const NotFound: React.FC = () => {
   return (
     <Fragment>
       <Navigation />
-      <div className={classes.container}>
+      <main className={classes.container}>
         <div className={classes.content}>
           <h1 className={classes.status}>{"404"}</h1>
           <p className={classes.text}>{"Page not found"}</p>
@@ -24,7 +24,7 @@ const NotFound: React.FC = () => {
             variant="fill"
           />
         </div>
-      </div>
+      </main>
     </Fragment>
   );
 };
