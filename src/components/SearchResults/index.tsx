@@ -1,16 +1,15 @@
-import Button from "@mui/material/Button";
 import "./index.css";
-import { ReactNode, useEffect, useMemo } from "react";
-import { Box, Container, Typography } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
+import { Box, Typography } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { searchEntries } from "../../utils/search";
 import SearchResultComponent from "../SearchResultComponent";
 import { SearchItem } from "../../interfaces/SearchItem";
-import { searchItemsState, setSearchItems } from "../../store/searchItemsSlice";
+import { searchItemsState, addSearchItems } from "../../store/searchItemsSlice";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 
-const getTableHeader = () => {
+const getTableHeader = (): JSX.Element => {
   const headerStr = {
     searchId: "#",
     entry: "Entry",
@@ -29,38 +28,91 @@ const SearchResults = (): JSX.Element => {
   const searchItems = useAppSelector(
     (state: { searchItems: searchItemsState }) => state.searchItems.searchItems
   );
+  const searchItemsNumber = useAppSelector(
+    (state: { searchItems: searchItemsState }) => state.searchItems.quantity
+  );
+  const [req, setReq] = useState("");
+  const [nextReq, setNextReq] = useState("");
   useEffect(() => {
-    const displayResults = () => {
-      const entries: SearchItem[] = [];
-      const queryParams = new URLSearchParams(search);
-      const query = queryParams.get("query");
+    const queryParams = new URLSearchParams(search);
+    const query = queryParams.get("query");
 
-      if (query) {
-        searchEntries(query).then((data) => {
-          data.results.forEach((element, index: number) => {
-            console.log("element: ", element);
-            const searchItem = {
-              searchId: index + 1,
-              entry: element.primaryAccession,
-              entryNames: element.uniProtkbId,
-              genes: element.genes[0].geneName.value,
-              organism: element.organism.scientificName,
-              subcellularLocation:
-                element.comments[0]?.subcellularLocations[0].location.value,
-              length: element.sequence.length,
-            };
-            entries.push(searchItem);
-          });
-          dispatch(setSearchItems(entries));
+    if (query) {
+      setReq(
+        `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,cc_subcellular_location&query=${query}`
+      );
+    }
+  }, [search]);
+
+  useEffect(() => {
+    const updateReq = (newReq: string): void => {
+      setNextReq(newReq);
+    };
+
+    const displayResults = (): void => {
+      const entries: SearchItem[] = [];
+      if (req) {
+        searchEntries(req, updateReq).then(({ link, data }) => {
+          if (link) {
+            const indexOfGreaterThan = link.indexOf(">");
+
+            const extractedLink = link.substring(1, indexOfGreaterThan);
+
+            setNextReq(extractedLink);
+          }
+          if (data && data.results) {
+            data.results.forEach((element, index: number) => {
+              const searchItem = {
+                searchId: searchItemsNumber + index + 1,
+                entry: element.primaryAccession,
+                entryNames: element.uniProtkbId,
+                genes: element.genes[0].geneName.value,
+                organism: element.organism.scientificName,
+                subcellularLocation:
+                  element.comments[0]?.subcellularLocations[0].location.value,
+                length: element.sequence.length,
+              };
+              entries.push(searchItem);
+            });
+            dispatch(addSearchItems(entries));
+          }
         });
       }
     };
     displayResults();
-  }, [search]);
+  }, [dispatch, req, search, searchItemsNumber]);
 
   const searchItemComponents = searchItems.map((entry) => (
-    <SearchResultComponent searchItem={entry} key={entry.searchId + 1} />
+    <SearchResultComponent
+      searchItem={entry}
+      key={searchItemsNumber + entry.searchId + 1}
+    />
   ));
+
+  // Infinite scroll with IntersectionObserver
+  const observerTarget = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setReq(nextReq);
+          console.log("nextReq: ", nextReq);
+        }
+      },
+      { threshold: 1 }
+    );
+
+    if (observerTarget.current) {
+      observer.observe(observerTarget.current);
+    }
+
+    return () => {
+      if (observerTarget.current) {
+        observer.unobserve(observerTarget.current);
+      }
+    };
+  }, [nextReq, observerTarget]);
 
   return (
     <Box
@@ -83,6 +135,7 @@ const SearchResults = (): JSX.Element => {
           <Typography>Please start search to display results</Typography>
         </>
       )}
+      <div ref={observerTarget}></div>
     </Box>
   );
 };

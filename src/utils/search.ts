@@ -1,10 +1,18 @@
-export const searchEntries = (query: string) => {
-  const req = `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,cc_subcellular_location&query=${query}`;
+export const searchEntries = (req: string, updateReq) => {
+  let link: string;
   return fetch(req)
-    .then((response) => response.json())
+    .then((response) => {
+      const headers = response.headers;
+      link = headers.get("link");
+
+      // Use the headers as needed
+      updateReq(link);
+
+      return response.json();
+    })
     .then((data) => {
-      // Process the data or update your table with the results
-      return data;
+      console.log("link: ", link);
+      return { link, data };
     })
     .catch((error) => {
       // Handle the error

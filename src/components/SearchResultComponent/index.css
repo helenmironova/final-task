@@ -1,16 +1,28 @@
 .search-result{
     height: 48px;
+    overflow: hidden;
+}
+.search-result p {
+    max-height: 48px;
+    text-overflow: ellipsis;
+    line-height: 24px;
+    overflow: hidden;
+    
 }
 .search-result > td{
+    height: 48px;
     padding: 15px 12px;
     box-sizing: border-box;
+    text-overflow: ellipsis;
 }
 .search-result__id{
+    
     width: 48px;
 }
 
 .search-result__entry{
     width: 115px; 
+    color: #175BC0;
 }
 .search-result__entry-names{
     width: 166px; 
@@ -20,6 +32,15 @@
 }
 .search-result__organism{
     width: 166px;
+    text-align: center;
+    
+}
+.search-result__organism > p{
+   
+    overflow: hidden;
+    background: #D8E7FF;
+    
+    border-radius: 12px;
 }
 .search-result__subcellular-location{
     width: 191px;
