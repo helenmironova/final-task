@@ -111,7 +111,7 @@ const SignUpForm = () => {
     return(
         <form className='signUpForm' onSubmit={handleSubmit}>
             <label className='label' htmlFor="email"><b>Email</b></label>
-            <input type='text' className='emailInput' placeholder='Enter your email' onChange={(e)=>setEmail(e.target.value)} id="email" name="email" autoComplete="on"></input>
+            <input type='text' className='emailInput' placeholder='Enter your email' onChange={(e)=>setEmail(e.target.value)} id="email" name="email" autoComplete="off"></input>
             {!isValidEmail && (
                 <div className='invalidTextSU'>Please enter a valid email address.</div>
             )}

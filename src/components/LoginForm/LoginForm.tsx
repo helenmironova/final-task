@@ -110,7 +110,7 @@ const LoginForm = () => {
         onChange={(e) => setEmail(e.target.value)}
         name='email'
         id="email"
-        autoComplete='on'
+        autoComplete='off'
       />
       {!isValidEmail && <div className="invalidEmailText">Please enter a valid email address.</div>}
       <label className="password__label" htmlFor='password'>
