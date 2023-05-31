@@ -3,11 +3,12 @@
     max-width: 1020px;
     min-height: 48px;
     width: 100%;
+    gap: 2px;
 }
 
 .numberDiv{
     display: flex;
-    width: 48px;
+    width: 47px;
     justify-content: center;
     align-items: center;
     margin-right: 2px;
@@ -15,7 +16,7 @@
 
 .entryDiv{
     display: flex;
-    width: 115px;
+    width: 114px;
     min-height: 48px;
     padding-left: 12px;
     text-align: left;
@@ -26,12 +27,11 @@
     font-size: 14px;
     line-height: 19px;
     color: #175BC0;
-    margin-right: 2px;
 }
 
 .entryNameDiv{
     display: flex;
-    width: 166.5px;
+    width: 165.5px;
     min-height: 48px;
     padding-left: 12px;
     text-align: left;
@@ -42,12 +42,11 @@
     font-size: 14px;
     line-height: 19px;
     color: #2B2B2B;
-    margin-right: 2px;
 }
 
 .genesDiv{
     display: flex;
-    width: 166.5px;
+    width: 165.5px;
     min-height: 48px;
     padding-left: 12px;
     align-items: center;
@@ -60,12 +59,11 @@
     font-size: 14px;
     line-height: 19px;
     color: #2B2B2B;
-    margin-right: 2px;
 }
 
 .organismDiv{
     display: flex;
-    width: 166.5px;
+    width: 165.5px;
     min-height: 48px;
     justify-content: center;
     align-items: center;
@@ -75,7 +73,6 @@
     font-size: 14px;
     line-height: 19px;
     color: #2B2B2B;
-    margin-right: 2px;
 }
 
 .organismInsideDiv{
@@ -94,7 +91,7 @@
 
 .subcelDiv{
     display: flex;
-    width: 191px;
+    width: 190px;
     min-height: 48px;
     align-items: center;
     padding-left: 12px;
@@ -105,12 +102,11 @@
     font-size: 14px;
     line-height: 19px;
     color: #2B2B2B;
-    margin-right: 2px;
 }
 
 .lengthDiv{
     display: flex;
-    width: 166.5px;
+    width: 150.5px;
     min-height: 48px;
     align-items: center;
     padding-left: 12px;
@@ -121,15 +117,10 @@
     font-size: 14px;
     line-height: 19px;
     color: #2B2B2B;
-    margin-right: 2px;
 }
 
 .span{
     width: 100%;
-}
-
-.entryDiv, .entryNameDiv, .genesDiv, .organismDiv, .subcelDiv, .lengthDiv{
-    word-break: break-all;
 }
 
 @media only screen and (max-width: 930px) {
@@ -148,4 +139,4 @@
     .organismInsideDiv{
         width: 70%;
     }
-}
+   }

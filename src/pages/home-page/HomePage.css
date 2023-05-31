@@ -50,8 +50,9 @@
 .itemsWrapper{
     overflow: scroll;
     overflow-x: hidden;
-    max-height: 532px;
+    max-height: 520px;
     width: 100%;
+    max-width: 1020px;
 }
 
 .loadingWrapper{
