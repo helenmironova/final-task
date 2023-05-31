@@ -112,7 +112,7 @@ const GridHeaders = () => {
         <p className='entryP'>Entry</p>
         <img src={sortOptions.selected===1 ? (sortOptions.type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>changeVisual(1)} />
       </div>
-      <div className='entryName'>
+      <div className='entryName entryNameD'>
         <p className='entryP'>Entry Names</p>
         <img src={sortOptions.selected===2 ? (sortOptions.type===0 ? logo2 : logo3) : logo1} className='logo' onClick={()=>changeVisual(2)} />
       </div>

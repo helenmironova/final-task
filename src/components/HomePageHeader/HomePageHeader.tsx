@@ -25,8 +25,10 @@ const HomePageHeader = () => {
 
     return(
         <div className='headerWrapper'>
-            <p className='userEmail'>{email}</p>
-            <Link to={"/auth/login"} className='logOut' onClick={logOut}>Log out</Link>
+            <div className='wrap'>
+                <p className='userEmail'>{email}</p>
+                <Link to={"/auth/login"} className='logOut' onClick={logOut}>Log out</Link>
+            </div>
         </div>
     )
 }

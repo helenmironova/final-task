@@ -35,8 +35,9 @@ export const fetchItems = createAsyncThunk(
       const nextUrl = parseNextLink(linkHeader);
       const [data, newNextUrl] = await Promise.all([response.json(), nextUrl]);
       const newItems = data.results;
-      if(newItems.length===0) return;
       dispatch(setTotalResults(response?.headers?.get("x-total-results")));
+
+      if(newItems.length===0) return;
       if(JSON.stringify(initialState?.items)===JSON.stringify(newItems)) dispatch(removeItems())
       dispatch(setNextUrl(newNextUrl || ''));
       dispatch(addListItems(newItems));

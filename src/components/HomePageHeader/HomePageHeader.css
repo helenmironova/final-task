@@ -29,3 +29,23 @@
     color: #7EA0D2;
     margin-right: 153px;
 }
+
+.wrap{
+    justify-content: center;
+    width: 470px;
+    display: flex;
+}
+
+ @media only screen and (max-width: 600px) {
+    .userEmail, .logOut{
+        margin: 0;
+    }
+
+    .headerWrapper{
+        justify-content: center;
+    }
+
+    .wrap{
+        justify-content: space-around;
+    }
+}

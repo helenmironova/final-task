@@ -86,7 +86,7 @@
     flex: none;
     order: 0;
     flex-grow: 0;
-    max-width: 138px;
+    max-width: 82%;
     margin-top: 14.5px;
     margin-bottom: 14.5px;
     word-break: break-all;
@@ -126,4 +126,26 @@
 
 .span{
     width: 100%;
+}
+
+.entryDiv, .entryNameDiv, .genesDiv, .organismDiv, .subcelDiv, .lengthDiv{
+    word-break: break-all;
+}
+
+@media only screen and (max-width: 930px) {
+    .subcelDiv{
+        display: none;
+    }
+  }
+
+  @media only screen and (max-width: 730px) {
+    .entryNameDiv{
+        display: none;
+    }
+   }
+
+   @media only screen and (max-width: 590px) {
+    .organismInsideDiv{
+        width: 70%;
+    }
 }

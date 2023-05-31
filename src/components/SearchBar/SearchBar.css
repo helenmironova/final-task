@@ -36,6 +36,8 @@
     width: 17.5%;
     height: 40px;
     margin-left: 9px;
+    display: flex;
+    justify-content: center;
 }
 
 .filter{
