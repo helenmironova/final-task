@@ -1,4 +1,6 @@
-.searchbar{}
+.searchbar{
+    position: relative;
+}
     
       
 .searchbar__input{

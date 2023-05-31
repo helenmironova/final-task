@@ -1,0 +1,29 @@
+.search-result{
+    height: 48px;
+}
+.search-result > td{
+    padding: 15px 12px;
+    box-sizing: border-box;
+}
+.search-result__id{
+    width: 48px;
+}
+
+.search-result__entry{
+    width: 115px; 
+}
+.search-result__entry-names{
+    width: 166px; 
+}
+.search-result__genes{
+    width: 166px;
+}
+.search-result__organism{
+    width: 166px;
+}
+.search-result__subcellular-location{
+    width: 191px;
+}
+.search-result__length{
+    width: 166px;
+}
