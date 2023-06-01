@@ -3,9 +3,18 @@ import "./index.css";
 import { getProteinInfo } from "../../utils/search";
 import { useEffect, useState } from "react";
 import { Stack, Typography } from "@mui/material";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { proteinState, setProtein } from "../../store/proteinSlice";
+import { RootState } from "../../store/store";
 
-const ProteinInfo = ({ proteinInfoData }): JSX.Element => {
-  console.log("proteinInfoData: ", proteinInfoData);
+const ProteinInfo = (): JSX.Element => {
+  const proteinInfoData = useAppSelector((state: RootState) => {
+    if (state.protein) {
+      return state.protein;
+    }
+  });
+
   if (proteinInfoData) {
     return (
       <Stack>
