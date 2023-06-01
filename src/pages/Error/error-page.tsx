@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import Wrapper from "./error-page"
+
 import Header from "../../components/Header/header"
 import { auth } from "../../firebase"
+import Wrapper from "./error-page-styled"
 
 const ErrorPage = () => {
   const [currentUser, setCurrentUser] = useState(auth.currentUser)

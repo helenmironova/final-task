@@ -299,11 +299,11 @@ const FiltersModal = () => {
             </div>
           </div>
           <div className="filters-btn-container">
-        <button type="button" onClick={handleCancel}>
-          {"Cancel"}
-        </button>
-        <button type="submit">{"Apply filters"}</button>
-      </div>
+            <button type="button" onClick={handleCancel}>
+              {"Cancel"}
+            </button>
+            <button type="submit">{"Apply filters"}</button>
+          </div>
         </form>
       ))}
     </Wrapper>

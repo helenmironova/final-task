@@ -1,4 +1,4 @@
-import "./App.css"
+import "./app.css"
 
 import { useEffect, useState } from "react"
 import { Provider } from "react-redux"
@@ -60,7 +60,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/auth" element={<AuthPage />} />
-          <Route path="/error" element={<ErrorPage />} />
+          <Route path="/not-found" element={<ErrorPage />} />
           <Route
             path="/search"
             element={<ProtectedRoute element={SearchPage} />}
@@ -73,7 +73,7 @@ const App = () => {
             path="/protein/:id"
             element={<ProtectedRoute element={SingleProteinPage} />}
           />
-          <Route path="*" element={<Navigate to="/error" />} />
+          <Route path="*" element={<Navigate to="/not-found" />} />
         </Routes>
       </Router>
     </Provider>

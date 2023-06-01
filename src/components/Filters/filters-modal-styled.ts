@@ -101,7 +101,7 @@ const Wrapper = styled.div`
       width: 100%;
       button[type="button"] {
         background-color: var(--white);
-        color: var(--blue);
+        color: var(--active-blue);
         padding: 10px 29px;
       }
 

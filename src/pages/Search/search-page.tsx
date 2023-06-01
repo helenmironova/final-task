@@ -1,7 +1,9 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
+import styled from "styled-components"
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import FiltersIcon from "../../assets/filters-icon"
+import FiltersIconActive from "../../assets/filters-icon-active" // Новая иконка
 import FiltersModal from "../../components/Filters/filters-modal"
 import Header from "../../components/Header/header"
 import TableWithReactQuery from "../../components/Table/table"
@@ -23,6 +25,8 @@ const SearchPage = () => {
     (state) => state.search.isFiltersModalOpen,
   )
 
+  const [isFiltersButtonActive, setIsFiltersButtonActive] = useState(false)
+
   useEffect(() => {
     if (urlSearchQuery && searchInputRef.current) {
       searchInputRef.current.value = urlSearchQuery
@@ -32,6 +36,7 @@ const SearchPage = () => {
 
   const toggleFiltersModal = () => {
     dispatch(setIsFiltersModalOpen(!isFiltersModalOpen))
+    setIsFiltersButtonActive(!isFiltersModalOpen)
   }
 
   const handleFormSubmit = (event: any) => {
@@ -63,8 +68,16 @@ const SearchPage = () => {
               ref={searchInputRef}
             />
             <button type="submit">{"Search"}</button>
-            <button type="button" onClick={toggleFiltersModal}>
-              <FiltersIcon />
+            <button
+              type="button"
+              onClick={toggleFiltersModal}
+              style={{
+                backgroundColor: isFiltersButtonActive
+                  ? "var(--active-blue)"
+                  : "var(--light-blue)",
+              }}
+            >
+              {isFiltersButtonActive ? <FiltersIconActive /> : <FiltersIcon />}
             </button>
           </form>
           {isFiltersModalOpen && <FiltersModal />}
