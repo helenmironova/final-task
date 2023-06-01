@@ -92,24 +92,12 @@ const SearchBar = () => {
     */
     useEffect(() => {
         const searchQuery = new URLSearchParams(location.search).get('query');
-        // dispatch(removeItems());
-        // dispatch(setNewValueFilter({
-        //     isOpen: false,
-        //     geneName: null,
-        //     organism: null,
-        //     sequenceLength__from: null,
-        //     sequenceLength__to: null, 
-        //     annotationScore: null,
-        //     proteinWith: null,
-        // }));
-        // dispatch(setNewValueSort({selected: 0, type: 0}))
         if (searchQuery) {
             if(searchQuery==='*'){
                 dispatch(setNewSearchText(""));
             }else{
                 dispatch(setNewSearchText(searchQuery));
             }
-            // dispatch(fetchItems(`https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=(${searchQuery})`));
         }
     }, [location]);
 
