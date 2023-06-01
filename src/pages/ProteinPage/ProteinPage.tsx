@@ -12,7 +12,9 @@ import { ThunkDispatch } from 'redux-thunk';
 import { setNewSelectedProteinName, fetchProteinReferencesData, fetchProteinData, setProteinLoading } from '../../store/selectedProtein';
 import ProtvistaUniprot from 'protvista-uniprot'
 
-window.customElements.define("protvista-uniprot", ProtvistaUniprot);
+if (!window.customElements.get("protvista-uniprot")) {
+  window.customElements.define("protvista-uniprot", ProtvistaUniprot);
+}
 
 const ProteinPage = () => {
     const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();

@@ -45,6 +45,7 @@
 .logo{
     position: absolute;
     right: 12px;
+    cursor: pointer;
 }
 
 .entryName{

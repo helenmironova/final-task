@@ -82,7 +82,6 @@ const SignUpForm = () => {
             const passwordInput =  document.getElementsByClassName("passwordInput")[0] as HTMLInputElement;
             const repPasswordInput =  document.getElementsByClassName("repeatPasswordInput")[0] as HTMLInputElement;
 
-
             console.log(error)
             emailInput.blur();
             passwordInput.blur();

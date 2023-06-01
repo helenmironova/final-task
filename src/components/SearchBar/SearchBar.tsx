@@ -47,6 +47,8 @@ const SearchBar = () => {
         }));
         dispatch(setNewValueSort({selected: 0, type: 0}))
         dispatch(fetchItems(apiUrl));
+        const button = document.getElementsByClassName("searchButton")[0] as HTMLInputElement;
+        button.blur();
     }
 
     /*
