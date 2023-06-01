@@ -1,6 +1,6 @@
 import "./index.css";
 import { useEffect, useRef, useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Container, Stack, Typography } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import { searchEntries } from "../../utils/search";
 import SearchResultComponent from "../SearchResultComponent";
@@ -30,6 +30,7 @@ const SearchResults = (): JSX.Element => {
   const searchItems = useAppSelector(
     (state: { searchItems: searchItemsState }) => state.searchItems.searchItems
   );
+
   const searchItemsNumber = useAppSelector(
     (state: { searchItems: searchItemsState }) => state.searchItems.quantity
   );
@@ -54,7 +55,7 @@ const SearchResults = (): JSX.Element => {
     const displayResults = (): void => {
       const entries: SearchItem[] = [];
       if (req) {
-        searchEntries(req, updateReq).then(({ link, data }) => {
+        searchEntries(req).then(({ link, data }) => {
           if (link) {
             const indexOfGreaterThan = link.indexOf(">");
 
@@ -100,7 +101,6 @@ const SearchResults = (): JSX.Element => {
       (entries) => {
         if (entries[0].isIntersecting) {
           setReq(nextReq);
-          console.log("nextReq: ", nextReq);
         }
       },
       { threshold: 1 }
@@ -124,7 +124,7 @@ const SearchResults = (): JSX.Element => {
       justifyContent="flex-start"
       flexDirection="column"
     >
-      {searchItems ? (
+      {searchItems.length > 0 ? (
         <div style={{ overflow: "auto" }}>
           <table className="search-table">
             <thead>{getTableHeader()}</thead>
@@ -132,10 +132,10 @@ const SearchResults = (): JSX.Element => {
           </table>
         </div>
       ) : (
-        <>
+        <Stack alignItems="center" justifyContent="center" height="100%">
           <Typography>No data to display</Typography>
           <Typography>Please start search to display results</Typography>
-        </>
+        </Stack>
       )}
       <div ref={observerTarget}></div>
     </Box>

@@ -1,6 +1,14 @@
 .search-result{
     height: 48px;
     overflow: hidden;
+    cursor: pointer;
+}
+.search-result:hover{
+    background-color: #eee;
+}
+thead .search-result:hover{
+    background-color: initial;
+    cursor: initial;
 }
 .search-result p {
     max-height: 48px;
@@ -9,8 +17,8 @@
     overflow: hidden;
     
 }
-.search-table tbody tr {
-    cursor: pointer;
+.search-table {
+    border-spacing: 0;
 }
 .search-result > td{
     height: 48px;
@@ -22,11 +30,15 @@
     
     width: 48px;
 }
-
 .search-result__entry{
     width: 115px; 
-    color: #175BC0;
+    
 }
+tbody .search-result__entry{
+    color: #175BC0;
+    
+}
+
 .search-result__entry-names{
     width: 166px; 
 }
@@ -38,7 +50,7 @@
     text-align: center;
     
 }
-.search-result__organism > p{
+tbody .search-result__organism > p{
    
     overflow: hidden;
     background: #D8E7FF;

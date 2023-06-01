@@ -1,12 +1,9 @@
-export const searchEntries = (req: string, updateReq) => {
-  let link: string;
+export const searchEntries = (req: string) => {
+  let link: string | null;
   return fetch(req)
     .then((response) => {
       const headers = response.headers;
       link = headers.get("link");
-
-      // Use the headers as needed
-      updateReq(link);
 
       return response.json();
     })
