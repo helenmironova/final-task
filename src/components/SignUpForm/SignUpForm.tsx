@@ -78,7 +78,15 @@ const SignUpForm = () => {
             navigate("/auth/login")
           })
           .catch((error) => {
+            const emailInput =  document.getElementsByClassName("emailInput")[0] as HTMLInputElement;
+            const passwordInput =  document.getElementsByClassName("passwordInput")[0] as HTMLInputElement;
+            const repPasswordInput =  document.getElementsByClassName("repeatPasswordInput")[0] as HTMLInputElement;
+
+
             console.log(error)
+            emailInput.blur();
+            passwordInput.blur();
+            repPasswordInput.blur();
             console.clear();
           });
         

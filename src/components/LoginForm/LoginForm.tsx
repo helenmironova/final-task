@@ -64,6 +64,8 @@ const LoginForm = () => {
         setIsFormSubmitted(false);
         emailInput.style.border = '2px solid #EC3030';
         passwordInput.style.border = '2px solid #EC3030';
+        emailInput.blur();
+        passwordInput.blur();
         console.clear();
       });
   };
