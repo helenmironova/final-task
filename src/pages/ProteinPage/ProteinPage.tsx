@@ -51,7 +51,10 @@ const ProteinPage = () => {
           .catch(() => false);
     };
 
-
+    const user = useSelector((state: any)=>state.user);
+    if(user===null || user===""){
+        navigate('/not-found');
+    } 
 
     /*
         on first render does the following:

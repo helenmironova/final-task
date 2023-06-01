@@ -17,6 +17,7 @@ const App = () =>{
         <Route path="/search" element={<HomePage />}></Route>
         <Route path="/protein" element={<ProteinPage />}></Route>
         <Route path="/not-found" element={<NotFound />}></Route>
+        <Route path="*" element={<NotFound />} />
 
       </Routes>
     </BrowserRouter>

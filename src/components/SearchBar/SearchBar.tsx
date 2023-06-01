@@ -17,6 +17,12 @@ const SearchBar = () => {
     const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
     const navigate = useNavigate();
 
+    const user = useSelector((state: any)=>state.user);
+    if(user===null || user===""){
+        navigate('/not-found');
+    } 
+
+
     //search text stored in redux;
     const searchText = useSelector((state: any) => state.searchText);
     //filters stord in redux;
@@ -88,12 +94,24 @@ const SearchBar = () => {
     */
     useEffect(() => {
         const searchQuery = new URLSearchParams(location.search).get('query');
+        dispatch(removeItems());
+        dispatch(setNewValueFilter({
+            isOpen: false,
+            geneName: null,
+            organism: null,
+            sequenceLength__from: null,
+            sequenceLength__to: null, 
+            annotationScore: null,
+            proteinWith: null,
+        }));
+        dispatch(setNewValueSort({selected: 0, type: 0}))
         if (searchQuery) {
             if(searchQuery==='*'){
                 dispatch(setNewSearchText(""));
-                return;
+            }else{
+                dispatch(setNewSearchText(searchQuery));
             }
-            dispatch(setNewSearchText(searchQuery));
+            dispatch(fetchItems(searchQuery));
         }
     }, [location]);
 
