@@ -12,6 +12,7 @@ const FiltersModal = () => {
 
   const [lengthFilterOptions, setLengthFilterOptions] = useState<any>({})
 
+  const [resetFilters, setResetFilters] = useState(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [noFilters, setNoFilters] = useState<boolean>(false)
 
@@ -37,6 +38,20 @@ const FiltersModal = () => {
   )
 
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (resetFilters) {
+      setSelectedFilters([])
+      setNoFilters(false)
+      setResetFilters(false)
+    }
+  }, [resetFilters])
+
+  const handleCancel = () => {
+    dispatch(setFilters(null))
+    dispatch(setIsFiltersModalOpen(false))
+    setSelectedFilters([]) // Добавить эту строку
+  }
 
   useEffect(() => {
     if (appliedFilters) {
@@ -284,14 +299,11 @@ const FiltersModal = () => {
             </div>
           </div>
           <div className="filters-btn-container">
-            <button
-              type="button"
-              onClick={() => dispatch(setIsFiltersModalOpen(false))}
-            >
-              {"Cancel"}
-            </button>
-            <button type="submit">{"Apply filters"}</button>
-          </div>
+        <button type="button" onClick={handleCancel}>
+          {"Cancel"}
+        </button>
+        <button type="submit">{"Apply filters"}</button>
+      </div>
         </form>
       ))}
     </Wrapper>
