@@ -105,6 +105,7 @@ const SearchBar = () => {
                 value={searchText}
                 onChange={handleSearchTextChange}
                 name='search'
+                autoComplete='off'
             />
             <button type='submit' className='searchButton' onClick={()=>handleSubmit(searchText)}>
                 Search

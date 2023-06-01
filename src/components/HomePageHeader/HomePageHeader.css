@@ -31,7 +31,7 @@
 }
 
 .wrap{
-    justify-content: center;
+    justify-content: right;
     width: 470px;
     display: flex;
 }
