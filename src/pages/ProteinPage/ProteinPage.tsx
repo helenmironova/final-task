@@ -9,7 +9,7 @@ import PublicationsTab from '../../components/ProteinPageComponents/Publications
 import { useNavigate } from 'react-router';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { setNewSelectedProteinName, fetchProteinReferencesData, fetchProteinData } from '../../store/selectedProtein';
+import { setNewSelectedProteinName, fetchProteinReferencesData, fetchProteinData, setProteinLoading } from '../../store/selectedProtein';
 import ProtvistaUniprot from 'protvista-uniprot'
 
 window.customElements.define("protvista-uniprot", ProtvistaUniprot);
@@ -50,6 +50,7 @@ const ProteinPage = () => {
     };
 
 
+
     /*
         on first render does the following:
         checks if query has parameter 'protein'
@@ -63,48 +64,47 @@ const ProteinPage = () => {
     useEffect(() => {
         if (initialRender.current) {
             initialRender.current = false;
+              dispatch(setProteinLoading(true));
+              const searchParams = new URLSearchParams(document.location.search);
+              if(searchParams.has("protein")){
+                  isValid(searchParams.get("protein") as string)
+                  .then(valid => {
+                      if (valid) {
+                      console.log("Query is valid");
+                          dispatch(setNewSelectedProteinName(searchParams.get("protein") as string));
+                          dispatch(fetchProteinReferencesData(searchParams.get("protein") as string));
+                          dispatch(fetchProteinData(searchParams.get("protein") as string));
+                      } else {
+                      console.log("Sorry, not a valid query");
+                          navigate('/not-found');
+                      }
+                  })
+                  .catch(error => {
+                      console.log("Error occurred during query validation:", error);
+                  })
+              }else{
+                  setParams(protein.name)
+              }
             return;
-        }
-        const searchParams = new URLSearchParams(document.location.search);
-        if(searchParams.has("protein")){
-            isValid(searchParams.get("protein") as string)
-            .then(valid => {
-                if (valid) {
-                 console.log("Query is valid");
-                    dispatch(setNewSelectedProteinName(searchParams.get("protein") as string));
-                    dispatch(fetchProteinReferencesData(searchParams.get("protein") as string));
-                    dispatch(fetchProteinData(searchParams.get("protein") as string));
-                } else {
-                 console.log("Sorry, not a valid query");
-                    navigate('/not-found');
-                }
-            })
-            .catch(error => {
-                console.log("Error occurred during query validation:", error);
-            });
-        }else{
-            setParams(protein.name)
         }
     }, []);
 
   return (
     <div className='body'>
-      <>
         <HomePageHeader />
-        <div className='proteinDataWrapper'>
-          <BasicData protein={protein?.protein} />
-          <Paths tab={tab} setTab={setTab} />
-          {/* Render content based on the selected tab */}
-          <div className='content'>
-            {tab === 'details' && <DetailsTab />}
-            {tab === 'feature' && 
-              <div className='protvistaWrapper'>
-                <protvista-uniprot accession={protein?.name} />
-              </div>}
-            {tab === 'publications' && <PublicationsTab />}
+        {protein.loading ? <p>Loading protein data...</p> : <div className='proteinDataWrapper'>
+            <BasicData protein={protein?.protein} />
+            <Paths tab={tab} setTab={setTab} />
+            {/* Render content based on the selected tab */}
+            <div className='content'>
+              {tab === 'details' && <DetailsTab />}
+              {tab === 'feature' && 
+                <div className='protvistaWrapper'>
+                  <protvista-uniprot accession={protein?.name} />
+                </div>}
+              {tab === 'publications' && <PublicationsTab />}
           </div>
-        </div>
-      </>
+        </div>}
     </div>
   );
 };

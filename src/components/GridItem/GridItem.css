@@ -27,6 +27,8 @@
     font-size: 14px;
     line-height: 19px;
     color: #175BC0;
+    word-break: break-all;
+
 }
 
 .entryNameDiv{
@@ -42,6 +44,8 @@
     font-size: 14px;
     line-height: 19px;
     color: #2B2B2B;
+    word-break: break-all;
+
 }
 
 .genesDiv{
@@ -59,6 +63,8 @@
     font-size: 14px;
     line-height: 19px;
     color: #2B2B2B;
+    word-break: break-all;
+
 }
 
 .organismDiv{
@@ -73,6 +79,8 @@
     font-size: 14px;
     line-height: 19px;
     color: #2B2B2B;
+    word-break: break-all;
+
 }
 
 .organismInsideDiv{
@@ -87,6 +95,8 @@
     margin-top: 14.5px;
     margin-bottom: 14.5px;
     word-break: break-all;
+    word-break: break-all;
+
 }
 
 .subcelDiv{
@@ -102,6 +112,7 @@
     font-size: 14px;
     line-height: 19px;
     color: #2B2B2B;
+    word-break: break-all;
 }
 
 .lengthDiv{
@@ -117,6 +128,8 @@
     font-size: 14px;
     line-height: 19px;
     color: #2B2B2B;
+    word-break: break-all;
+
 }
 
 .span{

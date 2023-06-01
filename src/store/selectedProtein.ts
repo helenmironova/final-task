@@ -31,6 +31,7 @@ const initialState = persistedState || {
     }
   },
   references: {},
+  loading: true,
 };
 
 export const fetchProteinData = createAsyncThunk(
@@ -58,11 +59,14 @@ export const selectedProteinSlice = createSlice({
     setNewSelectedProteinName: (state, action: PayloadAction<string>) => {
       return { ...state, name: action.payload };
     },
+    setProteinLoading: (state, action: PayloadAction<boolean>) => {
+      return {...state, loading: action.payload};
+    }
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProteinData.fulfilled, (state, action) => {
-        return { ...state, protein: action.payload };
+        return { ...state, protein: action.payload, loading: false};
       })
       .addCase(fetchProteinReferencesData.fulfilled, (state, action) => {
         return { ...state, references: action.payload };
@@ -70,6 +74,6 @@ export const selectedProteinSlice = createSlice({
   },
 });
 
-export const { setNewSelectedProteinName } = selectedProteinSlice.actions;
+export const { setNewSelectedProteinName, setProteinLoading } = selectedProteinSlice.actions;
 
 export default selectedProteinSlice.reducer;
