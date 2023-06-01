@@ -37,10 +37,8 @@ const SearchBar = () => {
         sets sorting options to no sort (default);
         fetches new data;
     */
-    const handleSubmit = (searchText: string) => {
-        const query = searchText.trim() || "*";
-        navigate(`/search?query=${query}`);      
-        const apiUrl = `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=${(query==='' || query===null) ? "*" : query }`;
+    const handleSubmit = (searchText: string) => { 
+        const apiUrl = `https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=${(searchText==='' || searchText===null) ? "*" : searchText }`;
         dispatch(removeItems());
         dispatch(setNewValueFilter({
             isOpen: false,
@@ -111,7 +109,7 @@ const SearchBar = () => {
             }else{
                 dispatch(setNewSearchText(searchQuery));
             }
-            dispatch(fetchItems(searchQuery));
+            dispatch(fetchItems(`https://rest.uniprot.org/uniprotkb/search?fields=accession,id,gene_names,organism_name,length,ft_peptide,cc_subcellular_location&query=(${searchQuery})`));
         }
     }, [location]);
 
