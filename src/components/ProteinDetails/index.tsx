@@ -1,9 +1,10 @@
 import { useLocation, useParams } from "react-router-dom";
 import "./index.css";
-import { getProteinInfo } from "../../utils/search";
-import { Box, Stack, Typography } from "@mui/material";
+
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { RootState } from "../../store/store";
+import CopyIcon from "../CopyIcon";
 
 const ProteinDetails = (): JSX.Element => {
   const proteinInfoData = useAppSelector((state: RootState) => {
@@ -11,6 +12,12 @@ const ProteinDetails = (): JSX.Element => {
       return state.protein;
     }
   });
+
+  const handleCopy = () => {
+    if (proteinInfoData) {
+      navigator.clipboard.writeText(proteinInfoData.sequence);
+    }
+  };
 
   return (
     <Stack>
@@ -65,10 +72,25 @@ const ProteinDetails = (): JSX.Element => {
         }}
         marginTop={3}
         padding={1.5}
+        position="relative"
       >
         <Typography fontWeight={400} fontSize={12}>
           {proteinInfoData.sequence}
         </Typography>
+        <Button
+          startIcon={<CopyIcon />}
+          sx={{
+            position: "absolute",
+            bottom: "100%",
+            right: "-10px",
+            textTransform: "initial",
+            color: "#000000",
+            fontSize: "12px",
+          }}
+          onClick={handleCopy}
+        >
+          Copy
+        </Button>
       </Box>
     </Stack>
   );
