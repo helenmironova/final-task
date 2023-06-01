@@ -9,10 +9,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { fetchItems} from '../../store/listItems';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
+import { setAnnotationOptions, setProteinWithOptions, setOrganismOptions, setAlreadyFetched } from '../../store/selectorOptions';
+
 
 const HomePage = () => {
     const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
 
+    const selectorOptions = useSelector((state: any) => state.selectorOptions);
     const listItems = useSelector((state: any) => state.listItems.items);
     const nextUrl = useSelector((state: any) => state.listItems.nextUrl);
     const loading = useSelector((state: any) => state.listItems.isLoading);
@@ -56,6 +59,24 @@ const HomePage = () => {
     if (searchParams.has('query')) {
       searchText = searchParams.get('query') as string;
     }
+
+      /*
+        sends fetch request to get selector options;
+        saves data in redux via dispatch;
+    */
+        const fetchDataSelector = () => {
+          fetch(`https://rest.uniprot.org/uniprotkb/search?facets=model_organism,proteins_with,annotation_score&query=(cancer)`)
+          .then((response) => response.json())
+          .then((data) =>{
+              dispatch(setAnnotationOptions(data.facets[2].values));
+              dispatch(setOrganismOptions(data.facets[0].values));
+              dispatch(setProteinWithOptions(data.facets[1].values));
+              dispatch(setAlreadyFetched());
+          });
+      }
+      if (!selectorOptions.alreadyFetched) {
+          fetchDataSelector();
+      }
 
     return(
         <div className='body'>

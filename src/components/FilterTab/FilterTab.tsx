@@ -1,6 +1,5 @@
 import './FilterTab.css'
 import { useSelector, useDispatch } from 'react-redux';
-import { setAnnotationOptions, setProteinWithOptions, setOrganismOptions, setAlreadyFetched } from '../../store/selectorOptions';
 import { useEffect, useState } from 'react';
 import GeneNameInput from '../FilterInputs/GeneNameInput/GeneNameInput';
 import OrganismInput from '../FilterInputs/OrganismInput/OrganismInput';
@@ -20,8 +19,6 @@ const FilterTab = () => {
 
     //filters stored in redux;
     const filterOptions = useSelector((state: any) => state.filterOptions);
-    //selector options stored in redux;
-    const selectorOptions = useSelector((state: any) => state.selectorOptions);
     //search text stored in redux;
     const searchText = useSelector((state: any) => state.searchText);
     
@@ -47,24 +44,6 @@ const FilterTab = () => {
         }));
         dispatch(setNewValueSort({selected: 0, type: 0}))
        dispatch(fetchItems(`https://rest.uniprot.org/uniprotkb/search?facets=model_organism,proteins_with,annotation_score&query=(${(searchText==='' || searchText===null) ? "*" : searchText})`));
-    }
-
-    /*
-        sends fetch request to get selector options;
-        saves data in redux via dispatch;
-    */
-    const fetchDataSelector = () => {
-        fetch(`https://rest.uniprot.org/uniprotkb/search?facets=model_organism,proteins_with,annotation_score&query=(cancer)`)
-        .then((response) => response.json())
-        .then((data) =>{
-            dispatch(setAnnotationOptions(data.facets[2].values));
-            dispatch(setOrganismOptions(data.facets[0].values));
-            dispatch(setProteinWithOptions(data.facets[1].values));
-            dispatch(setAlreadyFetched());
-        });
-    }
-    if (!selectorOptions.alreadyFetched) {
-        fetchDataSelector();
     }
 
     //changes apply button visual based on filterOptions change;
