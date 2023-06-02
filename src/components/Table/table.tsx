@@ -56,7 +56,16 @@ const Table = () => {
 
       setSort({ id, type })
     }
-  }, [])
+  }, [sort.id])
+
+  const updateQueryParam = useCallback(
+    (params: URLSearchParams) => {
+      const search = params.toString()
+
+      navigate({ search })
+    },
+    [navigate],
+  )
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search)
@@ -69,7 +78,7 @@ const Table = () => {
     }
 
     updateQueryParam(queryParams)
-  }, [sort])
+  }, [sort, updateQueryParam])
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search)
@@ -81,7 +90,7 @@ const Table = () => {
 
       dispatch(setFilters(filters))
     }
-  }, [])
+  }, [dispatch, selectedFilters])
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search)
@@ -95,7 +104,7 @@ const Table = () => {
     }
 
     updateQueryParam(queryParams)
-  }, [selectedFilters])
+  }, [selectedFilters, updateQueryParam])
 
   const handleSort = (id: string) => {
     setCursor("")
@@ -114,15 +123,6 @@ const Table = () => {
   useEffect(() => {
     setCursor("")
   }, [searchQuery, selectedFilters])
-
-  const updateQueryParam = useCallback(
-    (params: URLSearchParams) => {
-      const search = params.toString()
-
-      navigate({ search })
-    },
-    [navigate],
-  )
 
   const fetchData = useCallback(
     async ({ pageParam = "" }) => {
@@ -241,7 +241,6 @@ const Table = () => {
     },
     [
       globalFilter,
-      cursor,
       updateQueryParam,
       searchQuery,
       sort.id,
@@ -287,7 +286,7 @@ const Table = () => {
         }
       }
     },
-    [fetchNextPage, isFetching, totalFetched],
+    [fetchNextPage, isFetching],
   )
 
   useEffect(() => {
@@ -380,15 +379,17 @@ const Table = () => {
                             )}
                             {header.column.id !== "subcellularLocation" &&
                               header.column.id !== "number" &&
-                              (sort.id === header.column.id ? (
-                                sort.type === "desc" ? (
-                                  <SortIconDesc />
-                                ) : (
-                                  <SortIconAsc />
-                                )
-                              ) : (
-                                <SortIconInactive />
-                              ))}
+                              (() => {
+                                if (sort.id === header.column.id) {
+                                  return sort.type === "desc" ? (
+                                    <SortIconDesc />
+                                  ) : (
+                                    <SortIconAsc />
+                                  )
+                                } else {
+                                  return <SortIconInactive />
+                                }
+                              })()}
                           </div>
                         )}
                       </th>

@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react"
-import styled from "styled-components"
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import FiltersIcon from "../../assets/filters-icon"

@@ -58,7 +58,7 @@ const ProteinTabs: React.FC<ProteinTabsProps> = ({ data }) => {
   const [isCopied, setIsCopied] = React.useState(false)
   const [publications, setPublications] = React.useState([]) as any
 
-  const fetchPublications = async () => {
+  const fetchPublicationsAsync = async () => {
     if (!data.accession) {
       return
     }
@@ -69,15 +69,13 @@ const ProteinTabs: React.FC<ProteinTabsProps> = ({ data }) => {
 
     const dataResponse = await response.json()
 
-    console.log(dataResponse.results)
-
     setPublications(dataResponse.results)
 
     return publications
   }
 
   useEffect(() => {
-    fetchPublications()
+    fetchPublicationsAsync()
   }, [data])
 
   return (

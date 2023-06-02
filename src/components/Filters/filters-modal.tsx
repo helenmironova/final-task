@@ -75,7 +75,7 @@ const FiltersModal = () => {
     )
   }, [searchQuery, appliedFilters])
 
-  const getDynamicFilters = async () => {
+  const getDynamicFiltersAsync = async () => {
     try {
       setIsLoading(true)
 
@@ -203,32 +203,44 @@ const FiltersModal = () => {
   }
 
   useEffect(() => {
-    getDynamicFilters().then((data) => {
-      if (data) {
-        setDynamicFilters(data)
+    getDynamicFiltersAsync()
+      .then((data) => {
+        if (data) {
+          setDynamicFilters(data)
 
-        const selectElement = document.getElementById(
-          data[0].name,
-        ) as HTMLSelectElement
+          const selectElement = document.querySelector(
+            `#${data[0].name}`,
+          ) as HTMLSelectElement
 
-        if (selectElement && selectElement.options.length > 0) {
-          selectElement.value = selectElement.options[0].value
+          if (selectElement && selectElement.options.length > 0) {
+            selectElement.value = selectElement.options[0].value
+          }
+
+          return data
+        } else {
+          setNoFilters(true)
+
+          return null
         }
-      } else {
-        setNoFilters(true)
-      }
-    })
+      })
+      .catch((error) => {
+        throw error
+      })
   }, [searchQuery])
 
   return (
     <Wrapper>
       <h1>{"Filters"}</h1>
 
-      {isLoading ? (
+      {isLoading && (
         <p className="filters-loading">{"Loading available filters..."}</p>
-      ) : (noFilters ? (
+      )}
+
+      {noFilters && !isLoading && (
         <p className="filters-loading">{"No filters available"}</p>
-      ) : (
+      )}
+
+      {!isLoading && !noFilters && (
         <form className="filters-form" onSubmit={(e) => handleSubmit(e)}>
           <label htmlFor="gene">{"Gene Name"}</label>
           <input
@@ -238,37 +250,31 @@ const FiltersModal = () => {
             placeholder="Enter gene name"
             onChange={(e) => handleFilterChange(e)}
           />
-          {dynamicFilters.map((filter: any) => {
-            return (
-              <div className="filter-container" key={filter.name}>
-                <label htmlFor={filter.name}>{filter.label}</label>
-                <select
-                  name={filter.name}
-                  defaultValue=""
-                  id={filter.name}
-                  onChange={(e) => handleFilterChange(e)}
-                >
-                  <option value="" disabled>
-                    {" "}
-                    {"Select an option"}{" "}
+          {dynamicFilters.map((filter: any) => (
+            <div className="filter-container" key={filter.name}>
+              <label htmlFor={filter.name}>{filter.label}</label>
+              <select
+                name={filter.name}
+                defaultValue=""
+                id={filter.name}
+                onChange={(e) => handleFilterChange(e)}
+              >
+                <option value="" disabled>
+                  {"Select an option"}
+                </option>
+                {filter.values.map((value: any) => (
+                  <option
+                    value={value.value}
+                    key={`${value?.label}${value.value}${value?.count}`}
+                  >
+                    {value.label ? value.label : value.value} {"("}
+                    {value?.count}
+                    {")"}
                   </option>
-                  {filter.values.map((value: any) => {
-                    return (
-                      <option
-                        value={value.value}
-                        key={`${value?.label}${value.value}${value?.count}`}
-                      >
-                        {value.label ? value.label : value.value}
-                        {" ("}
-                        {value?.count}
-                        {")"}
-                      </option>
-                    )
-                  })}
-                </select>
-              </div>
-            )
-          })}
+                ))}
+              </select>
+            </div>
+          ))}
 
           <div className="length-filter-container">
             <label htmlFor="length">{"Sequence length"}</label>
@@ -305,7 +311,7 @@ const FiltersModal = () => {
             <button type="submit">{"Apply filters"}</button>
           </div>
         </form>
-      ))}
+      )}
     </Wrapper>
   )
 }

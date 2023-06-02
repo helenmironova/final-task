@@ -1,5 +1,5 @@
+import React from "react"
 import { Link } from "react-router-dom"
-import styled from "styled-components"
 
 import ExternalLinkIcon from "../../assets/external-link-icon"
 import Wrapper from "./publications-styled"
@@ -12,39 +12,41 @@ const Publications = ({ publications }: any) => {
           <div key={publication.citation.id} className="publication-container">
             <h3 className="publication-title">{publication.citation.title}</h3>
             <p className="publication-authors">
-              {publication.citation.authors
-                ? (publication.citation.authors.length > 15
-                  ? publication.citation.authors
-                      .slice(0, 15)
-                      .map((author: string, index: number) => {
-                        return index ===
-                          publication.citation.authors.slice(0, 15).length -
-                            1 ? (
-                          <span key={index}>
-                            {author}
-                            {"..."}
-                          </span>
-                        ) : (
-                          <span key={index}>
-                            {author}
-                            {", "}
-                          </span>
-                        )
-                      })
-                  : publication.citation.authors.map(
-                      (author: string, index: number) => {
-                        return index ===
-                          publication.citation.authors.length - 1 ? (
-                          <span key={index}>{author}</span>
-                        ) : (
-                          <span key={index}>
-                            {author}
-                            {", "}
-                          </span>
-                        )
-                      },
-                    ))
-                : ""}
+              {publication.citation.authors && (
+                <React.Fragment>
+                  {publication.citation.authors.length > 15
+                    ? publication.citation.authors
+                        .slice(0, 15)
+                        .map((author: string, index: number) => {
+                          return index ===
+                            publication.citation.authors.slice(0, 15).length -
+                              1 ? (
+                            <span key={index}>
+                              {author}
+                              {"..."}
+                            </span>
+                          ) : (
+                            <span key={index}>
+                              {author}
+                              {", "}
+                            </span>
+                          )
+                        })
+                    : publication.citation.authors.map(
+                        (author: string, index: number) => {
+                          return index ===
+                            publication.citation.authors.length - 1 ? (
+                            <span key={index}>{author}</span>
+                          ) : (
+                            <span key={index}>
+                              {author}
+                              {", "}
+                            </span>
+                          )
+                        },
+                      )}
+                </React.Fragment>
+              )}
             </p>
             <p>
               <span className="subtitle-grey-text">{"Categories: "}</span>

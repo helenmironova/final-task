@@ -12,8 +12,6 @@ const ErrorPage = () => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setCurrentUser(user)
-      } else {
-        console.log("no user")
       }
     })
 
