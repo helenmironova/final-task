@@ -1,0 +1,29 @@
+.navigation_container {
+  width: 100vw;
+  height: 5vh;
+  border-bottom: 1px solid #d8e7ff;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.email {
+  overflow: hidden;
+}
+
+.logOut,
+.logIn {
+  margin-right: 30px;
+  margin-left: 20px;
+  color: #7ea0d2;
+  cursor: pointer;
+  overflow: hidden;
+}

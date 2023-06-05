@@ -1,0 +1,25 @@
+.container {
+  background-image: url("/src/assets/main-page-background-dna.png");
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.content {
+  color: #000;
+  font-size: 16px;
+}
+
+.heading {
+  margin-bottom: 12px;
+}
+
+.text {
+  width: 30%;
+  height: 40%;
+  margin-bottom: 12px;
+}
