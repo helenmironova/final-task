@@ -10,7 +10,7 @@ const PageSearch = (): JSX.Element => {
   return (
     <Stack width="100%" height="100%">
       <Header />
-      <Stack padding="30px 130px" height="100%">
+      <Stack padding="30px 130px" height="100%" overflow="hidden">
         <SearchBar></SearchBar>
         <SearchResults></SearchResults>
       </Stack>

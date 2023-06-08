@@ -5,7 +5,11 @@ import { Link, useLocation } from "react-router-dom";
 import { searchEntries } from "../../utils/search";
 import SearchResultComponent from "../SearchResultComponent";
 import { SearchItem } from "../../interfaces/SearchItem";
-import { searchItemsState, addSearchItems } from "../../store/searchItemsSlice";
+import {
+  searchItemsState,
+  addSearchItems,
+  selectMemoizedQuantity,
+} from "../../store/searchItemsSlice";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 
@@ -36,6 +40,8 @@ const SearchResults = (): JSX.Element => {
   );
   const [req, setReq] = useState("");
   const [nextReq, setNextReq] = useState("");
+  const [newEntries, setNewEntries] = useState([]);
+
   useEffect(() => {
     const queryParams = new URLSearchParams(search);
     const query = queryParams.get("query");
@@ -48,42 +54,39 @@ const SearchResults = (): JSX.Element => {
   }, [search]);
 
   useEffect(() => {
-    const updateReq = (newReq: string): void => {
-      setNextReq(newReq);
-    };
+    const entries: SearchItem[] = [];
+    if (req) {
+      searchEntries(req).then(({ link, data }) => {
+        if (link) {
+          const indexOfGreaterThan = link.indexOf(">");
 
-    const displayResults = (): void => {
-      const entries: SearchItem[] = [];
-      if (req) {
-        searchEntries(req).then(({ link, data }) => {
-          if (link) {
-            const indexOfGreaterThan = link.indexOf(">");
+          const extractedLink = link.substring(1, indexOfGreaterThan);
 
-            const extractedLink = link.substring(1, indexOfGreaterThan);
-
-            setNextReq(extractedLink);
+          setNextReq(extractedLink);
+        }
+        if (data && data.results) {
+          data.results.forEach((element, index: number) => {
+            const searchItem = {
+              searchId: searchItemsNumber + index + 1,
+              entry: element.primaryAccession,
+              entryNames: element.uniProtkbId,
+              genes: element.genes[0].geneName.value,
+              organism: element.organism.scientificName,
+              subcellularLocation:
+                element.comments[0]?.subcellularLocations[0].location.value,
+              length: element.sequence.length,
+            };
+            entries.push(searchItem);
+          });
+          if (entries) {
+            setNewEntries(entries);
+          } else {
+            setNewEntries([]);
           }
-          if (data && data.results) {
-            data.results.forEach((element, index: number) => {
-              const searchItem = {
-                searchId: searchItemsNumber + index + 1,
-                entry: element.primaryAccession,
-                entryNames: element.uniProtkbId,
-                genes: element.genes[0].geneName.value,
-                organism: element.organism.scientificName,
-                subcellularLocation:
-                  element.comments[0]?.subcellularLocations[0].location.value,
-                length: element.sequence.length,
-              };
-              entries.push(searchItem);
-            });
-            dispatch(addSearchItems(entries));
-          }
-        });
-      }
-    };
-    displayResults();
-  }, [dispatch, req, search, searchItemsNumber]);
+        }
+      });
+    }
+  }, [dispatch, req]);
 
   const searchItemComponents = searchItems.map((entry) => (
     <SearchResultComponent
@@ -97,14 +100,24 @@ const SearchResults = (): JSX.Element => {
   const observerTarget = useRef(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 1.0,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      console.log("entries: ", entries);
+      if (entries[0].isIntersecting) {
+        console.log("Scroll!!");
+        if (newEntries) {
+          dispatch(addSearchItems(newEntries));
+        }
+        if (nextReq) {
           setReq(nextReq);
         }
-      },
-      { threshold: 1 }
-    );
+      }
+    }, options);
 
     if (observerTarget.current) {
       observer.observe(observerTarget.current);
@@ -115,7 +128,7 @@ const SearchResults = (): JSX.Element => {
         observer.unobserve(observerTarget.current);
       }
     };
-  }, [nextReq, observerTarget]);
+  }, [dispatch, newEntries, nextReq, observerTarget]);
 
   return (
     <Box
@@ -123,14 +136,13 @@ const SearchResults = (): JSX.Element => {
       display="flex"
       justifyContent="flex-start"
       flexDirection="column"
+      overflow="auto"
     >
       {searchItems.length > 0 ? (
-        <div style={{ overflow: "auto" }}>
-          <table className="search-table">
-            <thead>{getTableHeader()}</thead>
-            <tbody>{searchItemComponents}</tbody>
-          </table>
-        </div>
+        <table className="search-table">
+          <thead>{getTableHeader()}</thead>
+          <tbody>{searchItemComponents}</tbody>
+        </table>
       ) : (
         <Stack alignItems="center" justifyContent="center" height="100%">
           <Typography>No data to display</Typography>

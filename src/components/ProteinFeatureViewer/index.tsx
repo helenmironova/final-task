@@ -1,25 +1,22 @@
-import { useLocation, useParams } from "react-router-dom";
 import "./index.css";
-import { getProteinInfo } from "../../utils/search";
-import { Box, Typography } from "@mui/material";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { RootState } from "../../store/store";
 
-const ProteinFeatureViewer = (): JSX.Element => {
-  const proteinInfoData = useAppSelector((state: RootState) => {
-    if (state.protein) {
-      return state.protein;
-    }
-  });
+import { proteinState } from "../../store/proteinSlice";
 
+import ProtvistaUniprot from "protvista-uniprot";
+
+window.customElements.define("protvista-uniprot", ProtvistaUniprot);
+
+const ProteinFeatureViewer = () => {
+  const proteinAccession = useAppSelector(
+    (state: { protein: proteinState }) => state.protein.primaryAccession
+  );
+  console.log("proteinAccession: ", proteinAccession);
   return (
-    <Box
-      sx={{
-        overflowWrap: "break-word",
-      }}
-    >
-      <Typography>Protein viewer</Typography>
-    </Box>
+    <>
+      <script src="https://d3js.org/d3.v4.min.js" defer></script>
+      <protvista-uniprot accession={proteinAccession} />
+    </>
   );
 };
 
