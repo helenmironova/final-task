@@ -1,15 +1,11 @@
 import Header from "../components/Header";
 import { Stack } from "@mui/material";
-import ProteinDetails from "../components/ProteinDetails";
 import ProteinInfo from "../components/ProteinInfo";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getProteinInfo } from "../utils/search";
 import ProteinTabs from "../components/ProteinTabs";
-import { useSelector } from "react-redux";
-import { useAppSelector } from "../hooks/useAppSelector";
 import { proteinState, setProtein } from "../store/proteinSlice";
-import { RootState } from "../store/store";
 import { useAppDispatch } from "../hooks/useAppDispatch";
 
 const PageSearch = (): JSX.Element => {

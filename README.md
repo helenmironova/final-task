@@ -1,7 +1,5 @@
 ```console
-firebase emulators:start --only auth
-
-firebase serve --only hosting
+firebase emulators:start
 
 npm run dev
 ```
