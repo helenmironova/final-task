@@ -1,0 +1,14 @@
+div.header{
+    padding: 8px 130px;
+    border-bottom: 1px solid #D8E7FF;
+}
+p.header__email{
+    font-size: 12px;
+}
+button.header__logout{
+    font-size: 12px;
+    text-transform: initial;
+    padding: 0;
+    margin-right: 23px;
+    margin-left: 30px;
+}
