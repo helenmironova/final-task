@@ -1,0 +1,155 @@
+.itemWrapper{
+    display: inline-flex;
+    max-width: 1020px;
+    min-height: 48px;
+    width: 100%;
+    gap: 2px;
+}
+
+.numberDiv{
+    display: flex;
+    width: 47px;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2px;
+}
+
+.entryDiv{
+    display: flex;
+    width: 114px;
+    min-height: 48px;
+    padding-left: 12px;
+    text-align: left;
+    align-items: center;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #175BC0;
+    word-break: break-all;
+
+}
+
+.entryNameDiv{
+    display: flex;
+    width: 165.5px;
+    min-height: 48px;
+    padding-left: 12px;
+    text-align: left;
+    align-items: center;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: #2B2B2B;
+    word-break: break-all;
+
+}
+
+.genesDiv{
+    display: flex;
+    width: 165.5px;
+    min-height: 48px;
+    padding-left: 12px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    text-align: left;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #2B2B2B;
+    word-break: break-all;
+
+}
+
+.organismDiv{
+    display: flex;
+    width: 165.5px;
+    min-height: 48px;
+    justify-content: center;
+    align-items: center;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #2B2B2B;
+    word-break: break-all;
+
+}
+
+.organismInsideDiv{
+    padding: 2px 12px;
+    min-height: 23px;
+    background: #D8E7FF;
+    border-radius: 12px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    max-width: 82%;
+    margin-top: 14.5px;
+    margin-bottom: 14.5px;
+    word-break: break-all;
+    word-break: break-all;
+
+}
+
+.subcelDiv{
+    display: flex;
+    width: 190px;
+    min-height: 48px;
+    align-items: center;
+    padding-left: 12px;
+    text-align: left;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #2B2B2B;
+    word-break: break-all;
+}
+
+.lengthDiv{
+    display: flex;
+    width: 150.5px;
+    min-height: 48px;
+    align-items: center;
+    padding-left: 12px;
+    text-align: left;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #2B2B2B;
+    word-break: break-all;
+
+}
+
+.span{
+    width: 100%;
+}
+
+@media only screen and (max-width: 930px) {
+    .subcelDiv{
+        display: none;
+    }
+  }
+
+  @media only screen and (max-width: 730px) {
+    .entryNameDiv{
+        display: none;
+    }
+   }
+
+   @media only screen and (max-width: 590px) {
+    .organismInsideDiv{
+        width: 70%;
+    }
+   }

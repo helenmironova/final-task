@@ -1,0 +1,110 @@
+.referenceItemWrapper{
+    width: 78.4%;
+    padding: 14px 23px 10px  23px;
+    background: #F5F6F8;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.referenceItemHeader{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: #2B2B2B;
+    text-align: left;
+    margin-bottom: 6px;
+}
+
+.authors{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    text-decoration-line: underline;
+    color: #2B2B2B;
+    text-align: left;
+    margin-bottom: 18px;
+}
+
+
+
+.categoriesLabel, .citedForLabel, .sourceLabel{
+    color: #6C6C6C;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    text-align: left;
+    margin-bottom: 6px;
+}
+
+.categoriesData, .citedForData, .sourceData{
+    color: #2B2B2B;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    text-align: left;
+}
+
+.source{
+    margin-bottom: 19px;
+}
+
+.linksDiv{
+    display: flex;
+    gap: 9px;
+}
+
+@media only screen and (max-width: 430px){
+    .linksDiv{
+        flex-direction: column;
+        align-items: ceter;
+    }
+}
+
+.link{
+    height: 100%;
+    display: flex;
+    border: 1px solid #3C86F4;
+    gap: 9px;
+    border-radius: 4px;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+
+    padding-left: 10px;
+    padding-right: 8px;
+    color: #3C86F4;
+    cursor: pointer;
+}
+
+.linkImg{
+    width: 14px;
+    height: 14px;
+}
+
+.link--inactive{
+    height: 100%;
+    display: flex;
+    border: 1px solid #9F9F9F;
+    gap: 9px;
+    border-radius: 4px;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+
+    padding-left: 10px;
+    padding-right: 8px;
+    color: #9F9F9F;
+}

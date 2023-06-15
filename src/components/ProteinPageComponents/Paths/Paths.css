@@ -1,0 +1,55 @@
+
+.paths{
+    width: 402px;
+    height: 40px;
+    align-self: baseline;
+    margin-top: 12px;
+    display: flex;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #9F9F9F;
+}
+
+.tab{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#detailsTab{
+    width: 24.8%;
+}
+
+#featureTab{
+    width: 40.5%;
+}
+
+#publicationsTab{
+    width: 34.5%;
+}
+
+.tab--active{
+    color: #3C86F4;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid #3C86F4;
+}
+
+
+@media only screen and (max-width: 470px){
+    .paths{
+        width: 360px;
+    }
+}
+
+@media only screen and (max-width: 430px){
+    .paths{
+        width: 320px;
+    }
+}

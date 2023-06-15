@@ -1,0 +1,49 @@
+
+.sequenceData{
+    margin-top: 8px;
+    gap: 21px;
+    display: flex;
+    margin-left: 5px;
+    height: 91px;
+}
+
+.dataCol{
+    width: 179px;
+    gap: 7px;
+    height: 83px;
+    flex-direction: column;
+    display: flex;
+}
+
+.dataCell{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dataCellPHeader{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    color: #616161;
+}
+
+.dataCellPInfo{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #2B2B2B;
+}
+
+.dataCellPHeader, .dataCellPInfo{
+    text-align: left;
+}
+
+
+@media only screen and (max-width: 430px){
+    .dataCol{
+        width: 100px;
+    }
+}

@@ -1,0 +1,43 @@
+.body{
+    width: 100%;
+    min-height: 100%;
+    background-color: #FFFFFF;
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    justify-content: unset;
+    display: flex;
+    flex-direction: column;
+    color: black;
+}
+
+.proteinDataWrapper{
+    height: 100%;
+    display: flex;
+    justify-content: left;
+    margin-top: 30px;
+    flex-direction: column;
+    align-items: center;
+    width: 79.7%
+}
+ 
+.content{
+    width: 100%;
+}
+
+.protvistaWrapper{
+    width: 100%;
+    margin-top: 19px;
+}
+
+.loadingP{
+    color: black;
+    font-size: 16px;
+}
+
+.protvistaWrapper--hidden{
+    display: none;
+    width: 100%;
+    margin-top: 19px;
+}

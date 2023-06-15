@@ -1,0 +1,60 @@
+.signUpForm{
+    width: 100%;
+    text-align: left;
+    margin-left: 33px;
+}
+
+.label{
+    display: block;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #2B2B2B;
+}
+
+.emailInput, .passwordInput, .repeatPasswordInput{
+    box-sizing: border-box;
+    background: #F5F5F5;
+    border: none;
+    border-radius: 8px;
+    width: 395px;
+    height: 48px;
+    margin-top: 1px;
+    margin-bottom: 20px;
+    padding-left: 14px;
+    color: #000000;
+}
+
+.signUpButton--disabled{
+    width: 395px;
+    height: 48px;
+    border: 0;
+    background: #CFCFCF;
+    border-radius: 12px;
+    color: #FFFFFF;
+}
+
+.signUpButton--active{
+    width: 395px;
+    height: 48px;
+    border: 0;
+    background: #3C86F4;
+    border-radius: 12px;
+    color: #FFFFFF;
+}
+
+.invalidTextSU{
+    position: relative;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: #EC3030;
+    top: -16px;
+    width: 395px;
+}
+
+
+
+

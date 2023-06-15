@@ -1,0 +1,9 @@
+.custom-arrow{
+    position: absolute;
+    display: flex;
+    background-image: url(/src/assets/arrow.png);
+    width: 6.95px;
+    height: 13.01px;
+    transform: translateY(-32px);
+    right: 12.05px;
+}
